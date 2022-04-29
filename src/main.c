@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "gamemaker/core.h"
+#include "blob.h"
 
 
 typedef struct Blob {
@@ -22,8 +23,6 @@ typedef struct Data {
 	Food *food;
 	int nbFood;
 } Data;
-
-
 
 Data data;
 
@@ -162,8 +161,10 @@ void MainRender(App *p_App)
 
 void MainRemove(App *p_App)
 {
-	BlobsDel(data.blob);
-	FoodsDel(data.food);
+	if (data.blob)
+		free(data.blob);
+	if (data.food)
+		FoodsDel(data.food);
 }
 
 int main()
@@ -179,6 +180,6 @@ int main()
 
 	App_loop(app);
 	App_del(app);
-	printf("Hello World!");
+	
 	return 0;
 }
