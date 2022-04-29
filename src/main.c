@@ -76,7 +76,8 @@ void MainRender(App *p_App)
 
 void MainRemove(App *p_App)
 {
-
+	if (data.blob)
+		free(data.blob);
 }
 
 int main()
@@ -92,6 +93,6 @@ int main()
 
 	App_loop(app);
 	App_del(app);
-	printf("Hello World!");
+	
 	return 0;
 }
