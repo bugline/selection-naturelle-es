@@ -23,7 +23,6 @@
 *.lo
 
 inc/
-include/
 
 # Shared objects (inc. Windows DLLs)
 *.dll
