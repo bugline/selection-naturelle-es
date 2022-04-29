@@ -15,14 +15,14 @@ void DrawRecMid(Vector2 pos, Vector2 size)
 	DrawRectangleV(pos, size, (Color) { 255, 255, 255, 255 });
 }
 
-void DrawTexMid(Texture tex, Vector2 pos, Vector2 size)
+void DrawTexMid(Texture tex, Rectangle rec)
 {
 	Rectangle source = { 0, 0, tex.width, tex.height };
 
-	float width = tex.width / 100.f * size.x;
-	float height = tex.height / 100.f * size.y;
+	float width = tex.width / 100.f * rec.width;
+	float height = tex.height / 100.f * rec.height;
 
-	Rectangle dest = { -width / 2 + pos.x, -height / 2 + pos.y, width, height };
+	Rectangle dest = { -width / 2 + rec.x, -height / 2 + rec.y, width, height };
 
 	DrawTexturePro(tex, source, dest, (Vector2) { 0.f, 0.f }, 0.f, WHITE);
 }
