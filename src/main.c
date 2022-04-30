@@ -62,6 +62,8 @@ void MainInit(App *p_App)
 
 void MainUpdate(App *p_App, float p_Dt)
 {
+	printf("Blob(%f:%f) Carrot(%f;%f)\n", data.blob[0].pos.x, data.blob[0].pos.y, data.food[0].rec.x, data.food[0].rec.y);
+
 	if (IsKeyDown(KEY_UP))
 		data.cam.camera.target.y -= 1;
 	else if (IsKeyDown(KEY_DOWN))
@@ -70,6 +72,13 @@ void MainUpdate(App *p_App, float p_Dt)
 		data.cam.camera.target.x -= 1;
 	else if (IsKeyDown(KEY_RIGHT))
 		data.cam.camera.target.x += 1;
+
+	
+	for (int i = 0; i < data.nbBlob; i++) {
+		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
+			data.nbFood);
+		data.blob[i].pos = Vector2Add(data.blob[i].pos, Vector2Scale(dir, p_Dt * 5));
+	}
 }
 
 void MainRender(App *p_App)
