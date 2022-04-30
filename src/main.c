@@ -5,12 +5,22 @@
 #include "blob.h"
 
 
+#define CAM_MIN_ZOOM      20
+#define CAM_MAX_ZOOM     400
+#define CAM_SCROLL_SPEED   0.2f
+#define CAM_MOUSE_SPEED    0.002f
+#define CAM_KEY_SPEED     60
+
+
 typedef struct Data {
 	Cam cam;
 	Blob *blob;
 	int nbBlob;
 	Food *food;
 	int nbFood;
+
+	Vector2 beforeMouseMove;
+	Vector2 mpInitial;
 } Data;
 
 Data data;
@@ -65,15 +75,34 @@ void MainUpdate(App *p_App, float p_Dt)
 	printf("Blob(%f:%f) Carrot(%f;%f)\n", data.blob[0].pos.x, data.blob[0].pos.y, data.food[0].rec.x, data.food[0].rec.y);
 
 	if (IsKeyDown(KEY_UP))
-		data.cam.camera.target.y -= 1;
+		data.cam.camera.target.y -= CAM_KEY_SPEED * p_Dt;
 	else if (IsKeyDown(KEY_DOWN))
-		data.cam.camera.target.y += 1;
+		data.cam.camera.target.y += CAM_KEY_SPEED * p_Dt;
 	else if (IsKeyDown(KEY_LEFT))
-		data.cam.camera.target.x -= 1;
+		data.cam.camera.target.x -= CAM_KEY_SPEED * p_Dt;
 	else if (IsKeyDown(KEY_RIGHT))
-		data.cam.camera.target.x += 1;
+		data.cam.camera.target.x += CAM_KEY_SPEED * p_Dt;
 
+	// Mouvements avec la souris
+	data.cam.fov += data.cam.fov * -CAM_SCROLL_SPEED * GetMouseWheelMove();
+	if (data.cam.fov < CAM_MIN_ZOOM)
+		data.cam.fov = CAM_MIN_ZOOM;
+	else if (data.cam.fov > CAM_MAX_ZOOM)
+		data.cam.fov = CAM_MAX_ZOOM;
 	
+	if (IsMouseButtonPressed(0)) {
+		data.mpInitial = GetMousePosition();
+		data.beforeMouseMove = Cam_getPos(&data.cam);
+	} else if (IsMouseButtonReleased(0) || IsMouseButtonDown(0)) {
+		Vector2 mpDelta = Vector2Subtract(data.mpInitial,
+			GetMousePosition());
+		Vector2 newPos = Vector2Add(data.beforeMouseMove,
+			Vector2Scale(mpDelta, 1.f * data.cam.fov *
+				CAM_MOUSE_SPEED));
+		Cam_setPos(&data.cam, newPos);
+	}
+
+	// Mouvement des blobs
 	for (int i = 0; i < data.nbBlob; i++) {
 		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
 			data.nbFood);
