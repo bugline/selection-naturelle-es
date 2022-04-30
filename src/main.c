@@ -5,17 +5,6 @@
 #include "blob.h"
 
 
-typedef struct Blob {
-	float size;
-	Vector2 pos;
-	Color color;
-} Blob;
-
-typedef struct Food {
-	Rectangle rec;
-	Texture2D *tex;
-} Food;
-
 typedef struct Data {
 	Cam cam;
 	Blob *blob;
@@ -26,72 +15,8 @@ typedef struct Data {
 
 Data data;
 
-Blob *BlobsInit(int nbBlob)
-{
-	Blob *blobs = NEW_ARR(Blob, nbBlob);
-	for (int i = 0; i < nbBlob; i++) {
-		blobs[i].size = 5;
-		float posX = GetRandomValue(-50, 50);
-		float posY = GetRandomValue(-50, 50);
-		blobs[i].pos = (Vector2) { posX, posY };
-		blobs[i].color = (Color) { 255, 50, 50, 255 };
-	}
-	return blobs;
-}
 
-void BlobsDel(Blob *blobs)
-{
-	free(blobs);
-}
-
-void DrawBlob(Blob blob)
-{
-	DrawCircle(blob.pos.x, blob.pos.y, blob.size, blob.color);
-}
-
-void BlobsRender(Blob *blobs, int nbBlob)
-{
-	for (int i = 0; i < nbBlob; i++) {
-		DrawBlob(blobs[i]);
-	}
-}
-
-Food *FoodsInit(int nbFood)
-{
-	Texture2D *tex = NEW(Texture2D);
-	*tex = LoadTexture("res/food.png");
-	Food *foods = NEW_ARR(Food, nbFood);
-	float width = 3;
-	float height = 3;
-
-	for (int i = 0; i < nbFood; i++) {
-		float posX = GetRandomValue(-50, 50);
-		float posY = GetRandomValue(-50, 50);
-		foods[i].rec = (Rectangle) { posX, posY, width, height };
-		foods[i].tex = tex;
-	}
-	return foods;
-}
-
-void FoodsDel(Food *foods)
-{
-	free(foods[0].tex);
-	free(foods);
-}
-
-void FoodDraw(Food food)
-{
-	DrawTexMid(*food.tex, food.rec);
-}
-
-void FoodsRender(Food *foods, int nbFood)
-{
-	for (int i = 0; i < nbFood; i++) {
-		FoodDraw(foods[i]);
-	}
-}
-
-float carre(float a)
+float carre(float a)  // Sérieusement ?
 {
 	return a * a;
 }
@@ -116,7 +41,7 @@ int CollisionCircleRec(Vector2 center, float radius, Rectangle rec)
 {
 	// Fonction non finit
 	int collision = 0;
-	
+
 	float dx = fabsf(center.x - rec.x);
 	float dy = fabsf(center.y - rec.y);
 

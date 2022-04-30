@@ -1,4 +1,3 @@
-/*
 #ifndef BLOB
 #define BLOB
 
@@ -19,13 +18,14 @@ typedef struct Blob {
 // Blobs
 void BlobRender(const Blob *blob);
 
+// Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
+Vector2 BlobGetDir(Vector2 pos, const Food *foods, int foodAmount);
+
 
 // Array of blobs
 Blob *BlobsInit(int nbBlob);
 void BlobsRender(const Blob *blobs, int nbBlob);
-
-// Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
-Vector2 BlobGetDir(Vector2 pos, const Food *foods, int foodAmount);
+void BlobsDel(Blob *blobs);
 
 
 // IMPLEMENTATION
@@ -35,8 +35,34 @@ void BlobRender(const Blob *blob)
 	DrawCircle(blob->pos.x, blob->pos.y, blob->size, blob->color);
 }
 
+Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
+{
+	if (pFoodLen == 0)
+		return (Vector2) { 0.f, 0.f };
 
-// ARRAYS
+	Vector2 foodPos = (Vector2) { pFoods[0].rec.x, pFoods[0].rec.x };
+	Vector2 closer = Vector2Subtract(foodPos, pPos);
+	float closerDist = Vector2LengthSqr(closer);
+
+	for (int i = 1; i < pFoodLen; i++) {
+		Vector2 foodPos = (Vector2) { pFoods[i].rec.x,
+			pFoods[i].rec.x };
+		Vector2 toVec = Vector2Subtract(foodPos, pPos);
+		float dist = Vector2LengthSqr(toVec);
+
+		if (dist < closerDist) {
+			closer = toVec;
+			closerDist = dist;
+		}
+	}
+
+	if (closerDist == 0.f)
+		return (Vector2) { 0.f, 0.f };
+	
+	return Vector2Scale(closer, 1.f / sqrt(closerDist));
+}
+
+// Arrays
 
 Blob *BlobsInit(int nbBlob)
 {
@@ -54,34 +80,14 @@ Blob *BlobsInit(int nbBlob)
 void BlobsRender(const Blob *blobs, int nbBlob)
 {
 	for (int i = 0; i < nbBlob; i++) {
-		BlobRender(&(blobs[i]));
+		BlobRender(&blobs[i]);
 	}
 }
 
-
-Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
+void BlobsDel(Blob *blobs)
 {
-	if (pFoodLen == 0)
-		return (Vector2) { 0.f, 0.f };
-
-	Vector2 closer = Vector2Subtract(pFoods[0].pos, pPos);
-	float closerDist = Vector2LengthSqr(closer);
-
-	for (int i = 1; i < pFoodLen; i++) {
-		Vector2 toVec = Vector2Subtract(pFoods[i].pos, pPos);
-		float dist = Vector2LengthSqr(toVec);
-
-		if (dist < closerDist) {
-			closer = toVec;
-			closerDist = dist;
-		}
-	}
-
-	if (closerDist = 0.f)
-		return (Vector2) { 0.f, 0.f };
-	
-	return Vector2Scale(closer, 1.f / sqrt(closerDist));
+	free(blobs);
 }
 
 
-#endif  // BLOB */
+#endif  // BLOB
