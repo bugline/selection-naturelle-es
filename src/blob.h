@@ -68,7 +68,7 @@ Blob *BlobsInit(int nbBlob)
 {
 	Blob *blobs = NEW_ARR(Blob, nbBlob);
 	for (int i = 0; i < nbBlob; i++) {
-		blobs[i].size = 5;
+		blobs[i].size = 1;
 		float posX = GetRandomValue(-50, 50);
 		float posY = GetRandomValue(-50, 50);
 		blobs[i].pos = (Vector2) { posX, posY };

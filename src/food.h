@@ -33,8 +33,8 @@ Food *FoodsInit(int nbFood)
 	Texture2D *tex = NEW(Texture2D);
 	*tex = LoadTexture("res/food.png");
 	Food *foods = NEW_ARR(Food, nbFood);
-	float width = 3;
-	float height = 3;
+	float width = 1;
+	float height = 1;
 
 	for (int i = 0; i < nbFood; i++) {
 		float posX = GetRandomValue(-50, 50);

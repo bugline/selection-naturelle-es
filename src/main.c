@@ -3,6 +3,7 @@
 
 #include "gamemaker/core.h"
 #include "blob.h"
+#include "speed.h"
 
 
 #define CAM_MIN_ZOOM      20
@@ -18,6 +19,7 @@ typedef struct Data {
 	int nbBlob;
 	Food *food;
 	int nbFood;
+	Speed speed;
 
 	Vector2 beforeMouseMove;
 	Vector2 mpInitial;
@@ -25,45 +27,10 @@ typedef struct Data {
 
 Data data;
 
-
-float carre(float a)  // Sérieusement ?
-{
-	return a * a;
-}
-
-int CollisionCircle(Vector2 pos1, float radius1, Vector2 pos2, float radius2)
-{
-	// Fonction non testé
-	int collision = 0;
-
-	float dx = pos1.x - pos2.x;
-	float dy = pos1.y - pos2.y;
-
-	float distanceCarre = (carre(dx) + carre(dy));
-
-	if (distanceCarre <= carre(radius1 + radius2))
-		collision = 1;
-
-	return collision;
-}
-
-int CollisionCircleRec(Vector2 center, float radius, Rectangle rec)
-{
-	// Fonction non finit
-	int collision = 0;
-
-	float dx = fabsf(center.x - rec.x);
-	float dy = fabsf(center.y - rec.y);
-
-	if ((carre(dx - rec.width / 2.0f) + carre(dy - rec.width / 2.0f)))
-		collision = 1;
-
-	return collision;
-}
-
 void MainInit(App *p_App)
 {
-	data.cam = Cam_init(100);
+	data.cam = Cam_init(10);
+	SpeedInit(&data.speed);
 	data.nbBlob = 10;
 	data.blob = BlobsInit(data.nbBlob);
 	data.nbFood = 10;
@@ -72,7 +39,8 @@ void MainInit(App *p_App)
 
 void MainUpdate(App *p_App, float p_Dt)
 {
-	printf("Blob(%f:%f) Carrot(%f;%f)\n", data.blob[0].pos.x, data.blob[0].pos.y, data.food[0].rec.x, data.food[0].rec.y);
+	//printf("Blob(%f:%f) Carrot(%f;%f)\n", data.blob[0].pos.x, data.blob[0].pos.y, data.food[0].rec.x, data.food[0].rec.y);
+	SpeedUpdate(&data.speed, &p_Dt);
 
 	if (IsKeyDown(KEY_UP))
 		data.cam.camera.target.y -= CAM_KEY_SPEED * p_Dt;
@@ -120,6 +88,7 @@ void MainRender(App *p_App)
 	Cam_stop();
 
 	DrawFPS(10, 10);
+	SpeedRender(&data.speed);
 }
 
 void MainRemove(App *p_App)
