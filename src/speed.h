@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include "raylib.h"
 
 typedef struct Speed {
@@ -19,14 +21,15 @@ void SpeedInit(Speed *speed)
 
 void SpeedUpdate(Speed *speed, float *dt)
 {
-    if (IsKeyPressed('w')) {
+    if (IsKeyPressed(KEY_Q)) {
+        printf("bonjour");
         if (speed->value >= 0.5)
             speed->value /= 2.0f;
         else
             speed->value = 0;
         speed->change = 1;
     }
-    else if (IsKeyPressed('x')) {
+    else if (IsKeyPressed(KEY_S)) {
         if (speed->value >= 0.5)
             speed->value *= 2.0f;
         else
@@ -38,11 +41,14 @@ void SpeedUpdate(Speed *speed, float *dt)
 void SpeedRender(Speed *speed)
 {
     if (speed->change) {
-        if (speed->currTimeAnim = 0)
+        if (!speed->currTimeAnim)
             speed->currTimeAnim = GetTime();
         if (GetTime()  < speed->currTimeAnim + speed->timeAnim) {
-            char *text = "x8";
-            DrawTextEx(speed->font, text, (Vector2) { 200, 200 }, 50, 30, (Color) { 255, 255, 255, 255 });
+            char num[8];
+            gcvt(speed->value, 8, num);
+            char text[9] = "x";
+            strcat(text, num);
+            DrawTextEx(speed->font, text, (Vector2) { 200, 200 }, 50, 10, (Color) { 255, 255, 255, 255 });
         }
         else {
             speed->currTimeAnim = 0;

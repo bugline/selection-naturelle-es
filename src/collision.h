@@ -1,3 +1,7 @@
+#include <math.h>
+
+#include "raylib.h"
+
 float carre(float a)  // Sérieusement ?
 {
 	return a * a;
