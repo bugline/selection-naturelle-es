@@ -40,13 +40,13 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 	if (pFoodLen == 0)
 		return (Vector2) { 0.f, 0.f };
 
-	Vector2 foodPos = (Vector2) { pFoods[0].rec.x, pFoods[0].rec.y };
+	Vector2 foodPos = (Vector2) { pFoods[0].pos.x, pFoods[0].pos.y };
 	Vector2 closer = Vector2Subtract(foodPos, pPos);
 	float closerDist = Vector2LengthSqr(closer);
 
 	for (int i = 1; i < pFoodLen; i++) {
-		Vector2 foodPos = (Vector2) { pFoods[i].rec.x,
-			pFoods[i].rec.y };
+		Vector2 foodPos = (Vector2) { pFoods[i].pos.x,
+			pFoods[i].pos.y };
 		Vector2 toVec = Vector2Subtract(foodPos, pPos);
 		float dist = Vector2LengthSqr(toVec);
 
