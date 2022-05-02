@@ -74,7 +74,7 @@ void MainUpdate(App *p_App, float p_Dt)
 	for (int i = 0; i < data.nbBlob; i++) {
 		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
 			data.nbFood);
-		data.blob[i].pos = Vector2Add(data.blob[i].pos, Vector2Scale(dir, p_Dt * 5));
+		data.blob[i].pos = Vector2Add(data.blob[i].pos, Vector2Scale(dir, p_Dt * 1));
 	}
 }
 
@@ -82,8 +82,8 @@ void MainRender(App *p_App)
 {
 	Cam_start(&data.cam, p_App);
 
-	BlobsRender(data.blob, data.nbBlob);
 	FoodsRender(data.food, data.nbFood);
+	BlobsRender(data.blob, data.nbBlob);
 	
 	Cam_stop();
 
