@@ -19,7 +19,7 @@ typedef struct Data {
 	int nbBlob;
 	Food *food;
 	int nbFood;
-	Speed speed;
+	TimeSpeed timeSpeed;
 
 	Vector2 beforeMouseMove;
 	Vector2 mpInitial;
@@ -30,7 +30,7 @@ Data data;
 void MainInit(App *p_App)
 {
 	data.cam = Cam_init(10);
-	SpeedInit(&data.speed);
+	TimeSpeedInit(&data.timeSpeed);
 	data.nbBlob = 10;
 	data.blob = BlobsInit(data.nbBlob);
 	data.nbFood = 10;
@@ -39,17 +39,7 @@ void MainInit(App *p_App)
 
 void MainUpdate(App *p_App, float p_Dt)
 {
-	//printf("Blob(%f:%f) Carrot(%f;%f)\n", data.blob[0].pos.x, data.blob[0].pos.y, data.food[0].rec.x, data.food[0].rec.y);
-	SpeedUpdate(&data.speed, &p_Dt);
-
-	if (IsKeyDown(KEY_UP))
-		data.cam.camera.target.y -= CAM_KEY_SPEED * p_Dt;
-	else if (IsKeyDown(KEY_DOWN))
-		data.cam.camera.target.y += CAM_KEY_SPEED * p_Dt;
-	else if (IsKeyDown(KEY_LEFT))
-		data.cam.camera.target.x -= CAM_KEY_SPEED * p_Dt;
-	else if (IsKeyDown(KEY_RIGHT))
-		data.cam.camera.target.x += CAM_KEY_SPEED * p_Dt;
+	TimeSpeedUpdate(&data.timeSpeed, &p_Dt);
 
 	// Mouvements avec la souris
 	data.cam.fov += data.cam.fov * -CAM_SCROLL_SPEED * GetMouseWheelMove();
@@ -88,7 +78,7 @@ void MainRender(App *p_App)
 	Cam_stop();
 
 	DrawFPS(10, 10);
-	SpeedRender(&data.speed);
+	TimeSpeedRender(&data.timeSpeed);
 }
 
 void MainRemove(App *p_App)
