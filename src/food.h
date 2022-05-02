@@ -6,7 +6,8 @@
 
 
 typedef struct Food {
-	Rectangle rec;
+	Vector2 pos;
+	Vector2 size;
 	Texture2D *tex;
 } Food;
 
@@ -23,7 +24,7 @@ void FoodsDel(Food *foods);
 
 void FoodDraw(const Food *food)
 {
-	DrawTexMid(*food->tex, food->rec);
+	DrawTexMid(*food->tex, food->pos, food->size);
 }
 
 // Array functions
@@ -37,9 +38,9 @@ Food *FoodsInit(int nbFood)
 	float height = 1;
 
 	for (int i = 0; i < nbFood; i++) {
-		float posX = GetRandomValue(-50, 50);
-		float posY = GetRandomValue(-50, 50);
-		foods[i].rec = (Rectangle) { posX, posY, width, height };
+		foods[i].pos.x = GetRandomValue(-50, 50);
+		foods[i].pos.y = GetRandomValue(-50, 50);
+		foods[i].size = (Vector2) { width, height };
 		foods[i].tex = tex;
 	}
 	return foods;
