@@ -12,6 +12,7 @@ typedef struct Blob {
 	float size;
 	Vector2 pos;
 	Color color;
+	char score;
 } Blob;
 
 
@@ -20,6 +21,7 @@ void BlobRender(const Blob *blob);
 
 // Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
 Vector2 BlobGetDir(Vector2 pos, const Food *foods, int foodAmount);
+void BlobTryEat(Blob *blob, Food *foods, int nbFood);
 
 
 // Array of blobs
@@ -40,19 +42,20 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 	if (pFoodLen == 0)
 		return (Vector2) { 0.f, 0.f };
 
-	Vector2 foodPos = (Vector2) { pFoods[0].pos.x, pFoods[0].pos.y };
-	Vector2 closer = Vector2Subtract(foodPos, pPos);
-	float closerDist = Vector2LengthSqr(closer);
+	Vector2 closer = { 0.f, 0.f };
+	float closerDist = 10e+10f;  // Considéré ici comme plus l'infini
 
-	for (int i = 1; i < pFoodLen; i++) {
-		Vector2 foodPos = (Vector2) { pFoods[i].pos.x,
-			pFoods[i].pos.y };
-		Vector2 toVec = Vector2Subtract(foodPos, pPos);
-		float dist = Vector2LengthSqr(toVec);
+	for (int i = 0; i < pFoodLen; i++) {
+		if (!pFoods[i].eaten) {
+			Vector2 foodPos = (Vector2) { pFoods[i].pos.x,
+				pFoods[i].pos.y };
+			Vector2 toVec = Vector2Subtract(foodPos, pPos);
+			float dist = Vector2LengthSqr(toVec);
 
-		if (dist < closerDist) {
-			closer = toVec;
-			closerDist = dist;
+			if (dist < closerDist) {
+				closer = toVec;
+				closerDist = dist;
+			}
 		}
 	}
 
@@ -60,6 +63,20 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 		return (Vector2) { 0.f, 0.f };
 
 	return Vector2Scale(closer, 1.f / sqrt(closerDist));
+}
+
+void BlobTryEat(Blob *pBlob, Food *pFoods, int pNbFood)
+{
+	for (int i = 0; i < pNbFood; i++) {
+		if (!pFoods[i].eaten) {
+			bool eating = FoodCircleColl(&pFoods[i], pBlob->pos,
+				pBlob->size);
+			if (eating) {
+				pBlob->score += 1;
+				pFoods[i].eaten = true;
+			}
+		}
+	}
 }
 
 // Arrays
@@ -73,6 +90,7 @@ Blob *BlobsInit(int nbBlob)
 		float posY = GetRandomValue(-50, 50);
 		blobs[i].pos = (Vector2) { posX, posY };
 		blobs[i].color = (Color) { 255, 50, 50, 255 };
+		blobs[i].score = 0;
 	}
 	return blobs;
 }

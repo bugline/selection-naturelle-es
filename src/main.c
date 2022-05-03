@@ -40,9 +40,9 @@ void MainInit(App *p_App)
 {
 	data.cam = Cam_init(10);
 	SpeedInit(&data.speed);
-	data.nbBlob = 10;
+	data.nbBlob = 40;
 	data.blob = BlobsInit(data.nbBlob);
-	data.nbFood = 10;
+	data.nbFood = 60;
 	data.food = FoodsInit(data.nbFood);
 
 	// Fixed update trucs
@@ -53,12 +53,15 @@ void MainInit(App *p_App)
 
 void FixedUpdate(const float pFixDt)
 {
-	// Mouvement des blobs
 	for (int i = 0; i < data.nbBlob; i++) {
+		// Mouvement des blobs
 		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
 			data.nbFood);
 		data.blob[i].pos = Vector2Add(data.blob[i].pos,
 			Vector2Scale(dir, pFixDt * 1));
+
+		// Detection de colision
+		BlobTryEat(&data.blob[i], data.food, data.nbFood);
 	}
 }
 
