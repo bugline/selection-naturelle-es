@@ -13,6 +13,12 @@
 #define CAM_KEY_SPEED     60
 
 
+struct FixUpdtData {
+	float incrmnt;
+	float fixDt;
+	float limExec;
+};
+
 typedef struct Data {
 	Cam cam;
 	Blob *blob;
@@ -21,8 +27,11 @@ typedef struct Data {
 	int nbFood;
 	Speed speed;
 
+	// Movements avec la souris
 	Vector2 beforeMouseMove;
 	Vector2 mpInitial;
+
+	struct FixUpdtData fixUdpt;
 } Data;
 
 Data data;
@@ -35,6 +44,22 @@ void MainInit(App *p_App)
 	data.blob = BlobsInit(data.nbBlob);
 	data.nbFood = 10;
 	data.food = FoodsInit(data.nbFood);
+
+	// Fixed update trucs
+	data.fixUdpt.fixDt = 1.f / 60.f;
+	data.fixUdpt.incrmnt = 0.f; 
+	data.fixUdpt.limExec = 0.2f; 
+}
+
+void FixedUpdate(const float pFixDt)
+{
+	// Mouvement des blobs
+	for (int i = 0; i < data.nbBlob; i++) {
+		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
+			data.nbFood);
+		data.blob[i].pos = Vector2Add(data.blob[i].pos,
+			Vector2Scale(dir, pFixDt * 1));
+	}
 }
 
 void MainUpdate(App *p_App, float p_Dt)
@@ -70,11 +95,16 @@ void MainUpdate(App *p_App, float p_Dt)
 		Cam_setPos(&data.cam, newPos);
 	}
 
-	// Mouvement des blobs
-	for (int i = 0; i < data.nbBlob; i++) {
-		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
-			data.nbFood);
-		data.blob[i].pos = Vector2Add(data.blob[i].pos, Vector2Scale(dir, p_Dt * 1));
+	// FIXED UPDATE
+	data.fixUdpt.incrmnt += p_Dt;
+
+	// empêcher une boucle infinie
+	if (data.fixUdpt.limExec < data.fixUdpt.incrmnt)
+		data.fixUdpt.incrmnt = data.fixUdpt.limExec;
+
+	while (data.fixUdpt.incrmnt > data.fixUdpt.fixDt) {
+		FixedUpdate(data.fixUdpt.fixDt);
+		data.fixUdpt.incrmnt -= data.fixUdpt.fixDt;
 	}
 }
 
