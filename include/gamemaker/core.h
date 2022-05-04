@@ -8,4 +8,13 @@
 #include "param.h"
 #include "window.h"
 
+// Ui stuff
+#include "ui/anchor.h"
+#include "ui/img.h"
+#include "ui/panel.h"
+#include "ui/text.h"
+#include "ui/button/butt.h"
+#include "ui/button/tex.h"
+#include "ui/button/text.h"
+
 #endif
