@@ -123,7 +123,6 @@ void App_loop(App *p_App)
 	
 	SetWindowState(FLAG_WINDOW_RESIZABLE);
 	SetWindowMinSize(p_App->param.window.minDim.x, p_App->param.window.minDim.y);
-	SetTargetFPS(p_App->param.update.fps);
 
 	if (p_App->Init)
 		App_callInit(p_App);

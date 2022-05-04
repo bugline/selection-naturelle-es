@@ -47,16 +47,15 @@ void MainInit(App *p_App)
 
 	// Fixed update trucs
 	data.fixUdpt.fixDt = 1.f / 60.f;
-	data.fixUdpt.incrmnt = 0.f; 
-	data.fixUdpt.limExec = 0.2f; 
+	data.fixUdpt.incrmnt = 0.f;
+	data.fixUdpt.limExec = 0.2f;
 }
 
 void FixedUpdate(const float pFixDt)
 {
 	for (int i = 0; i < data.nbBlob; i++) {
 		// Mouvement des blobs
-		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
-			data.nbFood);
+		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food);
 		data.blob[i].pos = Vector2Add(data.blob[i].pos,
 			Vector2Scale(dir, pFixDt * 1));
 

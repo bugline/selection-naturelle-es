@@ -20,7 +20,7 @@ typedef struct Blob {
 void BlobRender(const Blob *blob);
 
 // Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
-Vector2 BlobGetDir(Vector2 pos, const Food *foods, int foodAmount);
+Vector2 BlobGetDir(Vector2 pos, const Food *foods);
 void BlobTryEat(Blob *blob, Food *foods);
 
 
@@ -37,11 +37,8 @@ void BlobRender(const Blob *blob)
 	DrawCircleV(blob->pos, blob->size, blob->color);
 }
 
-Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
+Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods)
 {
-	if (pFoodLen == 0)
-		return (Vector2) { 0.f, 0.f };
-
 	Vector2 closer = { 0.f, 0.f };
 	float closerDist = 10e+10f;  // Considéré ici comme plus l'infini
 	
@@ -56,10 +53,13 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 				closerDist = dist;
 			}
 		}
+		pFoods = pFoods->next;
 	}
 
 	if (closerDist == 0.f)
 		return (Vector2) { 0.f, 0.f };
+	
+	
 
 	return Vector2Scale(closer, 1.f / sqrt(closerDist));
 }
@@ -75,6 +75,7 @@ void BlobTryEat(Blob *pBlob, Food *pFoods)
 				pFoods->eaten = true;
 			}
 		}
+		pFoods = pFoods->next;
 	}
 }
 

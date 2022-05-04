@@ -63,13 +63,14 @@ void FoodDraw(const Food *food)
 Food *FoodsInit(int nbFood)
 {
 	Food *foods = NewLinkedList(nbFood, sizeof(Food));
+	Food *first = foods;
 
 	Texture2D *tex = NEW(Texture2D);
 	*tex = LoadTexture("res/food.png");
 	float width = 0.4f;
 	float height = 0.4f;
 
-	for (int i = 0; i < nbFood; i++) {
+	while (foods) {
 		foods->pos.x = GetRandomValue(-50, 50);
 		foods->pos.y = GetRandomValue(-50, 50);
 		foods->size = (Vector2) { width, height };
@@ -78,7 +79,7 @@ Food *FoodsInit(int nbFood)
 		foods = foods->next;
 	}
 	
-	return foods;
+	return first;
 }
 
 void FoodsRender(Food *foods)
