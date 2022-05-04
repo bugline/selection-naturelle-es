@@ -2,8 +2,8 @@
 #include <string.h>
 #include "raylib.h"
 
-
-#define MAX_TIME_SPEED 1e9
+#define MIN_TIME_SPEED 0.25
+#define MAX_TIME_SPEED 1e5
 
 
 
@@ -31,21 +31,20 @@ void TimeSpeedUpdate(TimeSpeed *speed, float *dt)
         speed->change = 1;
     }
     else if (IsKeyPressed(KEY_LEFT)) {
-        if (speed->value >= 0.5)
+        if (speed->value >= MIN_TIME_SPEED)
             speed->value /= 2.0f;
         else
             speed->value = 0;
         speed->change = 1;
     }
     else if (IsKeyPressed(KEY_RIGHT)) {
-        if (speed->value >= 0.5)
-            speed->value *= 2.0f;
+        if (speed->value >= MIN_TIME_SPEED) {
+            if (speed->value < MAX_TIME_SPEED)
+                speed->value *= 2.0f;
+        }
         else
-            speed->value = 0.5;
+            speed->value = MIN_TIME_SPEED;
         speed->change = 1;
-
-	if (speed->value > MAX_TIME_SPEED)
-		speed->value = MAX_TIME_SPEED;
     }
 }
 

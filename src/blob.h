@@ -44,7 +44,7 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 
 	Vector2 closer = { 0.f, 0.f };
 	float closerDist = 10e+10f;  // Considéré ici comme plus l'infini
-
+	
 	for (int i = 0; i < pFoodLen; i++) {
 		if (!pFoods[i].eaten) {
 			Vector2 foodPos = (Vector2) { pFoods[i].pos.x,

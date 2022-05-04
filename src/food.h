@@ -7,11 +7,27 @@
 
 
 typedef struct Food {
+	struct Food *next;
 	Vector2 pos;
 	Vector2 size;
 	Texture2D *tex;
 	bool eaten;
+	
 } Food;
+
+void *NewLinkedList(int size, size_t typeSize) {
+	void *first = malloc(typeSize);
+	void *prec = first;
+	void *curr;
+	for (int i = 1; i < size; i++) {
+		curr = malloc(typeSize);
+		*prec = curr;
+		prec = curr;
+	}
+	*prec = NULL;
+
+	return first;
+}
 
 
 bool FoodCircleColl(const Food *food, const Vector2 circleCenter,
@@ -20,6 +36,7 @@ void FoodDraw(const Food *food);
 
 // Arrays
 Food *FoodsInit(int nbFood);
+Food FoodInit();
 void FoodsRender(Food *foods, int nbFood);
 void FoodsDel(Food *foods);
 
@@ -45,20 +62,27 @@ void FoodDraw(const Food *food)
 
 Food *FoodsInit(int nbFood)
 {
+	Food *foods = NewLinkedList(nbFood, &NextFood, sizeof(Food));
+	
+	return foods;
+}
+
+Food FoodInit()
+{
+	Food food;
+
 	Texture2D *tex = NEW(Texture2D);
 	*tex = LoadTexture("res/food.png");
-	Food *foods = NEW_ARR(Food, nbFood);
 	float width = 0.4f;
 	float height = 0.4f;
 
-	for (int i = 0; i < nbFood; i++) {
-		foods[i].pos.x = GetRandomValue(-50, 50);
-		foods[i].pos.y = GetRandomValue(-50, 50);
-		foods[i].size = (Vector2) { width, height };
-		foods[i].tex = tex;
-		foods[i].eaten = false;
-	}
-	return foods;
+	food.pos.x = GetRandomValue(-50, 50);
+	food.pos.y = GetRandomValue(-50, 50);
+	food.size = (Vector2) { width, height };
+	food.tex = tex;
+	food.eaten = false;
+
+	return food;
 }
 
 void FoodsRender(Food *foods, int nbFood)
