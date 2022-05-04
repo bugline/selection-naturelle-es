@@ -2,6 +2,7 @@
 #define FOOD
 
 #include <stdbool.h>
+#include <stdio.h>
 #include "raylib.h"
 #include "gamemaker/core.h"
 
@@ -36,8 +37,7 @@ void FoodDraw(const Food *food);
 
 // Arrays
 Food *FoodsInit(int nbFood);
-Food FoodInit();
-void FoodsRender(Food *foods, int nbFood);
+void FoodsRender(Food *foods);
 void FoodsDel(Food *foods);
 
 
@@ -63,41 +63,42 @@ void FoodDraw(const Food *food)
 Food *FoodsInit(int nbFood)
 {
 	Food *foods = NewLinkedList(nbFood, sizeof(Food));
-	
-	return foods;
-}
-
-Food FoodInit()
-{
-	Food food;
 
 	Texture2D *tex = NEW(Texture2D);
 	*tex = LoadTexture("res/food.png");
 	float width = 0.4f;
 	float height = 0.4f;
 
-	food.pos.x = GetRandomValue(-50, 50);
-	food.pos.y = GetRandomValue(-50, 50);
-	food.size = (Vector2) { width, height };
-	food.tex = tex;
-	food.eaten = false;
-
-	return food;
+	for (int i = 0; i < nbFood; i++) {
+		foods->pos.x = GetRandomValue(-50, 50);
+		foods->pos.y = GetRandomValue(-50, 50);
+		foods->size = (Vector2) { width, height };
+		foods->tex = tex;
+		foods->eaten = false;
+		foods = foods->next;
+	}
+	
+	return foods;
 }
 
-void FoodsRender(Food *foods, int nbFood)
+void FoodsRender(Food *foods)
 {
-	for (int i = 0; i < nbFood; i++) {
-		if (!foods[i].eaten) {
-			FoodDraw(&foods[i]);
+	while (foods) {
+		if (!foods->eaten) {
+			FoodDraw(foods);
 		}
+		foods = foods->next;
 	}
 }
 
 void FoodsDel(Food *foods)
 {
-	free(foods[0].tex);
-	free(foods);
+	free(foods->tex);
+	while (foods) {
+		Food *prec = foods;
+		foods = foods->next;
+		free(prec);
+	}
 }
 
 

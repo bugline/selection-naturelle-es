@@ -21,7 +21,7 @@ void BlobRender(const Blob *blob);
 
 // Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
 Vector2 BlobGetDir(Vector2 pos, const Food *foods, int foodAmount);
-void BlobTryEat(Blob *blob, Food *foods, int nbFood);
+void BlobTryEat(Blob *blob, Food *foods);
 
 
 // Array of blobs
@@ -45,10 +45,9 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 	Vector2 closer = { 0.f, 0.f };
 	float closerDist = 10e+10f;  // Considéré ici comme plus l'infini
 	
-	for (int i = 0; i < pFoodLen; i++) {
-		if (!pFoods[i].eaten) {
-			Vector2 foodPos = (Vector2) { pFoods[i].pos.x,
-				pFoods[i].pos.y };
+	while (pFoods) {
+		if (!pFoods->eaten) {
+			Vector2 foodPos = (Vector2) { pFoods->pos.x, pFoods->pos.y };
 			Vector2 toVec = Vector2Subtract(foodPos, pPos);
 			float dist = Vector2LengthSqr(toVec);
 
@@ -65,15 +64,15 @@ Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods, int pFoodLen)
 	return Vector2Scale(closer, 1.f / sqrt(closerDist));
 }
 
-void BlobTryEat(Blob *pBlob, Food *pFoods, int pNbFood)
+void BlobTryEat(Blob *pBlob, Food *pFoods)
 {
-	for (int i = 0; i < pNbFood; i++) {
-		if (!pFoods[i].eaten) {
-			bool eating = FoodCircleColl(&pFoods[i], pBlob->pos,
+	while (pFoods) {
+		if (!pFoods->eaten) {
+			bool eating = FoodCircleColl(pFoods, pBlob->pos,
 				pBlob->size);
 			if (eating) {
 				pBlob->score += 1;
-				pFoods[i].eaten = true;
+				pFoods->eaten = true;
 			}
 		}
 	}

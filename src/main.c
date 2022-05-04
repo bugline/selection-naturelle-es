@@ -61,7 +61,7 @@ void FixedUpdate(const float pFixDt)
 			Vector2Scale(dir, pFixDt * 1));
 
 		// Detection de colision
-		BlobTryEat(&data.blob[i], data.food, data.nbFood);
+		BlobTryEat(&data.blob[i], data.food);
 	}
 }
 
@@ -87,7 +87,7 @@ void MainUpdate(App *p_App, float p_Dt)
 				CAM_MOUSE_SPEED));
 		Cam_setPos(&data.cam, newPos);
 	}
-
+    
 	// FIXED UPDATE
 	data.fixUdpt.incrmnt += p_Dt * data.timeSpeed.value;
 
@@ -105,7 +105,7 @@ void MainRender(App *p_App)
 {
 	Cam_start(&data.cam, p_App);
 
-	FoodsRender(data.food, data.nbFood);
+	FoodsRender(data.food);
 	BlobsRender(data.blob, data.nbBlob);
 	
 	Cam_stop();
