@@ -89,7 +89,7 @@ void MainUpdate(App *p_App, float p_Dt)
 	}
 
 	// FIXED UPDATE
-	data.fixUdpt.incrmnt += p_Dt;
+	data.fixUdpt.incrmnt += p_Dt * data.timeSpeed.value;
 
 	// empêcher une boucle infinie
 	if (data.fixUdpt.limExec < data.fixUdpt.incrmnt)

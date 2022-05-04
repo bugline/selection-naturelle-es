@@ -2,6 +2,11 @@
 #include <string.h>
 #include "raylib.h"
 
+
+#define MAX_TIME_SPEED 1e9
+
+
+
 typedef struct TimeSpeed {
     float value;
     Font font;
@@ -38,6 +43,9 @@ void TimeSpeedUpdate(TimeSpeed *speed, float *dt)
         else
             speed->value = 0.5;
         speed->change = 1;
+
+	if (speed->value > MAX_TIME_SPEED)
+		speed->value = MAX_TIME_SPEED;
     }
 }
 
