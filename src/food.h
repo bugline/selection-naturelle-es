@@ -17,7 +17,7 @@ typedef struct Food {
 
 void *NewLinkedList(int size, size_t typeSize) {
 	void *first = malloc(typeSize);
-	void *prec = first;
+	void **prec = first;
 	void *curr;
 	for (int i = 1; i < size; i++) {
 		curr = malloc(typeSize);
@@ -62,7 +62,7 @@ void FoodDraw(const Food *food)
 
 Food *FoodsInit(int nbFood)
 {
-	Food *foods = NewLinkedList(nbFood, &NextFood, sizeof(Food));
+	Food *foods = NewLinkedList(nbFood, sizeof(Food));
 	
 	return foods;
 }
