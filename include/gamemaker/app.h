@@ -3,6 +3,7 @@
 #include "macros.h"
 #include "param.h"
 #include "window.h"
+#include "draw.h"
 
 
 #ifndef GM_APP_H

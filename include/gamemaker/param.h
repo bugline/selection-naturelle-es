@@ -50,7 +50,7 @@ static App_param_window Param_default_window(void)
 {
 	App_param_window window = { 0 };
 
-	window.name = "Séléction Naturelle ES";
+	window.name = "Game";
 	window.iconPath = "res/icon.png";
 	
 	window.dim = (Vector2) { 640.f, 360.f };
