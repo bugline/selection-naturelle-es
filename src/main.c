@@ -86,6 +86,13 @@ void MainUpdate(App *p_App, float p_Dt)
 				CAM_MOUSE_SPEED));
 		Cam_setPos(&data.cam, newPos);
 	}
+
+	if (IsMouseButtonPressed(1)) {
+		Food param = *data.food;
+		param.pos = GetScreenToWorld2D(GetMousePosition(), data.cam.camera);
+		param.eaten = false;
+		data.food = NewFood(data.food, param);
+	}
     
 	// FIXED UPDATE
 	data.fixUdpt.incrmnt += p_Dt * data.timeSpeed.value;

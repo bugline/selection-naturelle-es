@@ -30,6 +30,37 @@ void *NewLinkedList(int size, size_t typeSize) {
 	return first;
 }
 
+void *Push(void *first, size_t typeSize)
+{
+	void **new = malloc(typeSize);
+	*new = first;
+	return new;
+}
+
+/* 
+*  |del| -> |next| -> |tmp|
+*
+*  			|del| -> |next|
+*
+*			
+*/
+/*
+void *Pop(void *del, size_t typeSize)
+{
+	void **next = del;
+	void ***temp = del;
+	ListCopy(del, *next);
+	free(next);
+	**del = temp;
+}
+*/
+
+void ListCopy(void *dest, void *src, const size_t typeSize)
+{
+	for (size_t i = 0; i < typeSize; i++) {
+		((char *) dest)[i] = ((const char *) src)[i];
+	}
+}
 
 bool FoodCircleColl(const Food *food, const Vector2 circleCenter,
 	const float radius);
@@ -81,6 +112,17 @@ Food *FoodsInit(int nbFood)
 	
 	return first;
 }
+
+Food *NewFood(Food *food, Food param)
+{
+	food = Push(food, sizeof(Food));
+	Food *tmp = food->next;
+	*food = param;
+	food->next = tmp;
+	return food;
+}
+
+
 
 void FoodsRender(Food *foods)
 {
