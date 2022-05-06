@@ -6,24 +6,32 @@
 #include "raylib.h"
 #include "gamemaker/core.h"
 
+typedef struct DbList {
+	Elem *first;
+	Elem *last;
+} DbList;
+
+typedef struct Elem {
+	Elem *next;
+	Elem *prev;
+	void *data;
+} Elem;
+
 
 typedef struct Food {
-	struct Food *next;
 	Vector2 pos;
 	Vector2 size;
 	Texture2D *tex;
 	bool eaten;
-	
 } Food;
 
-void *NewLinkedList(int size, size_t typeSize) {
-	void *first = malloc(typeSize);
-	void **prec = first;
-	void *curr;
+DbList NewLinkedList(int size, size_t typeSize) {
+	DbList dbList;
+	dbList.first = malloc(sizeof(Elem));
+	Elem next = dbList.first;
+	
 	for (int i = 1; i < size; i++) {
-		curr = malloc(typeSize);
-		*prec = curr;
-		prec = curr;
+		next.data = malloc(typeSize);
 	}
 	*prec = NULL;
 
@@ -44,21 +52,22 @@ void *Push(void *first, size_t typeSize)
 *
 *			
 */
-/*
-void *Pop(void *del, size_t typeSize)
-{
-	void **next = del;
-	void ***temp = del;
-	ListCopy(del, *next);
-	free(next);
-	**del = temp;
-}
-*/
 
 void ListCopy(void *dest, void *src, const size_t typeSize)
 {
-	for (size_t i = 0; i < typeSize; i++) {
+	for (size_t i = 0; i < typeSize; i++)
 		((char *) dest)[i] = ((const char *) src)[i];
+}
+
+void Pop(void *del, size_t typeSize)
+{
+	void **next = del;  // Recuperer le ptr next de l'objet
+	if (next) {
+		ListCopy(del, *next, typeSize);
+		free(*next);
+	}
+	else {
+		free(del);
 	}
 }
 
@@ -121,8 +130,6 @@ Food *NewFood(Food *food, Food param)
 	food->next = tmp;
 	return food;
 }
-
-
 
 void FoodsRender(Food *foods)
 {

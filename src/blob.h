@@ -72,7 +72,11 @@ void BlobTryEat(Blob *pBlob, Food *pFoods)
 				pBlob->size);
 			if (eating) {
 				pBlob->score += 1;
-				pFoods->eaten = true;
+				printf("pop truc\n");
+				Pop(pFoods, sizeof(Food));
+				// pFoods->eaten = true;
+				printf("fin pop tru\n");
+				return;
 			}
 		}
 		pFoods = pFoods->next;
