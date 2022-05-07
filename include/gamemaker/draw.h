@@ -10,8 +10,8 @@ typedef struct Frame {  // Pourquoi ? Les vecteurs éxistent déjà
 
 
 void DrawRecMid(Vector2 position, Vector2 size, Color color);
-void DrawTexMid(Texture texture, Vector2 position, Vector2 size);
-void DrawFrameMid(Texture tileMap, Vector2 position, Vector2 size,
+void DrawTexMid(Texture2D texture, Vector2 position, Vector2 size);
+void DrawFrameMid(Texture2D tileMap, Vector2 position, Vector2 size,
 	Frame tileAmount, Frame framePosition);
 void DrawArcMid(Vector2 position, float radius, float startAngle,
 	float stopAngle, int lines, Color color);
@@ -23,7 +23,7 @@ void DrawRecMid(Vector2 pPos, Vector2 pSize, Color pCol)
 	DrawRectangleV(pos, pSize, pCol);
 }
 
-void DrawTexMid(Texture tex, Vector2 pos, Vector2 size)
+void DrawTexMid(Texture2D tex, Vector2 pos, Vector2 size)
 {
 	Rectangle source = { 0, 0, tex.width, tex.height };
 
@@ -36,7 +36,7 @@ void DrawTexMid(Texture tex, Vector2 pos, Vector2 size)
 	DrawTexturePro(tex, source, dest, (Vector2) { 0.f, 0.f }, 0.f, WHITE);
 }
 
-void DrawFrameMid(Texture tex, Vector2 pos, Vector2 size, Frame nbFrame,
+void DrawFrameMid(Texture2D tex, Vector2 pos, Vector2 size, Frame nbFrame,
 	Frame posFrame)
 {
 	int widthFrame = tex.width / nbFrame.x;

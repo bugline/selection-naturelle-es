@@ -47,21 +47,20 @@ void MainInit(App *p_App)
 
 	// Fixed update trucs
 	data.fixUdpt.fixDt = 1.f / 60.f;
-	data.fixUdpt.incrmnt = 0.f; 
-	data.fixUdpt.limExec = 0.2f; 
+	data.fixUdpt.incrmnt = 0.f;
+	data.fixUdpt.limExec = 0.2f;
 }
 
 void FixedUpdate(const float pFixDt)
 {
 	for (int i = 0; i < data.nbBlob; i++) {
 		// Mouvement des blobs
-		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food,
-			data.nbFood);
+		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food);
 		data.blob[i].pos = Vector2Add(data.blob[i].pos,
 			Vector2Scale(dir, pFixDt * 1));
 
 		// Detection de colision
-		BlobTryEat(&data.blob[i], data.food, data.nbFood);
+		BlobTryEat(&data.blob[i], data.food);
 	}
 }
 
@@ -88,6 +87,13 @@ void MainUpdate(App *p_App, float p_Dt)
 		Cam_setPos(&data.cam, newPos);
 	}
 
+	if (IsMouseButtonPressed(1)) {
+		Food param = *data.food;
+		param.pos = GetScreenToWorld2D(GetMousePosition(), data.cam.camera);
+		param.eaten = false;
+		data.food = NewFood(data.food, param);
+	}
+    
 	// FIXED UPDATE
 	data.fixUdpt.incrmnt += p_Dt * data.timeSpeed.value;
 
@@ -105,7 +111,7 @@ void MainRender(App *p_App)
 {
 	Cam_start(&data.cam, p_App);
 
-	FoodsRender(data.food, data.nbFood);
+	FoodsRender(data.food);
 	BlobsRender(data.blob, data.nbBlob);
 	
 	Cam_stop();
