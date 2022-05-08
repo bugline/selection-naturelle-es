@@ -134,7 +134,7 @@ float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 }
 
 
-void _DrawBars(UiGraphBar *graph)
+void _DrawBars(const UiGraphBar *graph)
 {
 	Vector2 tl = AnchGetRecTL(graph->pos, graph->size, graph->anch);
 	Vector2 br = AnchGetRecBR(graph->pos, graph->size, graph->anch);

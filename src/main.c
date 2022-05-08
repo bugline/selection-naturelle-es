@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "gamemaker/core.h"
+#include "gamemaker/ui/graph/graph_bar.h"
 #include "blob.h"
 #include "timeSpeed.h"
 
@@ -32,6 +33,9 @@ typedef struct Data {
 	Vector2 mpInitial;
 
 	struct FixUpdtData fixUdpt;
+
+	// Statistics
+	UiGraphBar speedGraph;
 } Data;
 
 Data data;
@@ -49,6 +53,18 @@ void MainInit(App *p_App)
 	data.fixUdpt.fixDt = 1.f / 60.f;
 	data.fixUdpt.incrmnt = 0.f;
 	data.fixUdpt.limExec = 0.2f;
+
+	// Statistics
+	data.speedGraph = UiGraphBar_default(data.nbBlob);
+	data.speedGraph.anch = ANCHOR_NE;
+	data.speedGraph.pos = (Vector2) { -5.f, 5.f };
+	data.speedGraph.xAxis.valRng = (Vector2) { BLOB_MIN_SPEED,
+		BLOB_MAX_SPEED };
+	data.speedGraph.xAxis.markStep = 0.5f;
+	for (int i = 0; i < data.nbBlob; i++)
+		UiGraphBar_setVal(&data.speedGraph, i, data.blob[i].speed);
+	UiGraphAxis_setLabel(&data.speedGraph.xAxis, "speed");
+	UiGraphAxis_setLabel(&data.speedGraph.yAxis, "blob amount");
 }
 
 void FixedUpdate(const float pFixDt)
@@ -57,7 +73,7 @@ void FixedUpdate(const float pFixDt)
 		// Mouvement des blobs
 		Vector2 dir = BlobGetDir(data.blob[i].pos, data.food);
 		data.blob[i].pos = Vector2Add(data.blob[i].pos,
-			Vector2Scale(dir, pFixDt * 1));
+			Vector2Scale(dir, pFixDt * data.blob[i].speed));
 
 		// Detection de colision
 		BlobTryEat(&data.blob[i], data.food);
@@ -116,6 +132,8 @@ void MainRender(App *p_App)
 	
 	Cam_stop();
 
+	UiGraphBar_render(&data.speedGraph);
+
 	DrawFPS(10, 10);
 	TimeSpeedRender(&data.timeSpeed);
 }
@@ -131,6 +149,7 @@ void MainRemove(App *p_App)
 int main()
 {
 	App_param param = App_param_default();
+	param.update.fps = 0;
 
 	App *app = App_new(param);
 

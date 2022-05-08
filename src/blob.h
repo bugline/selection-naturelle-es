@@ -8,11 +8,18 @@
 #include "food.h"
 
 
+#define BLOB_MAX_SPEED 5.f
+#define BLOB_MIN_SPEED .5f
+
+
 typedef struct Blob {
 	float size;
 	Vector2 pos;
 	Color color;
 	char score;
+
+	// Attributes
+	float speed;
 } Blob;
 
 
@@ -91,6 +98,9 @@ Blob *BlobsInit(int nbBlob)
 		blobs[i].pos = (Vector2) { posX, posY };
 		blobs[i].color = (Color) { 255, 50, 50, 255 };
 		blobs[i].score = 0;
+
+		blobs[i].speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
+			BLOB_MAX_SPEED * 1e3f) / 1e3f;
 	}
 	return blobs;
 }
