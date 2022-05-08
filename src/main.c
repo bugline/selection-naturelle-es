@@ -46,7 +46,7 @@ void MainInit(App *p_App)
 	TimeSpeedInit(&data.timeSpeed);
 	data.nbBlob = 10;
 	data.blob = BlobsInit(data.nbBlob);
-	data.nbFood = 60;
+	data.nbFood = 20;
 	data.food = FoodsInit(data.nbFood);
 
 	// Fixed update trucs
@@ -67,6 +67,55 @@ void MainInit(App *p_App)
 	UiGraphAxis_setLabel(&data.speedGraph.yAxis, "blob amount");
 }
 
+bool AreAllCarrotsGone()
+{
+	Food *carrot = data.food;
+
+	while (carrot) {
+		if (!carrot->eaten)
+			return false;
+		carrot = carrot->next;
+	}
+
+	return true;
+}
+
+void ProduceNextGen()
+{
+	int newPopSize = 0;
+	for (int i = 0; i < data.nbBlob; i++) {
+		newPopSize += data.blob[i].score;
+	}
+
+	Blob *tmp = NEW_ARR(Blob, newPopSize);
+	int tmpLen = 0;
+
+	for (int i = 0; i < data.nbBlob; i++) {
+		if (data.blob[i].score > 0) {
+			tmp[tmpLen] = data.blob[i];
+			tmp[tmpLen].pos = GetRandBlobPos();
+			tmp[tmpLen].score = 0;
+			tmpLen++;
+
+			// Enfants
+			for (int j = 0; j < data.blob[i].score - 1; j++) {
+				tmp[tmpLen] = BlobMutate(data.blob[i]);
+				tmp[tmpLen].pos = GetRandBlobPos();
+				tmp[tmpLen].score = 0;
+				tmpLen++;
+			}
+		}
+	}
+
+	free(data.blob);
+	data.blob = tmp;
+	data.nbBlob = tmpLen;
+
+	// Update graph
+	for (int i = 0; i < data.nbBlob; i++)
+		UiGraphBar_setVal(&data.speedGraph, i, data.blob[i].speed);
+}
+
 void FixedUpdate(const float pFixDt)
 {
 	for (int i = 0; i < data.nbBlob; i++) {
@@ -77,6 +126,12 @@ void FixedUpdate(const float pFixDt)
 
 		// Detection de colision
 		BlobTryEat(&data.blob[i], data.food);
+	}
+
+	if (AreAllCarrotsGone()) {
+		ProduceNextGen();
+		FoodsDel(data.food);
+		data.food = FoodsInit(data.nbFood);
 	}
 }
 
