@@ -8,8 +8,8 @@
 
 
 // Créer des pointeurs vers des structures plus facilement
-#define NEW(type) (type *) malloc(sizeof(type))  // Mémoire à libérer
-#define NEW_ARR(type, amount) (type *) malloc(sizeof(type) * amount)  // Pour les arrays, mémoire à libérer
+#define NEW(type) ((type *) malloc(sizeof(type)))  // Mémoire à libérer
+#define NEW_ARR(type, amount) ((type *) malloc(sizeof(type) * (amount)))  // Pour les arrays, mémoire à libérer
 
 
 // PRINT DES INFORMATIONS
