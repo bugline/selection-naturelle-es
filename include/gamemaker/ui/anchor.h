@@ -5,6 +5,9 @@
 #include "raymath.h"
 
 
+typedef char Anchor;
+
+
 // All anchors
 #define ANCHOR_NW  0
 #define ANCHOR_NE  1

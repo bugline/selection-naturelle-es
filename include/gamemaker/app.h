@@ -106,6 +106,7 @@ static void App_callRemove(App *p_App)
 	(*removeFunc)(p_App);
 }
 
+
 void App_loop(App *p_App)
 {
 	if (!p_App->Update) {
@@ -118,14 +119,15 @@ void App_loop(App *p_App)
 	InitWindow(p_App->param.window.dim.x, p_App->param.window.dim.y,
 		p_App->param.window.name);
 
+	if (p_App->Init)
+		App_callInit(p_App);
+
 	Image icon = LoadImage(p_App->param.window.iconPath);
 	SetWindowIcon(icon);
 	
 	SetWindowState(FLAG_WINDOW_RESIZABLE);
 	SetWindowMinSize(p_App->param.window.minDim.x, p_App->param.window.minDim.y);
-
-	if (p_App->Init)
-		App_callInit(p_App);
+	SetTargetFPS(p_App->param.update.fps);
 
 	double newTime = GetTime();	
 	p_App->dt = 0.f;

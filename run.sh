@@ -4,7 +4,7 @@
 OUT=bin/main.exe
 INP='src/main.c'
 
-INCLUDE=include/
+INCLUDE=inc/
 LIB=lib/
 
 
