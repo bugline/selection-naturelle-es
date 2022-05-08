@@ -23,7 +23,7 @@
 *.lo
 
 inc/
-.vscode/
+.vscode/settings.json
 
 # Shared objects (inc. Windows DLLs)
 *.dll
