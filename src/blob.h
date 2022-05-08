@@ -117,11 +117,12 @@ Blob *BlobsInit(int nbBlob)
 	for (int i = 0; i < nbBlob; i++) {
 		blobs[i].size = 1;
 		blobs[i].pos = GetRandBlobPos();
-		blobs[i].color = (Color) { GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255), 255 };
+		blobs[i].color = (Color) { GetRandomValue(0, 255),
+			GetRandomValue(0, 255), GetRandomValue(0, 255), 255 };
 		blobs[i].score = 0;
 
 		blobs[i].speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
-			BLOB_MAX_SPEED * 1e3f) / 1e3f;
+			(BLOB_MAX_SPEED - 3.f) * 1e3f) / 1e3f;
 	}
 	return blobs;
 }

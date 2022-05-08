@@ -45,6 +45,7 @@ void UiGraphAxis_setLabel(UiGraphAxis *axisPtr, const char *newLabel);
 
 UiGraphBar UiGraphBar_default(int valuesAmount);
 void UiGraphBar_setVal(UiGraphBar *graph, int index, float value);
+void UiGraphBar_newValAmnt(UiGraphBar *graph, int amount);
 void UiGraphBar_render(const UiGraphBar *graph);
 void UiGraphBar_del(UiGraphBar *graph);
 
@@ -109,6 +110,16 @@ void UiGraphBar_setVal(UiGraphBar *graph, int index, float value)
 }
 
 
+void UiGraphBar_newValAmnt(UiGraphBar *graph, int amount)
+{
+	if (graph->values)
+		free(graph->values);
+	
+	graph->values = NEW_ARR(float, amount);
+	graph->valLen = amount;
+}
+
+
 float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 {
 	int frequLen = floorf((range.y - range.x) / step);
@@ -136,10 +147,24 @@ float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 
 void _DrawBars(const UiGraphBar *graph)
 {
+#ifndef RELEASE
+	if (graph->values == NULL) {
+		printf("Can't draw bars when the values dont exist\n");
+		exit(-1);
+	}
+#endif
+
 	Vector2 tl = AnchGetRecTL(graph->pos, graph->size, graph->anch);
 	Vector2 br = AnchGetRecBR(graph->pos, graph->size, graph->anch);
 
 	float rng = graph->xAxis.valRng.y - graph->xAxis.valRng.x;
+
+#ifndef RELEASE
+	if (rng < graph->xAxis.markStep) {
+		printf("A step of %f can't cut a range of %f\n",
+			graph->xAxis.markStep, rng);
+	}
+#endif
 
 	int frequLen = (int) ceilf(rng / graph->xAxis.markStep);
 	float *frequences = _GetFrequ(graph->values, graph->valLen,
@@ -158,6 +183,17 @@ void _DrawBars(const UiGraphBar *graph)
 
 void _DrawText(const UiGraphBar *graph)
 {
+#ifndef RELEASE
+	if (!graph->xAxis.m_Label) {
+		printf("No label is set for the x Axis\n");
+		exit(-1);
+	}
+	if (!graph->yAxis.m_Label) {
+		printf("No label is set for the y Axis\n");
+		exit(-1);
+	}
+#endif
+
 	Vector2 tl = AnchGetRecTL(graph->pos, graph->size, graph->anch);
 	Vector2 br = AnchGetRecBR(graph->pos, graph->size, graph->anch);
 

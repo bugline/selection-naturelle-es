@@ -54,15 +54,22 @@ void MainInit(App *p_App)
 	data.fixUdpt.incrmnt = 0.f;
 	data.fixUdpt.limExec = 0.2f;
 
-	// Statistics
+	// SPEED GRAPHIC
 	data.speedGraph = UiGraphBar_default(data.nbBlob);
+
 	data.speedGraph.anch = ANCHOR_NE;
 	data.speedGraph.pos = (Vector2) { -5.f, 5.f };
+
+	data.speedGraph.colBar = (Color) { 100, 50, 200, 200 };
+	data.speedGraph.colBg = (Color) { 50, 50, 50, 200 };
+
 	data.speedGraph.xAxis.valRng = (Vector2) { BLOB_MIN_SPEED,
 		BLOB_MAX_SPEED };
 	data.speedGraph.xAxis.markStep = 0.5f;
+
 	for (int i = 0; i < data.nbBlob; i++)
 		UiGraphBar_setVal(&data.speedGraph, i, data.blob[i].speed);
+
 	UiGraphAxis_setLabel(&data.speedGraph.xAxis, "speed");
 	UiGraphAxis_setLabel(&data.speedGraph.yAxis, "blob amount");
 }
@@ -98,7 +105,7 @@ void ProduceNextGen()
 			tmpLen++;
 
 			// Enfants
-			for (int j = 0; j < data.blob[i].score - 1; j++) {
+			if (data.blob[i].score > 1) {
 				tmp[tmpLen] = BlobMutate(data.blob[i]);
 				tmp[tmpLen].pos = GetRandBlobPos();
 				tmp[tmpLen].score = 0;
@@ -112,6 +119,7 @@ void ProduceNextGen()
 	data.nbBlob = tmpLen;
 
 	// Update graph
+	UiGraphBar_newValAmnt(&data.speedGraph, data.nbBlob);
 	for (int i = 0; i < data.nbBlob; i++)
 		UiGraphBar_setVal(&data.speedGraph, i, data.blob[i].speed);
 }
