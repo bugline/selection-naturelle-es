@@ -35,6 +35,9 @@ typedef struct Data {
 
 	// Statistics
 	UiGraphBar speedGraph;
+	UiGraphLine popGraph;
+
+	int genCount;
 } Data;
 
 Data data;
@@ -43,9 +46,9 @@ void MainInit(App *p_App)
 {
 	data.cam = Cam_init(10);
 	TimeSpeedInit(&data.timeSpeed);
-	data.nbBlob = 10;
+	data.nbBlob = 2;
 	data.blob = BlobsInit(data.nbBlob);
-	data.nbFood = 20;
+	data.nbFood = 100;
 	data.food = FoodsInit(data.nbFood);
 
 	// Fixed update trucs
@@ -71,6 +74,26 @@ void MainInit(App *p_App)
 
 	UiGraphAxis_setLabel(&data.speedGraph.xAxis, "speed");
 	UiGraphAxis_setLabel(&data.speedGraph.yAxis, "blob amount");
+
+	// POPULATION GRAPHIC
+	UiGraphLine g = UiGraphLine_default();
+
+	g.anch = ANCHOR_SE;
+	g.pos = (Vector2) { -5.f, -5.f };
+
+	UiGraphAxis_setLabel(&g.xAxis, "time");
+	UiGraphAxis_setLabel(&g.yAxis, "population amount");
+
+	g.xAxis.valRng = (Vector2) { 0.f, 1.f };
+	g.yAxis.valRng = (Vector2) { 0.f, 105.f };
+
+	g.xAxis.markStep = 1.f;
+	g.yAxis.markStep = 1.f;
+	
+	data.genCount = 0;
+	UiGraphLine_addPoint(&g, (Vector2) { 0, data.nbBlob });
+
+	data.popGraph = g;
 }
 
 bool AreAllCarrotsGone()
@@ -121,6 +144,11 @@ void ProduceNextGen()
 	UiGraphBar_newValAmnt(&data.speedGraph, data.nbBlob);
 	for (int i = 0; i < data.nbBlob; i++)
 		UiGraphBar_setVal(&data.speedGraph, i, data.blob[i].speed);
+
+	data.genCount++;
+	UiGraphLine_addPoint(&data.popGraph, (Vector2) { data.genCount,
+		tmpLen });
+	data.popGraph.xAxis.valRng.y = data.genCount;
 }
 
 void FixedUpdate(const float pFixDt)
@@ -195,6 +223,7 @@ void MainRender(App *p_App)
 	Cam_stop();
 
 	UiGraphBar_render(&data.speedGraph);
+	UiGraphLine_render(&data.popGraph);
 
 	DrawFPS(10, 10);
 	TimeSpeedRender(&data.timeSpeed);
@@ -206,6 +235,9 @@ void MainRemove(App *p_App)
 		free(data.blob);
 	if (data.food)
 		FoodsDel(data.food);
+
+	UiGraphBar_del(&data.speedGraph);
+	UiGraphLine_del(&data.popGraph);
 }
 
 int main()
