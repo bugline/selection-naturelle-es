@@ -81,6 +81,9 @@ void MainInit(App *p_App)
 	g.anch = ANCHOR_SE;
 	g.pos = (Vector2) { -5.f, -5.f };
 
+	g.colLine = (Color) { 250, 150, 75, 200 };
+	g.colBg = (Color) { 50, 50, 50, 200 };
+
 	UiGraphAxis_setLabel(&g.xAxis, "time");
 	UiGraphAxis_setLabel(&g.yAxis, "population amount");
 
