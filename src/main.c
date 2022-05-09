@@ -1,3 +1,5 @@
+// #define RELEASE
+
 #include <stdio.h>
 #include <math.h>
 
@@ -46,7 +48,7 @@ void MainInit(App *p_App)
 {
 	data.cam = Cam_init(10);
 	TimeSpeedInit(&data.timeSpeed);
-	data.nbBlob = 2;
+	data.nbBlob = 4;
 	data.blob = BlobsInit(data.nbBlob);
 	data.nbFood = 100;
 	data.food = FoodsInit(data.nbFood);
