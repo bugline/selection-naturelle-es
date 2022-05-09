@@ -7,15 +7,8 @@
 #include "raylib.h"
 #include "../../macros.h"
 #include "../anchor.h"
+#include "graph.h"
 
-
-// STRUCTS
-
-typedef struct UiGraphAxis {
-	char *m_Label;  // use setLabel() to change it
-	Vector2 valRng;
-	float markStep;
-} UiGraphAxis;
 
 typedef struct UiGraphBar {
 	Vector2 pos;
@@ -39,9 +32,7 @@ typedef struct UiGraphBar {
 } UiGraphBar;
 
 
-// DEFINES
-
-void UiGraphAxis_setLabel(UiGraphAxis *axisPtr, const char *newLabel);
+// IMPLEMENTATION
 
 UiGraphBar UiGraphBar_default(int valuesAmount);
 void UiGraphBar_setVal(UiGraphBar *graph, int index, float value);
@@ -51,22 +42,6 @@ void UiGraphBar_del(UiGraphBar *graph);
 
 
 // IMPLEMENTATION
-
-void UiGraphAxis_setLabel(UiGraphAxis *axis, const char *label)
-{
-	size_t len = strlen(label);
-	char *tmp = NEW_ARR(char, len);
-
-	if (tmp == NULL)
-		return;
-	
-	if (axis->m_Label != NULL)
-		free(axis->m_Label);
-
-	strcpy(tmp, label);
-	axis->m_Label = tmp;
-}
-
 
 UiGraphBar UiGraphBar_default(int valLen)
 {
@@ -114,8 +89,12 @@ void UiGraphBar_newValAmnt(UiGraphBar *graph, int amount)
 {
 	if (graph->values)
 		free(graph->values);
+
+	if (amount > 0)
+		graph->values = NEW_ARR(float, amount);
+	else
+		graph->values = NULL;
 	
-	graph->values = NEW_ARR(float, amount);
 	graph->valLen = amount;
 }
 
@@ -147,12 +126,9 @@ float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 
 void _DrawBars(const UiGraphBar *graph)
 {
-#ifndef RELEASE
 	if (graph->values == NULL) {
-		printf("Can't draw bars when the values dont exist\n");
-		exit(-1);
+		return;
 	}
-#endif
 
 	Vector2 tl = AnchGetRecTL(graph->pos, graph->size, graph->anch);
 	Vector2 br = AnchGetRecBR(graph->pos, graph->size, graph->anch);
@@ -163,6 +139,7 @@ void _DrawBars(const UiGraphBar *graph)
 	if (rng < graph->xAxis.markStep) {
 		printf("A step of %f can't cut a range of %f\n",
 			graph->xAxis.markStep, rng);
+		exit(-1);
 	}
 #endif
 
@@ -235,6 +212,8 @@ void UiGraphBar_del(UiGraphBar *graph)
 		free(graph->xAxis.m_Label);
 	if (graph->yAxis.m_Label)
 		free(graph->yAxis.m_Label);
+	if (graph->values)
+		free(graph->values);
 }
 
 

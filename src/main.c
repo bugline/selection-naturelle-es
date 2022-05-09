@@ -2,7 +2,6 @@
 #include <math.h>
 
 #include "gamemaker/core.h"
-#include "gamemaker/ui/graph/graph_bar.h"
 #include "blob.h"
 #include "timeSpeed.h"
 
