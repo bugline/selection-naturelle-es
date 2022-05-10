@@ -14,11 +14,14 @@ struct LnListElemInfo {
 };
 
 typedef struct Iter {
+	LnList *list;
+	void *m_Elem;  // Use the Iter_getElem macro to access it
 	int index;
 } Iter;
 
 
 // PUBLIC METHODS
+LnList LnList_new(size_t typeSize);
 #define LnList_get(type_in_list, list_ptr, index);
 // TODO: char LnList_set(LnList *list, const int index, void *newElem);
 // TODO: char LnList_insert(LnList *list, const int index, void *newElem);
