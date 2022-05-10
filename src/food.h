@@ -67,7 +67,7 @@ bool FoodCircleColl(const Food *food, const Vector2 circleCenter,
 void FoodDraw(const Food *food);
 
 // Arrays
-Food *FoodsInit(int nbFood);
+Food *FoodsInit(int foodAmount, Texture2D *texture);
 void FoodsRender(Food *foods);
 void FoodsDel(Food *foods);
 
@@ -91,13 +91,11 @@ void FoodDraw(const Food *food)
 
 // Array functions
 
-Food *FoodsInit(int nbFood)
+Food *FoodsInit(int nbFood, Texture2D *tex)
 {
 	Food *foods = NewLinkedList(nbFood, sizeof(Food));
 	Food *first = foods;
 
-	Texture2D *tex = NEW(Texture2D);
-	*tex = LoadTexture("res/food.png");
 	float width = 0.4f;
 	float height = 0.4f;
 
@@ -136,7 +134,6 @@ void FoodsRender(Food *foods)
 
 void FoodsDel(Food *foods)
 {
-	free(foods->tex);
 	while (foods) {
 		Food *prec = foods;
 		foods = foods->next;

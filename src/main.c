@@ -23,10 +23,14 @@ struct FixUpdtData {
 
 typedef struct Data {
 	Cam cam;
+	
 	Blob *blob;
 	int nbBlob;
+
+	Texture2D foodTex;
 	Food *food;
 	int nbFood;
+	
 	TimeSpeed timeSpeed;
 
 	// Movements avec la souris
@@ -47,11 +51,14 @@ Data data;
 void MainInit(App *p_App)
 {
 	data.cam = Cam_init(10);
+
 	TimeSpeedInit(&data.timeSpeed);
 	data.nbBlob = 4;
 	data.blob = BlobsInit(data.nbBlob);
+
 	data.nbFood = 100;
-	data.food = FoodsInit(data.nbFood);
+	data.foodTex = LoadTexture("res/food.png");
+	data.food = FoodsInit(data.nbFood, &data.foodTex);
 
 	// Fixed update trucs
 	data.fixUdpt.fixDt = 1.f / 60.f;
@@ -171,7 +178,7 @@ void FixedUpdate(const float pFixDt)
 	if (AreAllCarrotsGone()) {
 		ProduceNextGen();
 		FoodsDel(data.food);
-		data.food = FoodsInit(data.nbFood);
+		data.food = FoodsInit(data.nbFood, &data.foodTex);
 	}
 }
 
@@ -243,6 +250,8 @@ void MainRemove(App *p_App)
 
 	UiGraphBar_del(&data.speedGraph);
 	UiGraphLine_del(&data.popGraph);
+
+	UnloadTexture(data.foodTex);
 }
 
 int main()
