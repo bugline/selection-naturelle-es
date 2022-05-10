@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -12,9 +13,12 @@ struct LnListElemInfo {
 	void *next;
 };
 
+typedef struct Iter {
+	int index;
+} Iter;
+
 
 // PUBLIC METHODS
-LnList LnList_new(size_t typeSize);
 #define LnList_get(type_in_list, list_ptr, index);
 // TODO: char LnList_set(LnList *list, const int index, void *newElem);
 // TODO: char LnList_insert(LnList *list, const int index, void *newElem);
@@ -23,6 +27,29 @@ char LnList_rem(LnList *list, void *ptr);
 #define LnList_pushFront(type_in_list, list_ptr, new_element_reference);
 #define LnList_pushBack(type_in_list, list_ptr, new_element_reference);
 void LnList_clear(LnList *list);
+
+Iter Iterate(LnList *list);
+void Iter_next(Iter *iterator);
+#define Iter_getElem(element_type,iterator_ptr);
+
+
+/* To go threw a list of type T
+ *
+ * ```
+ * Iter iter = Iterate(&list);
+ * T object = Iter_getElem(T, &iter);
+ * 
+ * while (object != NULL) {
+ * 	
+ * 	// Do stuff with "object" and "iter.index"
+ * 
+ * 	Iter_next(&iter);
+ * 	object = Iter_getElem(T, &iter);
+ * }
+ * 
+ * ```
+ */
+
 
 
 // PRIVATE FUNCTIONS use the coresponding macros to call them
@@ -36,6 +63,8 @@ char _LnList_pushBack(LnList *list, const void *newElem);
 #undef LnList_get
 #undef LnList_pushFront
 #undef LnList_pushBack
+
+#undef Iter_getElem
 
 
 #ifdef RELEASE
@@ -63,6 +92,10 @@ char _LnList_pushBack(LnList *list, const void *newElem);
 		( _LnList_pushBack( _CHECK_PTR(LnList, list_ptr),    \
 			_CHECK_PTR(type_in_list, new_elem_ref) ) )
 #endif
+
+#define Iter_getElem(element_type,iterator_ptr) ((element_type *)  \
+	(iterator_ptr))
+
 
 // STATIC FUNCTIONS
 
@@ -258,4 +291,22 @@ void LnList_clear(LnList *list)
 		free(_LnList_GetInfo(next));
 		next = tmp;
 	}
+}
+
+
+// ITER METHODS
+
+Iter Iterate(LnList *list)
+{
+	return (Iter) {
+		list,
+		list->first,
+		0
+	};
+}
+
+void Iter_next(Iter *iter)
+{
+	iter->m_Elem = _LnList_GetInfo(iter->m_Elem)->next;
+	iter->index += 1;
 }

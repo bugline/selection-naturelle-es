@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "run c",
+            "type": "cppdbg",
+            "request": "launch",
+            "args": [],
+
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+
+            "preLaunchTask": "compile_debug",
+            "program": "${workspaceFolder}/bin/debug",
+            "internalConsoleOptions": "openOnSessionStart",
+            "MIMode": "gdb",
+            "miDebuggerPath": "",
+            "console": "integratedTerminal",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": false
+                }
+            ]
+        }
+    ]
+}

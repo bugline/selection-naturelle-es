@@ -122,6 +122,9 @@ void App_loop(App *p_App)
 	InitWindow(p_App->param.window.dim.x, p_App->param.window.dim.y,
 		p_App->param.window.name);
 
+	if (p_App->Init)
+		App_callInit(p_App);
+
 	Image icon = LoadImage(p_App->param.window.iconPath);
 	SetWindowIcon(icon);
 	

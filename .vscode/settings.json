@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "raylib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "memory": "cpp",
+        "variant": "cpp"
     }
 }

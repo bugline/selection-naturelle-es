@@ -16,5 +16,8 @@
 #include "ui/button/butt.h"
 #include "ui/button/tex.h"
 #include "ui/button/text.h"
+#include "ui/graph/graph.h"
+#include "ui/graph/bar.h"
+#include "ui/graph/line.h"
 
 #endif

@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [{
+        "label": "compile_debug",
+        "command": "gcc",
+        "args": [
+            "-g",
+            "${workspaceFolder}/src/main.c",
+            "-o",
+            "${workspaceFolder}/bin/debug",
+            "-Wall",
+            "-I",
+            "${workspaceFolder}/inc/",
+            "-L",
+            "${workspaceFolder}/lib/",
+            "-lraylib",
+            "-lGL",
+            "-lm",
+            "-lpthread",
+            "-ldl",
+            "-lrt",
+            "-lX11",
+        ],
+        "type": "shell",
+    }]
+}

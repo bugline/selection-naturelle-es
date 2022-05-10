@@ -8,11 +8,18 @@
 #include "food.h"
 
 
+#define BLOB_MAX_SPEED 5.f
+#define BLOB_MIN_SPEED .5f
+
+
 typedef struct Blob {
 	float size;
 	Vector2 pos;
 	Color color;
-	char score;
+	int score;
+
+	// Attributes
+	float speed;
 } Blob;
 
 
@@ -85,16 +92,41 @@ void BlobTryEat(Blob *pBlob, Food *pFoods)
 
 // Arrays
 
+Vector2 GetRandBlobPos()
+{
+	return (Vector2) { GetRandomValue(-50, 50), GetRandomValue(-50, 50) };
+}
+
+void fclamp(float *val, float min, float max)
+{
+	if (*val > max)
+		*val = max;
+	if (*val < min)
+		*val = min;
+}
+
+Blob BlobMutate(Blob blob)
+{
+	Blob newBlob = blob;
+
+	newBlob.speed += (float) GetRandomValue(-100, 100) / 400.f;
+	fclamp(&newBlob.speed, BLOB_MIN_SPEED, BLOB_MAX_SPEED);
+
+	return newBlob;
+}
+
 Blob *BlobsInit(int nbBlob)
 {
 	Blob *blobs = NEW_ARR(Blob, nbBlob);
 	for (int i = 0; i < nbBlob; i++) {
 		blobs[i].size = 1;
-		float posX = GetRandomValue(-50, 50);
-		float posY = GetRandomValue(-50, 50);
-		blobs[i].pos = (Vector2) { posX, posY };
-		blobs[i].color = (Color) { 255, 50, 50, 255 };
+		blobs[i].pos = GetRandBlobPos();
+		blobs[i].color = (Color) { GetRandomValue(0, 255),
+			GetRandomValue(0, 255), GetRandomValue(0, 255), 255 };
 		blobs[i].score = 0;
+
+		blobs[i].speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
+			(BLOB_MAX_SPEED - 3.f) * 1e3f) / 1e3f;
 	}
 	return blobs;
 }
