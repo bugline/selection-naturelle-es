@@ -1,3 +1,6 @@
+#ifndef TIMESPEED
+#define TIMESPEED
+
 #include <string.h>
 #include "raylib.h"
 
@@ -66,3 +69,6 @@ void TimeSpeedRender(TimeSpeed *speed)
     }
     
 }
+
+// TIMESPEED
+#endif

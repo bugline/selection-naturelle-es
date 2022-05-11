@@ -37,24 +37,6 @@ void *Push(void *first, size_t typeSize)
 	return new;
 }
 
-/* 
-*  |del| -> |next| -> |tmp|
-*
-*  			|del| -> |next|
-*
-*			
-*/
-/*
-void *Pop(void *del, size_t typeSize)
-{
-	void **next = del;
-	void ***temp = del;
-	ListCopy(del, *next);
-	free(next);
-	**del = temp;
-}
-*/
-
 void ListCopy(void *dest, void *src, const size_t typeSize)
 {
 	for (size_t i = 0; i < typeSize; i++) {
@@ -80,7 +62,16 @@ bool FoodCircleColl(const Food *pFood, const Vector2 pCircPos, const float pRad)
 		pFood->pos));
 	if (sqrdDist > pRad * pRad)
 		return false;
+	return true;
+}
 
+bool AreAllFoodsGone(Food *food)
+{
+	while (food) {
+		if (!food->eaten)
+			return false;
+		food = food->next;
+	}
 	return true;
 }
 

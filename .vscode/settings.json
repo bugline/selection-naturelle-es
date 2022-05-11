@@ -3,6 +3,8 @@
         "raylib.h": "c",
         "stdio.h": "c",
         "memory": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "gen.h": "c",
+        "mouse.h": "c"
     }
 }
