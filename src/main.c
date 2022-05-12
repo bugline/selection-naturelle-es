@@ -23,7 +23,7 @@ void MainInit(App *p_App)
 
 	data.nbFood = 100;
 	data.foodTex = LoadTexture("res/food.png");
-	data.food = FoodsInit(data.nbFood, &data.foodTex);
+	data.foods = FoodsInit(data.nbFood, &data.foodTex);
 
 	// Fixed update trucs
 	data.fixUdpt.fixDt = 1.f / 60.f;
@@ -40,22 +40,23 @@ void FixedUpdate(const float pFixDt, Data *pData)
 
 	while (blob != NULL) {
 		// Mouvement des blobs
-		Vector2 dir = BlobGetDir(blob->pos, pData->food);
+		Vector2 dir = BlobGetDir(blob->pos, &pData->foods);
 		blob->pos = Vector2Add(blob->pos, Vector2Scale(dir,
 			pFixDt * blob->speed));
 
 		// Detection de colision
-		BlobTryEat(blob, pData->food);
+		BlobTryEat(blob, &pData->foods);
 
 		Iter_next(&iter);
 		blob = Iter_getElem(Blob, &iter);
 	}
 
-	if (AreAllFoodsGone(pData->food)) {
+	// Quand toutes les carotes sont mangées
+	if (pData->foods.first == NULL) {
 		ProduceNextGen(pData);
 		GraphsUpdate(pData);
-		FoodsDel(pData->food);
-		pData->food = FoodsInit(pData->nbFood, &pData->foodTex);
+		FoodsDel(&pData->foods);
+		pData->foods = FoodsInit(pData->nbFood, &pData->foodTex);
 	}
 }
 
@@ -82,7 +83,7 @@ void MainRender(App *p_App)
 {
 	Cam_start(&data.cam, p_App);
 
-	FoodsRender(data.food);
+	FoodsRender(&data.foods);
 	BlobsRender(&data.blobs);
 	
 	Cam_stop();
@@ -97,9 +98,7 @@ void MainRender(App *p_App)
 void MainRemove(App *p_App)
 {
 	BlobsDel(&data.blobs);
-
-	if (data.food)
-		FoodsDel(data.food);
+	FoodsDel(&data.foods);
 
 	UiGraphBar_del(&data.speedGraph);
 	UiGraphLine_del(&data.popGraph);
