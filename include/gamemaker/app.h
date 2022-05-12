@@ -136,7 +136,8 @@ void App_loop(App *p_App)
 	while (!WindowShouldClose()) {
 		App_callUpdate(p_App, p_App->dt);
 
-		CorrectWin(p_App->param.window.ratio);
+		if (p_App->param.window.autoResize)
+			CorrectWin(p_App->param.window.ratio);
 		BeginDrawing();
 			ClearBackground(p_App->param.render.bgColor);
 			App_callRender(p_App);

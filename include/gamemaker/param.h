@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include <stdbool.h>
 
 #ifndef GM_PRAM_H
 #define GM_PRAM_H
@@ -10,6 +11,7 @@ typedef struct App_param_window {
 	const char *iconPath;
 	Vector2 dim, minDim;
 	float ratio;
+	bool autoResize;
 } App_param_window;
 
 typedef struct App_param_update {
@@ -63,6 +65,9 @@ static App_param_window Param_default_window(void)
 	} else {
 		ERR("Ratio different de dim et de min dim");
 	}
+
+	window.autoResize = true;
+
 	return window;
 }
 

@@ -111,6 +111,7 @@ int main()
 {
 	App_param param = App_param_default();
 	param.update.fps = 0;
+	param.window.autoResize = false;
 
 	App *app = App_new(param);
 
