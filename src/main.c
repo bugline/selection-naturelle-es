@@ -19,7 +19,7 @@ void MainInit(App *p_App)
 	TimeSpeedInit(&data.timeSpeed);
 
 	data.nbBlob = 4;
-	data.blob = BlobsInit(data.nbBlob);
+	data.blobs = BlobsInit(data.nbBlob);
 
 	data.nbFood = 100;
 	data.foodTex = LoadTexture("res/food.png");
@@ -35,14 +35,20 @@ void MainInit(App *p_App)
 
 void FixedUpdate(const float pFixDt, Data *pData)
 {
-	for (int i = 0; i < pData->nbBlob; i++) {
+	Iter iter = Iterate(&pData->blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
 		// Mouvement des blobs
-		Vector2 dir = BlobGetDir(pData->blob[i].pos, pData->food);
-		pData->blob[i].pos = Vector2Add(pData->blob[i].pos,
-			Vector2Scale(dir, pFixDt * pData->blob[i].speed));
+		Vector2 dir = BlobGetDir(blob->pos, pData->food);
+		blob->pos = Vector2Add(blob->pos, Vector2Scale(dir,
+			pFixDt * blob->speed));
 
 		// Detection de colision
-		BlobTryEat(&pData->blob[i], pData->food);
+		BlobTryEat(blob, pData->food);
+
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
 	}
 
 	if (AreAllFoodsGone(pData->food)) {
@@ -77,7 +83,7 @@ void MainRender(App *p_App)
 	Cam_start(&data.cam, p_App);
 
 	FoodsRender(data.food);
-	BlobsRender(data.blob, data.nbBlob);
+	BlobsRender(&data.blobs);
 	
 	Cam_stop();
 
@@ -90,8 +96,8 @@ void MainRender(App *p_App)
 
 void MainRemove(App *p_App)
 {
-	if (data.blob)
-		free(data.blob);
+	BlobsDel(&data.blobs);
+
 	if (data.food)
 		FoodsDel(data.food);
 

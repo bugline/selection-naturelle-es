@@ -1,3 +1,6 @@
+#ifndef __LNLIST_H
+#define __LNLIST_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,10 +24,8 @@ typedef struct Iter {
 
 
 // PUBLIC METHODS
-LnList LnList_new(size_t typeSize);
+#define LnList_new(type_in_list);
 #define LnList_get(type_in_list, list_ptr, index);
-// TODO: char LnList_set(LnList *list, const int index, void *newElem);
-// TODO: char LnList_insert(LnList *list, const int index, void *newElem);
 char LnList_pop(LnList *list, const int index);
 char LnList_rem(LnList *list, void *ptr);
 #define LnList_pushFront(type_in_list, list_ptr, new_element_reference);
@@ -40,7 +41,7 @@ void Iter_next(Iter *iterator);
  *
  * ```
  * Iter iter = Iterate(&list);
- * T object = Iter_getElem(T, &iter);
+ * T *object = Iter_getElem(T, &iter);
  * 
  * while (object != NULL) {
  * 	
@@ -56,6 +57,8 @@ void Iter_next(Iter *iterator);
 
 
 // PRIVATE FUNCTIONS use the coresponding macros to call them
+
+LnList _LnList_new(size_t typeSize);
 void *_LnList_get(LnList *list, const int index);
 void *_SafeLnList_get(size_t typeSize, LnList *list, const int index);
 char _LnList_pushFront(LnList *list, const void *newElem);
@@ -63,11 +66,17 @@ char _LnList_pushBack(LnList *list, const void *newElem);
 
 // MACROS
 
+// undefine those use for decoration
+
+#undef LnList_new
 #undef LnList_get
 #undef LnList_pushFront
 #undef LnList_pushBack
 
 #undef Iter_getElem
+
+// define with the real body
+#define LnList_new(type_in_list) (_LnList_new(sizeof(type_in_list)))
 
 
 #ifdef RELEASE
@@ -97,7 +106,7 @@ char _LnList_pushBack(LnList *list, const void *newElem);
 #endif
 
 #define Iter_getElem(element_type,iterator_ptr) ((element_type *)  \
-	(iterator_ptr))
+	(iterator_ptr)->m_Elem)
 
 
 // STATIC FUNCTIONS
@@ -137,7 +146,8 @@ static void _LnList_copy(void *dest, const void *src, const size_t bytes)
 
 
 // LIST METHODS
-LnList LnList_new(size_t typeSize)
+
+LnList _LnList_new(size_t typeSize)
 {
 	return (LnList) {
 		typeSize,  // type size
@@ -313,3 +323,5 @@ void Iter_next(Iter *iter)
 	iter->m_Elem = _LnList_GetInfo(iter->m_Elem)->next;
 	iter->index += 1;
 }
+
+#endif  // __LNLIST_H

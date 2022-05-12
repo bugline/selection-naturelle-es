@@ -7,6 +7,7 @@
 #include "timeSpeed.h"
 #include "blob.h"
 #include "gen.h"
+#include "linked_list.h"
 
 
 struct FixUpdtData {
@@ -17,8 +18,8 @@ struct FixUpdtData {
 
 typedef struct Data {
 	Cam cam;
-	
-	Blob *blob;
+
+	LnList blobs;
 	int nbBlob;
 
 	Texture2D foodTex;

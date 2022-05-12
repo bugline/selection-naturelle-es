@@ -9,33 +9,52 @@
 void ProduceNextGen(Data *pData)
 {
 	int newPopSize = 0;
-	for (int i = 0; i < pData->nbBlob; i++) {
-		newPopSize += pData->blob[i].score;
-	}
 
-	Blob *tmp = NEW_ARR(Blob, newPopSize);
-	int tmpLen = 0;
+	Iter iter = Iterate(&pData->blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
 
-	for (int i = 0; i < pData->nbBlob; i++) {
-		if (pData->blob[i].score > 0) {
-			tmp[tmpLen] = pData->blob[i];
-			tmp[tmpLen].pos = GetRandBlobPos();
-			tmp[tmpLen].score = 0;
-			tmpLen++;
-
-			// Enfants
-			if (pData->blob[i].score > 1) {
-				tmp[tmpLen] = BlobMutate(pData->blob[i]);
-				tmp[tmpLen].pos = GetRandBlobPos();
-				tmp[tmpLen].score = 0;
-				tmpLen++;
-			}
+	while (blob != NULL) {
+		if (blob->score > 1) {
+			newPopSize += 2;
+		} else if (blob->score > 0) {
+			newPopSize++;
 		}
+
+		if (blob->score > 0) {
+			blob->pos = GetRandBlobPos();
+
+			if (blob->score > 1) {
+				Blob newBlob = BlobMutate(*blob);
+				newBlob.pos = GetRandBlobPos();
+				newBlob.score = 0;
+				LnList_pushFront(Blob, &pData->blobs, &newBlob);
+			}
+
+			blob->score = 0;
+		} else {
+			blob->score = -1;
+		}
+
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
+	}
+	
+	// Supprime les blobs qui son nuls
+	iter = Iterate(&pData->blobs);
+	blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
+		Blob *prevBlob = blob;
+		Iter_next(&iter);
+
+		if (blob->score == -1) {
+			LnList_rem(&pData->blobs, prevBlob);
+		}
+
+		blob = Iter_getElem(Blob, &iter);
 	}
 
-	free(pData->blob);
-	pData->blob = tmp;
-	pData->nbBlob = tmpLen;
+	pData->nbBlob = newPopSize;
 }
 
 void GraphsInit(Data *pData)
@@ -53,8 +72,17 @@ void GraphsInit(Data *pData)
 		BLOB_MAX_SPEED };
 	pData->speedGraph.xAxis.markStep = 0.5f;
 
-	for (int i = 0; i < pData->nbBlob; i++)
-		UiGraphBar_setVal(&pData->speedGraph, i, pData->blob[i].speed);
+
+	// Set speed values for the graph
+	Iter iter = Iterate(&pData->blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
+		UiGraphBar_setVal(&pData->speedGraph, iter.index, blob->speed);
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
+	}
+		
 
 	UiGraphAxis_setLabel(&pData->speedGraph.xAxis, "speed");
 	UiGraphAxis_setLabel(&pData->speedGraph.yAxis, "blob amount");
@@ -87,8 +115,16 @@ void GraphsUpdate(Data *pData)
 {
 	// Update graph
 	UiGraphBar_newValAmnt(&pData->speedGraph, pData->nbBlob);
-	for (int i = 0; i < pData->nbBlob; i++)
-		UiGraphBar_setVal(&pData->speedGraph, i, pData->blob[i].speed);
+
+	// Set speed values for the graph
+	Iter iter = Iterate(&pData->blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
+		UiGraphBar_setVal(&pData->speedGraph, iter.index, blob->speed);
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
+	}
 
 	pData->genCount++;
 	UiGraphLine_addPoint(&pData->popGraph, (Vector2) { pData->genCount,

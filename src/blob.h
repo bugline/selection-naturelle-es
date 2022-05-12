@@ -4,6 +4,7 @@
 #include "gamemaker/core.h"
 #include "raylib.h"
 #include "raymath.h"
+#include "linked_list.h"
 
 #include "food.h"
 
@@ -23,7 +24,7 @@ typedef struct Blob {
 } Blob;
 
 
-// Blobs
+// Blob
 void BlobRender(const Blob *blob);
 
 // Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
@@ -32,9 +33,9 @@ void BlobTryEat(Blob *blob, Food *foods);
 
 
 // Array of blobs
-Blob *BlobsInit(int nbBlob);
-void BlobsRender(const Blob *blobs, int nbBlob);
-void BlobsDel(Blob *blobs);
+LnList BlobsInit(int nbBlob);
+void BlobsRender(LnList *blobs);
+void BlobsDel(LnList *blobs);
 
 
 // IMPLEMENTATION
@@ -111,32 +112,46 @@ Blob BlobMutate(Blob blob)
 	return newBlob;
 }
 
-Blob *BlobsInit(int nbBlob)
+LnList BlobsInit(int nbBlob)
 {
-	Blob *blobs = NEW_ARR(Blob, nbBlob);
-	for (int i = 0; i < nbBlob; i++) {
-		blobs[i].size = 1;
-		blobs[i].pos = GetRandBlobPos();
-		blobs[i].color = (Color) { GetRandomValue(0, 255),
-			GetRandomValue(0, 255), GetRandomValue(0, 255), 255 };
-		blobs[i].score = 0;
+	LnList blobs = LnList_new(Blob);
 
-		blobs[i].speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
+	for (int i = 0; i < nbBlob; i++) {
+		Blob blob;
+
+		blob.pos = GetRandBlobPos();
+		blob.size = 1;
+
+		blob.color = (Color) { GetRandomValue(0, 255),
+			GetRandomValue(0, 255), GetRandomValue(0, 255), 255 };
+
+		blob.score = 0;
+
+		blob.speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
 			(BLOB_MAX_SPEED - 3.f) * 1e3f) / 1e3f;
+		
+		LnList_pushBack(Blob, &blobs, &blob);
 	}
+
 	return blobs;
 }
 
-void BlobsRender(const Blob *blobs, int nbBlob)
+void BlobsRender(LnList *blobs)
 {
-	for (int i = 0; i < nbBlob; i++) {
-		BlobRender(&blobs[i]);
+	Iter iter = Iterate(blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
+		BlobRender(blob);
+
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
 	}
 }
 
-void BlobsDel(Blob *blobs)
+void BlobsDel(LnList *blobs)
 {
-	free(blobs);
+	LnList_clear(blobs);
 }
 
 
