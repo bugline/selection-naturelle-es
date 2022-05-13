@@ -61,11 +61,11 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
     }
     if (GetTime()  < tSpeed->currTimeAnim + tSpeed->timeAnim) {
         char *num = NEW_ARR(char, 8);
-	bzero(num, 8);
+	memset(num, '\0', 8);
         gcvt(tSpeed->value, 8, num);
 
         char *text = NEW_ARR(char, 9);
-	bzero(text, 9);
+	memset(text, '\0', 9);
 	text[0] = 'x';
         strcat(text, num);
 
