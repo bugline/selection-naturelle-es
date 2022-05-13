@@ -52,7 +52,7 @@ UiGraphBar UiGraphBar_default(int valLen)
 	graph.anch = ANCHOR_C;
 
 	graph.values = NEW_ARR(float, valLen);
-	bzero(graph.values, sizeof(float) * valLen);
+	memset(graph.values, 0, sizeof(float) * valLen);
 	graph.valLen = valLen;
 
 	graph.xAxis.m_Label = NULL;
@@ -107,7 +107,7 @@ float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 	if (frequ == NULL)
 		return NULL;
 
-	bzero(frequ, sizeof(float) * frequLen);
+	memset(frequ, 0, sizeof(float) * frequLen);
 	float probability = 1.f / valLen;
 
 	for (int i = 0; i < valLen; i++) {
