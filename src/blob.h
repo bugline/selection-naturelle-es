@@ -28,8 +28,8 @@ typedef struct Blob {
 void BlobRender(const Blob *blob);
 
 // Fonction pour simuler le choix du blob. Donne un vecteur de longueure 1.
-Vector2 BlobGetDir(Vector2 pos, const Food *foods);
-void BlobTryEat(Blob *blob, Food *foods);
+Vector2 BlobGetDir(Vector2 pos, LnList *foods);
+void BlobTryEat(Blob *blob, LnList *foods);
 
 
 // Array of blobs
@@ -45,45 +45,51 @@ void BlobRender(const Blob *blob)
 	DrawCircleV(blob->pos, blob->size, blob->color);
 }
 
-Vector2 BlobGetDir(Vector2 pPos, const Food *pFoods)
+Vector2 BlobGetDir(Vector2 pPos, LnList *pFoods)
 {
 	Vector2 closer = { 0.f, 0.f };
 	float closerDist = 10e+10f;  // Considéré ici comme plus l'infini
-	
-	while (pFoods) {
-		if (!pFoods->eaten) {
-			Vector2 foodPos = (Vector2) { pFoods->pos.x, pFoods->pos.y };
-			Vector2 toVec = Vector2Subtract(foodPos, pPos);
-			float dist = Vector2LengthSqr(toVec);
 
-			if (dist < closerDist) {
-				closer = toVec;
-				closerDist = dist;
-			}
+	Iter iter = Iterate(pFoods);
+	Food *food = Iter_getElem(Food, &iter);
+
+	while (food != NULL) {
+		Vector2 toVec = Vector2Subtract(food->pos, pPos);
+		float dist = Vector2LengthSqr(toVec);
+
+		if (dist < closerDist) {
+			closer = toVec;
+			closerDist = dist;
 		}
-		pFoods = pFoods->next;
+
+		Iter_next(&iter);
+		food = Iter_getElem(Food, &iter);
 	}
 
 	if (closerDist == 0.f)
 		return (Vector2) { 0.f, 0.f };
-	
-	
 
 	return Vector2Scale(closer, 1.f / sqrt(closerDist));
 }
 
-void BlobTryEat(Blob *pBlob, Food *pFoods)
+void BlobTryEat(Blob *pBlob, LnList *pFoods)
 {
-	while (pFoods) {
-		if (!pFoods->eaten) {
-			bool eating = FoodCircleColl(pFoods, pBlob->pos,
-				pBlob->size);
-			if (eating) {
-				pBlob->score += 1;
-				pFoods->eaten = true;
-			}
+	Iter iter = Iterate(pFoods);
+	Food *food = Iter_getElem(Food, &iter);
+
+	while (food != NULL) {
+		bool eating = FoodCircleColl(food, pBlob->pos, pBlob->size);
+
+		Food *prevFood = food;
+		Iter_next(&iter);
+		food = Iter_getElem(Food, &iter);
+
+		if (eating) {
+			pBlob->score++;
+			printf("%p %p %p %p\n", pFoods->first, pFoods->last,
+				prevFood, food);
+			LnList_rem(pFoods, prevFood);
 		}
-		pFoods = pFoods->next;
 	}
 }
 
