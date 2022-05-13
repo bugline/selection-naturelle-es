@@ -31,11 +31,16 @@ void MouseUpdate(Data *pData)
 		Cam_setPos(&pData->cam, newPos);
 	}
 
+	// Ajouter une nouvelle carrote la où est la sourie si click droit
 	if (IsMouseButtonPressed(1)) {
-		Food param = *pData->food;
-		param.pos = GetScreenToWorld2D(GetMousePosition(), pData->cam.camera);
-		param.eaten = false;
-		pData->food = NewFood(pData->food, param);
+		Food newFood;
+
+		newFood.pos = GetScreenToWorld2D(GetMousePosition(),
+			pData->cam.camera);
+		newFood.size = FOOD_DEF_SIZE;
+		newFood.tex = &pData->foodTex;
+
+		LnList_pushBack(Food, &pData->foods, &newFood);
 	}
 }
 

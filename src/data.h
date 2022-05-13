@@ -26,7 +26,7 @@ typedef struct Data {
 	int nbBlob;
 
 	Texture2D foodTex;
-	Food *food;
+	LnList foods;
 	int nbFood;
 	
 	TimeSpeed timeSpeed;

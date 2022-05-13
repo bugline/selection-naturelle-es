@@ -215,9 +215,9 @@ char LnList_rem(LnList *list, void *ptr)
 		_LnList_GetInfo(info->next)->prev = info->prev;
 	
 	if (list->first == ptr)
-		list->first = NULL;
+		list->first = info->next;
 	if (list->last == ptr)
-		list->last = NULL;
+		list->last = info->prev;
 
 	free(info);
 	
@@ -243,6 +243,10 @@ char _LnList_pushFront(LnList *list, const void *newElem)
 
 	// Set it's next ptr to null because it's at the end of the list
 	info->prev = NULL;
+
+	if (list->last == NULL) {
+		info->next = NULL;
+	}
 
 	// If the list wasn't empty
 	if (list->first != NULL) {
@@ -279,6 +283,10 @@ char _LnList_pushBack(LnList *list, const void *newElem)
 
 	// Set it's next ptr to null because it's at the end of the list
 	info->next = NULL;
+
+	if (list->first == NULL) {
+		info->prev = NULL;
+	}
 
 	// If the list wasn't empty
 	if (list->last != NULL) {
