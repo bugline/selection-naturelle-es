@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include "raylib.h"
+#include "gamemaker/core.h"
 
 #define MIN_TIME_SPEED 0.25
 #define MAX_TIME_SPEED 1e5
@@ -11,63 +12,71 @@
 
 typedef struct TimeSpeed {
     float value;
-    Font font;
     int change;
     float timeAnim;
     float currTimeAnim;
+    UiText uiText;
 } TimeSpeed;
 
-void TimeSpeedInit(TimeSpeed *speed)
+void TimeSpeedInit(TimeSpeed *tSpeed)
 {
-    speed->value = 1.0f;
-    speed->font = LoadFont("res/Panipuri.ttf");
-    speed->change = 0;
-    speed->timeAnim = 0.5;
-    speed->currTimeAnim = 0;
+    tSpeed->value = 1.0f;
+    tSpeed->change = 0;
+    tSpeed->timeAnim = 0.5;
+    tSpeed->currTimeAnim = 0;
+
+    Font font = LoadFont("res/Panipuri.ttf");
+    UiText_init(&tSpeed->uiText, "", font, 60, (Vector2) { 0, 0 }, ANCHOR_C, WHITE);
 }
 
-void TimeSpeedUpdate(TimeSpeed *speed, float *dt)
+void TimeSpeedUpdate(TimeSpeed *tSpeed, float *dt)
 {
     if (IsKeyPressed(KEY_SPACE)) {
-        speed->value = (speed->value == 0) ? 1 : 0;
-        speed->change = 1;
+        tSpeed->value = (tSpeed->value == 0) ? 1 : 0;
+        tSpeed->change = 1;
     }
     else if (IsKeyPressed(KEY_LEFT)) {
-        if (speed->value >= MIN_TIME_SPEED)
-            speed->value /= 2.0f;
+        if (tSpeed->value >= MIN_TIME_SPEED)
+            tSpeed->value /= 2.0f;
         else
-            speed->value = 0;
-        speed->change = 1;
+            tSpeed->value = 0;
+        tSpeed->change = 1;
     }
     else if (IsKeyPressed(KEY_RIGHT)) {
-        if (speed->value >= MIN_TIME_SPEED) {
-            if (speed->value < MAX_TIME_SPEED)
-                speed->value *= 2.0f;
+        if (tSpeed->value >= MIN_TIME_SPEED) {
+            if (tSpeed->value < MAX_TIME_SPEED)
+                tSpeed->value *= 2.0f;
         }
         else
-            speed->value = MIN_TIME_SPEED;
-        speed->change = 1;
+            tSpeed->value = MIN_TIME_SPEED;
+        tSpeed->change = 1;
     }
 }
 
-void TimeSpeedRender(TimeSpeed *speed)
+void TimeSpeedRender(TimeSpeed *tSpeed)
 {
-    if (speed->change) {
-        speed->currTimeAnim = GetTime();
-        speed->change = 0;
+    if (tSpeed->change) {
+        tSpeed->currTimeAnim = GetTime();
+        tSpeed->change = 0;
     }
-    if (GetTime()  < speed->currTimeAnim + speed->timeAnim) {
+    if (GetTime()  < tSpeed->currTimeAnim + tSpeed->timeAnim) {
         char num[8];
-        gcvt(speed->value, 8, num);
+        gcvt(tSpeed->value, 8, num);
         char text[9] = "x";
         strcat(text, num);
-        DrawTextEx(speed->font, text, (Vector2) { 200, 200 }, 50, 10, (Color) { 255, 255, 255, 255 });
+        tSpeed->uiText.mText = text;
+
+        UiText_render(&tSpeed->uiText);
     }
     else {
-        speed->currTimeAnim = 0;
-        speed->change = 0;
+        tSpeed->currTimeAnim = 0;
+        tSpeed->change = 0;
     }
-    
+}
+
+void TimeSpeedDel(TimeSpeed *tSpeed)
+{
+    UiText_del(&tSpeed->uiText);
 }
 
 // TIMESPEED

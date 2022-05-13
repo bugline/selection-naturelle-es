@@ -96,6 +96,8 @@ void MainRender(App *p_App)
 
 void MainRemove(App *p_App)
 {
+	TimeSpeedDel(&data.timeSpeed);
+
 	BlobsDel(&data.blobs);
 
 	if (data.food)
