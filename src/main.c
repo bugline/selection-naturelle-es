@@ -9,12 +9,15 @@
 #include "gen.h"
 #include "data.h"
 #include "mouse.h"
+#include "startParam.h"
 
 Data data;
 
 void MainInit(App *p_App)
 {
 	data.cam = Cam_init(10);
+
+	StartParamInit(&data.startParam);
 
 	TimeSpeedInit(&data.timeSpeed);
 
@@ -61,6 +64,8 @@ void FixedUpdate(const float pFixDt, Data *pData)
 
 void MainUpdate(App *p_App, float p_Dt)
 {
+	StartParamUpdate(&data.startParam);
+
 	TimeSpeedUpdate(&data.timeSpeed, &p_Dt);
 
 	MouseUpdate(&data);
@@ -88,14 +93,18 @@ void MainRender(App *p_App)
 	Cam_stop();
 
 	UiGraphBar_render(&data.speedGraph);
-	UiGraphLine_render(&data.popGraph);
+	//UiGraphLine_render(&data.popGraph);
 
 	DrawFPS(10, 10);
 	TimeSpeedRender(&data.timeSpeed);
+
+	StartParamRender(&data.startParam);
 }
 
 void MainRemove(App *p_App)
 {
+	StartParamDel(&data.startParam);
+
 	TimeSpeedDel(&data.timeSpeed);
 
 	BlobsDel(&data.blobs);
