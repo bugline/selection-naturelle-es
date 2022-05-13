@@ -3,10 +3,15 @@
 
 #include "gamemaker/core.h"
 
+typedef struct StartParamButt {
+    UiButtTex play;
+    UiButtTex pause;
+    UiButtTex nbBlobLeft;
+    UiButtTex nbBlobRight;
+} StartParamButt;
+
 typedef struct StartParam {
-    UiButtTex play_butt;
-    UiButtTex nbBlobLeft_butt;
-    UiButtTex nbBlobRight_butt;
+    StartParamButt butt;
 } StartParam;
 
 void StartParamInit(StartParam *sp);
@@ -17,30 +22,37 @@ void StartParamDel(StartParam *sp);
 
 void StartParamInit(StartParam *sp)
 {
-    UiButtTex_init(&sp->play_butt, (Vector2) { 0, -50 }, (Vector2) { 128, 128 }
-        , ANCHOR_S, "res/play-button.png", NULL);
+    UiButtTex_init(&sp->butt.play, (Vector2) { 0, -32 }, (Vector2) { 64, 64 }
+        , ANCHOR_SW, "res/ui/play.png", NULL);
 
-    UiButtTex_init(&sp->nbBlobLeft_butt, (Vector2) { 150, -50 }
-        , (Vector2) { 128, 128 }, ANCHOR_S, "res/play-button.png", NULL);
-    UiButtTex_init(&sp->nbBlobRight_butt, (Vector2) { 0, -50 }
-        , (Vector2) { 128, 128 }, ANCHOR_S, "res/play-button.png", NULL);
-
-
+    UiButtTex_init(&sp->butt.nbBlobLeft, (Vector2) { 120, -32 }
+        , (Vector2) { 64, 64 }, ANCHOR_SW, "res/ui/left_arrow.png", NULL);
+    UiButtTex_init(&sp->butt.nbBlobRight, (Vector2) { 200, -32 }
+        , (Vector2) { 64, 64 }, ANCHOR_SW, "res/ui/right_arrow.png", NULL);
 }
 
 void StartParamUpdate(StartParam *sp)
 {
-    UiButtTex_update(&sp->play_butt);
+    UiButtTex_update(&sp->butt.play);
+
+    UiButtTex_update(&sp->butt.nbBlobLeft);
+    UiButtTex_update(&sp->butt.nbBlobRight);
 }
 
 void StartParamRender(StartParam *sp)
 {
-    UiButtTex_render(&sp->play_butt);
+    UiButtTex_render(&sp->butt.play);
+
+    UiButtTex_render(&sp->butt.nbBlobLeft);
+    UiButtTex_render(&sp->butt.nbBlobRight);
 }
 
 void StartParamDel(StartParam *sp)
 {
-    UiButtTex_del(&sp->play_butt);
+    UiButtTex_del(&sp->butt.play);
+
+    UiButtTex_del(&sp->butt.nbBlobLeft);
+    UiButtTex_del(&sp->butt.nbBlobRight);
 }
 
 // STARTPARAM

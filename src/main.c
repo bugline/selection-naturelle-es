@@ -94,7 +94,7 @@ void MainRender(App *p_App)
 	Cam_stop();
 
 	UiGraphBar_render(&data.speedGraph);
-	//UiGraphLine_render(&data.popGraph);
+	UiGraphLine_render(&data.popGraph);
 
 	DrawFPS(10, 10);
 	TimeSpeedRender(&data.timeSpeed);
