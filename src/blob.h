@@ -86,8 +86,6 @@ void BlobTryEat(Blob *pBlob, LnList *pFoods)
 
 		if (eating) {
 			pBlob->score++;
-			printf("%p %p %p %p\n", pFoods->first, pFoods->last,
-				prevFood, food);
 			LnList_rem(pFoods, prevFood);
 		}
 	}
