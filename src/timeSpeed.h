@@ -60,11 +60,19 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
         tSpeed->change = 0;
     }
     if (GetTime()  < tSpeed->currTimeAnim + tSpeed->timeAnim) {
-        char num[8];
+        char *num = NEW_ARR(char, 8);
+	bzero(num, 8);
         gcvt(tSpeed->value, 8, num);
-        char text[9] = "x";
+
+        char *text = NEW_ARR(char, 9);
+	bzero(text, 9);
+	text[0] = 'x';
         strcat(text, num);
-        tSpeed->uiText.mText = text;
+
+	UiText_chngTxt(&tSpeed->uiText, text);
+
+	free(num);
+	free(text);
 
         UiText_render(&tSpeed->uiText);
     }

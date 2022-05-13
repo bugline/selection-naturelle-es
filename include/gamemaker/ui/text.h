@@ -19,6 +19,7 @@ typedef struct UiText {
 
 void UiText_init(UiText *uitext, const char *text, Font font, float fontSize,
 	Vector2 position, char anchor, Color color);
+void UiText_chngTxt(UiText *uiText, const char *newText);
 void UiText_render(const UiText *text);
 void UiText_del(UiText *text);
 
@@ -41,6 +42,20 @@ void UiText_init(UiText *pUiText, const char *pText, Font pFont,
 
 	for (int i = 0; i < textLen; i++)
 		pUiText->mText[i] = pText[i];
+}
+
+void UiText_chngTxt(UiText *uiText, const char *newText)
+{
+	if (uiText->mText)
+		free(uiText->mText);
+	
+	uiText->mSize = MeasureTextEx(uiText->mFont, newText, uiText->mSize.y,
+		uiText->mSpacing);
+
+	size_t textLen = strlen(newText);
+	uiText->mText = (char *) malloc(textLen);
+	if (uiText->mText)
+		strcpy(uiText->mText, newText);
 }
 
 void UiText_render(const UiText *pText)
