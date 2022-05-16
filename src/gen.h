@@ -111,6 +111,36 @@ void GraphsInit(Data *pData)
 	pData->popGraph = g;
 }
 
+void ReducePopGraphPts(UiGraphLine *popGraph, int maxPtsAmout)
+{
+	if (!(popGraph->ptsLen > maxPtsAmout))
+		return;
+
+	Vector2 *temp = NEW_ARR(Vector2, maxPtsAmout);
+
+#ifndef RELEASE
+	if (!temp) {
+		printf("malloc chose to not work in ReducePopGraphPts\n");
+		exit(-1);
+	}
+	if (!popGraph->pts) {
+		printf("the points are NULL\n");
+		exit(-1);
+	}
+#endif
+
+	for (int i = 0; i < maxPtsAmout; i++) {
+		temp[i] = popGraph->pts[popGraph->ptsLen - maxPtsAmout + i];
+	}
+
+	free(popGraph->pts);
+	popGraph->pts = temp;
+
+	popGraph->ptsLen = maxPtsAmout;
+
+	popGraph->xAxis.valRng.x = popGraph->pts[0].x;
+}
+
 void GraphsUpdate(Data *pData)
 {
 	// Update graph
@@ -130,6 +160,8 @@ void GraphsUpdate(Data *pData)
 	UiGraphLine_addPoint(&pData->popGraph, (Vector2) { pData->genCount,
 		pData->nbBlob });
 	pData->popGraph.xAxis.valRng.y = pData->genCount;
+
+	ReducePopGraphPts(&pData->popGraph, 60);
 }
 
 // GEN
