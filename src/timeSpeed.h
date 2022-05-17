@@ -74,6 +74,12 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
 	free(num);
 	free(text);
 
+	if (tSpeed->timeAnim != 0.f) {
+		float alpha = (tSpeed->currTimeAnim - GetTime()) /
+			tSpeed->timeAnim;
+		tSpeed->uiText.mCol.a = roundf(alpha * 255);
+	}
+
         UiText_render(&tSpeed->uiText);
     }
     else {
