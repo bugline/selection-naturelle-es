@@ -20,6 +20,7 @@ typedef struct App_param_update {
 
 typedef struct App_param_render {
 	Color bgColor;
+	float limitFPS;
 } App_param_render;
 
 typedef struct App_param {
@@ -85,6 +86,7 @@ static App_param_render Param_default_render(void)
 	App_param_render render = { 0 };
 
 	render.bgColor = (Color) { 0, 0, 0, 255};
+	render.limitFPS = 0;
 
 	return render;
 }

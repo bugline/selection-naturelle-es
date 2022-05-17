@@ -14,6 +14,8 @@ typedef struct App {
 
 	float dt;  // delta temps
 
+	float m_RndIncrmt;
+
 	void (*Init) (void);
 	void (*Update) (void);
 	void (*Render) (void);
@@ -44,6 +46,8 @@ App *App_new(App_param p_Param)
 	App *newApp = NEW(App);
 
 	newApp->param = p_Param;
+
+	newApp->m_RndIncrmt = 0.0f;
 
 	newApp->Init = NULL;
 	newApp->Update = NULL;
@@ -127,20 +131,28 @@ void App_loop(App *p_App)
 	
 	SetWindowState(FLAG_WINDOW_RESIZABLE);
 	SetWindowMinSize(p_App->param.window.minDim.x, p_App->param.window.minDim.y);
-	SetTargetFPS(p_App->param.update.fps);
 
-	double newTime = GetTime();	
+	if (p_App->param.update.fps > 0.f)
+		SetTargetFPS(p_App->param.update.fps);
+
+	double newTime = GetTime();
 	p_App->dt = 0.f;
 	double lastTime = newTime;
 
 	while (!WindowShouldClose()) {
 		App_callUpdate(p_App, p_App->dt);
 
-		if (p_App->param.window.autoResize)
-			CorrectWin(p_App->param.window.ratio);
-		BeginDrawing();
-			ClearBackground(p_App->param.render.bgColor);
-			App_callRender(p_App);
+		p_App->m_RndIncrmt += p_App->dt;
+		if (p_App->m_RndIncrmt > p_App->param.render.limitFPS) {
+			if (p_App->param.window.autoResize)
+				CorrectWin(p_App->param.window.ratio);
+
+			BeginDrawing();
+				ClearBackground(p_App->param.render.bgColor);
+				App_callRender(p_App);
+
+			p_App->m_RndIncrmt = 0.f;
+		}
 		EndDrawing();
 
 		newTime = GetTime();	
