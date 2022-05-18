@@ -8,7 +8,7 @@
 #include "blob.h"
 #include "gen.h"
 #include "linked_list.h"
-#include "startParam.h"
+#include "Ui.h"
 
 
 struct FixUpdtData {
@@ -20,7 +20,9 @@ struct FixUpdtData {
 typedef struct Data {
 	Cam cam;
 
-	StartParam startParam;
+	char state;
+
+	Ui ui;
 
 	LnList blobs;
 	int nbBlob;
@@ -43,6 +45,13 @@ typedef struct Data {
 
 	int genCount;
 } Data;
+
+Data data;
+
+Data *DataPointer()
+{
+	return &data;
+}
 
 // DATA
 #endif
