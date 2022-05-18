@@ -9,7 +9,7 @@
 #include "gen.h"
 #include "data.h"
 #include "mouse.h"
-#include "Ui.h"
+#include "ui.h"
 
 #define STATE_MENU 1
 #define STATE_RUN 2
