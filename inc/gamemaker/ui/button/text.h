@@ -64,7 +64,6 @@ void UiButtText_del(UiButtText *pButt)
 {
 	UiButt_del(&pButt->mButt);
 	free(pButt->mText);
-	free(pButt);
 }
 
 #endif  // GM_UI_BUT_TEXT

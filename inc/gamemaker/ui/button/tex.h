@@ -47,7 +47,6 @@ void UiButtTex_del(UiButtTex *pButt)
 {
 	UiButt_del(&pButt->mButt);
 	UnloadTexture(pButt->mTex);
-	free(pButt);
 }
 
 #endif  // GM_UI_BUT_TEX

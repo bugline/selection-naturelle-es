@@ -1,3 +1,6 @@
+# Personal stuff
+.vscode/settings.json
+
 # Prerequisites
 *.d
 
@@ -17,14 +20,10 @@
 *.pch
 
 # Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-inc/
-.vscode/
-bin/
+# *.lib
+# *.a
+# *.la
+# *.lo
 
 # Shared objects (inc. Windows DLLs)
 *.dll
