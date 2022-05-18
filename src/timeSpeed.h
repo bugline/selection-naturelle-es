@@ -22,7 +22,7 @@ void TimeSpeedInit(TimeSpeed *tSpeed)
 {
     tSpeed->value = 1.0f;
     tSpeed->change = 0;
-    tSpeed->timeAnim = 0.5;
+    tSpeed->timeAnim = 0.666;
     tSpeed->currTimeAnim = 0;
 
     Font font = LoadFont("res/Panipuri.ttf");
@@ -75,9 +75,9 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
 	free(text);
 
 	if (tSpeed->timeAnim != 0.f) {
-		float alpha = (tSpeed->currTimeAnim - GetTime()) /
+		float alpha = (GetTime() - tSpeed->currTimeAnim) /
 			tSpeed->timeAnim;
-		tSpeed->uiText.mCol.a = roundf(alpha * 255);
+		tSpeed->uiText.mCol.a = roundf((1.f - alpha) * 255);
 	}
 
         UiText_render(&tSpeed->uiText);
