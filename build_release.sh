@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # VARIABLES
-OUT=bin/selection_naturelle.exe
+OUT=bin/release/project.exe
 INP=`find ./src -name *.c | tr "\n" " "`
 
 INCLUDE=inc/
@@ -22,16 +22,5 @@ fi
 
 # COMPILE
 echo "[RUN] Compiling $INP ..."
-gcc $INP -o $OUT -Wall -D DEBUG -I $INCLUDE -L $LIB -lrayliblinux -lGL -lm -lpthread -ldl -lrt -lX11
+gcc $INP -o $OUT -Wall -O2 -D RELEASE -I $INCLUDE -L $LIB -lrayliblinux -lGL -lm -lpthread -ldl -lrt -lX11
 echo ""
-
-
-# RUN
-if [ -f "$OUT" ]; then
-    echo "[RUN] Running $OUT ..."
-    exec $OUT
-    echo ""
-else
-    echo "[RUN] Compilation of $INP failed !"
-    echo ""
-fi

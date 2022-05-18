@@ -25,10 +25,10 @@ set ENTRIES="src\main.c"
 :: le dossier où sera le .exe
 set OUTPUT_DIR="bin\"
 :: le .exe qui sera généré
-set OUTPUT="%OUTPUT_DIR%game-maker.exe"
+set OUTPUT="%OUTPUT_DIR%selection_naturelle.exe"
 
 :: le dossier où sont les .h des librairies utilisées
-set INCLUDE_DIR="include\"
+set INCLUDE_DIR="inc\"
 :: le dossier où sont les .a des librairies utilisées
 set LIB_DIR="lib\"
 
@@ -88,7 +88,7 @@ echo(
 echo(
 echo(
 :: COMPILATION
-%COMPILER% %ENTRIES:"=% -o %OUTPUT:"=% -O2 -Wall -I %INCLUDE_DIR:"=% -L %LIB_DIR:"=% %LIBS:"=%
+%COMPILER% %ENTRIES:"=% -o %OUTPUT:"=% -Wall -D DEBUG -I %INCLUDE_DIR:"=% -L %LIB_DIR:"=% %LIBS:"=%
 
 
 :: LANCEMENT DU PROGRAMME
