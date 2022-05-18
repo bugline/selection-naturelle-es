@@ -6,7 +6,6 @@
 #include "food.h"
 #include "timeSpeed.h"
 #include "blob.h"
-#include "gen.h"
 #include "linked_list.h"
 #include "ui.h"
 
@@ -46,12 +45,6 @@ typedef struct Data {
 	int genCount;
 } Data;
 
-Data data;
+Data *DataPointer(void);
 
-Data *DataPointer()
-{
-	return &data;
-}
-
-// DATA
-#endif
+#endif  // DATA

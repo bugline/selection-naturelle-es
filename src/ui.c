@@ -1,44 +1,20 @@
-#ifndef UI
-#define UI
-
+#include "ui.h"
 #include "data.h"
-#include "gamemaker/core.h"
-
-typedef struct Butt {
-    UiButtTex play;
-    UiButtTex restart;
-    UiButtTex nbBlobLeft;
-    UiButtTex nbBlobRight;
-} Butt;
-
-typedef struct Ui {
-    Butt butt;
-} Ui;
-
-void ButtCallback_play();
-void ButtCallback_nbBlobLeft();
-void ButtCallback_nbBlobRight();
-
-void UiMenuInit(Ui *ui);
-void UiRunInit(Ui *ui);
-void UiUpdate(Ui *ui);
-void UiRender(Ui *ui);
-void UiDel(Ui *ui);
 
 
 void ButtCallback_play()
 {
-    Data *data = DataPointer();
+    Data *_data = DataPointer();
 }
 
 void ButtCallback_nbBlobLeft()
 {
-    Data *data = DataPointer();
+    Data *_data = DataPointer();
 }
 
 void ButtCallback_nbBlobRight()
 {
-    //Data *data = DataPointer();
+    Data *_data = DataPointer();
 }
 
 void UiMenuInit(Ui *ui)
@@ -89,6 +65,3 @@ void UiDel(Ui *ui)
     UiButtTex_del(&ui->butt.nbBlobLeft);
     UiButtTex_del(&ui->butt.nbBlobRight);
 }
-
-// UI
-#endif

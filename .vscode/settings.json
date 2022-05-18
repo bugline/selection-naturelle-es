@@ -6,6 +6,7 @@
         "variant": "cpp",
         "gen.h": "c",
         "mouse.h": "c",
-        "string": "c"
+        "string": "c",
+        "data.h": "c"
     }
 }
