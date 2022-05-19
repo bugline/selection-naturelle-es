@@ -1,5 +1,7 @@
 #include "timeSpeed.h"
 
+#include <math.h>
+
 
 void TimeSpeedInit(TimeSpeed *tSpeed)
 {

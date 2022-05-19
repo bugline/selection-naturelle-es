@@ -1,5 +1,7 @@
 #include "food.h"
 
+#include "raymath.h"
+
 
 bool FoodCircleColl(const Food *pFood, const Vector2 pCircPos, const float pRad)
 {

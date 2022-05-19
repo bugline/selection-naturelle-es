@@ -2,7 +2,7 @@
 
 # VARIABLES
 OUT=bin/release/project.exe
-INP=`find ./src -name *.c | tr "\n" " "`
+INP=`find ./ -name *.c | tr "\n" " "`
 
 INCLUDE=inc/
 LIB=lib/

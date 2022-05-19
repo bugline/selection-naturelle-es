@@ -2,7 +2,7 @@
 
 # VARIABLES
 OUT=bin/selection_naturelle.exe
-INP=`find ./src -name *.c | tr "\n" " "`
+INP=`find ./ -name *.c | tr "\n" " "`
 
 INCLUDE=inc/
 LIB=lib/
