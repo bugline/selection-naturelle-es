@@ -11,9 +11,6 @@
 #include "mouse.h"
 #include "ui.h"
 
-#define STATE_MENU 1
-#define STATE_RUN 2
-
 
 
 void RestartInit(Data *data)

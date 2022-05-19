@@ -5,6 +5,7 @@
 void ButtCallback_play()
 {
     Data *_data = DataPointer();
+    data->state = STATE_RUN;
 }
 
 void ButtCallback_nbBlobLeft()

@@ -9,6 +9,9 @@
 #include "linked_list.h"
 #include "ui.h"
 
+#define STATE_MENU 1
+#define STATE_RUN 2
+
 
 struct FixUpdtData {
 	float incrmnt;
