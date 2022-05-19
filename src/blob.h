@@ -36,6 +36,8 @@ Blob BlobMutate(Blob blob);
 
 // Array of blobs
 LnList BlobsInit(int nbBlob);
+void BlobMore(int *nbBlob, LnList *blobs);
+void BlobLess(int *nbBlob, LnList *blobs);
 void BlobsRender(LnList *blobs);
 void BlobsDel(LnList *blobs);
 

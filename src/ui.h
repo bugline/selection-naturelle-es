@@ -1,26 +1,20 @@
 #ifndef UI
 #define UI
 
-#include "gamemaker/core.h"
+#include "structUi.h"
+#include "data.h"
+#include "blob.h"
+#include "gen.h"
 
-typedef struct Butt {
-    UiButtTex play;
-    UiButtTex restart;
-    UiButtTex nbBlobLeft;
-    UiButtTex nbBlobRight;
-} Butt;
-
-typedef struct Ui {
-    Butt butt;
-} Ui;
-
-// void ButtCallback_play();
-// void ButtCallback_nbBlobLeft();
-// void ButtCallback_nbBlobRight();
-
-void UiMenuInit(Ui *ui);
-void UiRunInit(Ui *ui);
-void UiUpdate(Ui *ui);
+void MenuToRun(Data *data);
+void RunToMenu(Data * data);
+void ButtCallback_play();
+void ButtCallback_nbBlobLeft();
+void ButtCallback_nbBlobRight();
+void ButtCallback_restart();
+void UiInit(Ui *ui);
+void UiMenuUpdate(Ui *ui);
+void UiRunUpdate(Ui *ui);
 void UiRender(Ui *ui);
 void UiDel(Ui *ui);
 

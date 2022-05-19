@@ -11,20 +11,6 @@
 #include "mouse.h"
 #include "ui.h"
 
-
-
-void RestartInit(Data *data)
-{
-	if (data->blobs.first != NULL)
-		BlobsDel(&data->blobs);
-	data->blobs = BlobsInit(data->nbBlob);
-	if (data->foods.first != NULL)
-		FoodsDel(&data->foods);
-	data->foods = FoodsInit(data->nbFood, &data->foodTex);
-
-	GraphsInit(data);
-}
-
 void MainInit(App *p_App)
 {
 	Data *data = DataPointer();
@@ -32,22 +18,17 @@ void MainInit(App *p_App)
 
 	data->state = STATE_MENU;
 
-	UiMenuInit(&data->ui);
-
+	UiInit(&data->ui);
 	TimeSpeedInit(&data->timeSpeed);
 
-	data->nbBlob = 4;
-	
-	data->nbFood = 100;
 	data->foodTex = LoadTexture("res/food.png");
 	
-
 	// Fixed update trucs
 	data->fixUdpt.fixDt = 1.f / 60.f;
 	data->fixUdpt.incrmnt = 0.f;
 	data->fixUdpt.limExec = 0.2f;
 
-	RestartInit(data);
+	RunToMenu(data);
 }
 
 void FixedUpdate(const float pFixDt, Data *pData)
@@ -79,14 +60,25 @@ void FixedUpdate(const float pFixDt, Data *pData)
 
 void MenuUpdate(Data *data)
 {
-	UiUpdate(&data->ui);
+	UiMenuUpdate(&data->ui);
 
+	if (IsKeyPressed(KEY_LEFT))
+		ButtCallback_nbBlobLeft();
+	if (IsKeyPressed(KEY_RIGHT))
+		ButtCallback_nbBlobRight();
+	if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_ENTER))
+		ButtCallback_play();
 	MouseUpdate(data);
 }
 
 void RunUpdate(Data *data, float p_Dt)
 {
 	TimeSpeedUpdate(&data->timeSpeed, &p_Dt);
+
+	UiRunUpdate(&data->ui);
+
+	if (IsKeyPressed(KEY_DELETE))
+		ButtCallback_restart();
 
 	MouseUpdate(data);
     

@@ -6,6 +6,7 @@ void UiButtTex_init(UiButtTex *pButt, Vector2 pPos, Vector2 pSize, char pAnch,
 {
 	UiButt_init(&pButt->mButt, pPos, pSize, pAnch, pCallback);
 	pButt->mTex = LoadTexture(pTex);
+	pButt->color = WHITE;
 }
 
 void UiButtTex_update(UiButtTex *pButt)
@@ -23,7 +24,7 @@ void UiButtTex_render(const UiButtTex *pButt)
 		pButt->mButt.size.y };
 
 	DrawTexturePro(pButt->mTex, src, dest, (Vector2) { 0.f, 0.f }, 0.f,
-		WHITE);
+		pButt->color);
 }
 
 void UiButtTex_del(UiButtTex *pButt)

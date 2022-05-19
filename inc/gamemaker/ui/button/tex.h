@@ -8,6 +8,7 @@
 typedef struct UiButtTex {
 	UiButt mButt;
 	Texture2D mTex;
+	Color color;
 } UiButtTex;
 
 

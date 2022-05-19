@@ -101,6 +101,26 @@ LnList BlobsInit(int nbBlob)
 	return blobs;
 }
 
+void BlobMore(int *nbBlob, LnList *blobs)
+{
+    *nbBlob *= 2;
+    if (*nbBlob > 10000)
+        *nbBlob = 10000;
+    if (blobs->first != NULL)
+		BlobsDel(blobs);
+	*blobs = BlobsInit(*nbBlob);
+}
+
+void BlobLess(int *nbBlob, LnList *blobs)
+{
+    *nbBlob /= 2;
+    if (*nbBlob < 1)
+        *nbBlob = 1;
+    if (blobs->first != NULL)
+		BlobsDel(blobs);
+	*blobs = BlobsInit(*nbBlob);
+}
+
 void BlobsRender(LnList *blobs)
 {
 	Iter iter = Iterate(blobs);
