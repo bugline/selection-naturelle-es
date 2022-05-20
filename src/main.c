@@ -119,7 +119,9 @@ void MainRender(App *p_App)
 	UiGraphBar_render(&data->speedGraph);
 	UiGraphLine_render(&data->popGraph);
 
+#ifndef RELEASE
 	DrawFPS(10, 10);
+#endif
 	TimeSpeedRender(&data->timeSpeed);
 
 	UiRender(&data->ui);
