@@ -12,8 +12,9 @@
 
 
 #define BLOB_MAX_SPEED  5.f
+#define BLOB_SPEED_MUTATION 0.0001f
 #define BLOB_MIN_SPEED  .5f
-#define BLOB_ENERGY     30.f
+#define BLOB_ENERGY     100.f
 #define BLOB_MAX 10000
 #define BLOB_MIN 1
 

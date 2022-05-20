@@ -73,7 +73,8 @@ Blob BlobMutate(Blob blob)
 {
 	Blob newBlob = blob;
 
-	newBlob.speed += (float) GetRandomValue(-100, 100) / 400.f;
+	newBlob.speed += (float) GetRandomValue(BLOB_MIN_SPEED * 1e3,
+		BLOB_MAX_SPEED * 1e3) * BLOB_SPEED_MUTATION / 1e3f;
 	fclamp(&newBlob.speed, BLOB_MIN_SPEED, BLOB_MAX_SPEED);
 
 	return newBlob;
@@ -95,7 +96,7 @@ LnList BlobsInit(int nbBlob)
 		blob.score = 0;
 
 		blob.speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
-			(BLOB_MAX_SPEED - 3.f) * 1e3f) / 1e3f;
+			(BLOB_MAX_SPEED) * 1e3f) / 1e3f;
 		blob.energy = BLOB_ENERGY;
 		
 		LnList_pushBack(Blob, &blobs, &blob);

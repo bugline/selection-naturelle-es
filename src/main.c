@@ -42,7 +42,7 @@ void FixedUpdate(const float pFixDt, Data *pData)
 			Vector2 dir = BlobGetDir(blob->pos, &pData->foods);
 			blob->pos = Vector2Add(blob->pos, Vector2Scale(dir,
 				pFixDt * blob->speed));
-			blob->energy -= blob->speed * 10 * pFixDt;
+			blob->energy -= blob->speed * blob->speed * 2 * pFixDt;
 		}
 
 		// Detection de colision
