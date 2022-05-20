@@ -28,7 +28,7 @@ void MainInit(App *p_App)
 	data->fixUdpt.incrmnt = 0.f;
 	data->fixUdpt.limExec = 0.2f;
 
-	RunToMenu(data);
+	RunToMenu();
 }
 
 void FixedUpdate(const float pFixDt, Data *pData)
@@ -145,7 +145,7 @@ int main()
 {
 	App_param param = App_param_default();
 	param.update.fps = 0;
-	param.render.limitFPS = 1.f / 60.f;
+	//param.render.limitFPS = 1.f / 60.f;
 	param.window.autoResize = false;
 
 	App *app = App_new(param);

@@ -2,14 +2,12 @@
 #define GEN
 
 #include "gamemaker/core.h"
-#include "data.h"
 
+void ProduceNextGen();
 
-void ProduceNextGen(Data *pData);
-
-void GraphsInit(Data *pData);
+void GraphsInit();
 void ReducePopGraphPts(UiGraphLine *popGraph, int maxPtsAmout);
-void GraphsUpdate(Data *pData);
+void GraphsUpdate();
 
 
 // GEN

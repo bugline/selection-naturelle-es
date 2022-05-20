@@ -7,7 +7,7 @@
 #include "timeSpeed.h"
 #include "blob.h"
 #include "linked_list.h"
-#include "structUi.h"
+#include "ui.h"
 
 #define STATE_MENU 1
 #define STATE_RUN 2

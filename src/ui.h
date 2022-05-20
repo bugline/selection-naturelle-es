@@ -1,13 +1,21 @@
 #ifndef UI
 #define UI
 
-#include "structUi.h"
-#include "data.h"
 #include "blob.h"
 #include "gen.h"
+#include "gamemaker/core.h"
+typedef struct Butt {
+    UiButtTex play;
+    UiButtTex restart;
+    UiButtTex nbBlobLeft;
+    UiButtTex nbBlobRight;
+} Butt;
+typedef struct Ui {
+    Butt butt;
+} Ui;
 
-void MenuToRun(Data *data);
-void RunToMenu(Data * data);
+void MenuToRun(void);
+void RunToMenu(void);
 void ButtCallback_play();
 void ButtCallback_nbBlobLeft();
 void ButtCallback_nbBlobRight();

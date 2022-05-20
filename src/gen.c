@@ -1,8 +1,11 @@
 #include "gen.h"
+#include "data.h"
 
 
-void ProduceNextGen(Data *pData)
+void ProduceNextGen()
 {
+	Data *pData = DataPointer();
+
 	int newPopSize = 0;
 
 	Iter iter = Iterate(&pData->blobs);
@@ -52,8 +55,9 @@ void ProduceNextGen(Data *pData)
 	pData->nbBlob = newPopSize;
 }
 
-void GraphsInit(Data *pData)
+void GraphsInit()
 {
+	Data *pData = DataPointer();
 	// SPEED GRAPHIC
 	pData->speedGraph = UiGraphBar_default(pData->nbBlob);
 
@@ -136,8 +140,9 @@ void ReducePopGraphPts(UiGraphLine *popGraph, int maxPtsAmout)
 	popGraph->xAxis.valRng.x = popGraph->pts[0].x;
 }
 
-void GraphsUpdate(Data *pData)
+void GraphsUpdate()
 {
+	Data *pData = DataPointer();
 	// Update graph
 	UiGraphBar_newValAmnt(&pData->speedGraph, pData->nbBlob);
 
