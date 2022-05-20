@@ -63,11 +63,11 @@ void MenuUpdate(Data *data)
 	UiMenuUpdate(&data->ui);
 
 	if (IsKeyPressed(KEY_LEFT))
-		ButtCallback_nbBlobLeft();
+		BlobLess();
 	if (IsKeyPressed(KEY_RIGHT))
-		ButtCallback_nbBlobRight();
+		BlobMore();
 	if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_ENTER))
-		ButtCallback_play();
+		MenuToRun();
 	MouseUpdate(data);
 }
 
@@ -78,7 +78,7 @@ void RunUpdate(Data *data, float p_Dt)
 	UiRunUpdate(&data->ui);
 
 	if (IsKeyPressed(KEY_DELETE))
-		ButtCallback_restart();
+		RunToMenu();
 
 	MouseUpdate(data);
     

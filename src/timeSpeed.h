@@ -19,6 +19,8 @@ typedef struct TimeSpeed {
 
 
 void TimeSpeedInit(TimeSpeed *tSpeed);
+void TimeSpeedLess();
+void TimeSpeedMore();
 void TimeSpeedUpdate(TimeSpeed *tSpeed, float *dt);
 void TimeSpeedRender(TimeSpeed *tSpeed);
 void TimeSpeedDel(TimeSpeed *tSpeed);

@@ -6,10 +6,10 @@ void MenuToRun()
 	Data *data = DataPointer();
 
 	data->ui.butt.play.color = BLANK;
-	data->ui.butt.nbBlobLeft.color = BLANK;
-	data->ui.butt.nbBlobRight.color = BLANK;
-
 	data->ui.butt.restart.color = WHITE;
+
+	data->ui.butt.left.mButt.callback = &TimeSpeedLess;
+	data->ui.butt.right.mButt.callback = &TimeSpeedMore;
 
 	data->state = STATE_RUN;
 }
@@ -19,9 +19,10 @@ void RunToMenu()
 	Data *data = DataPointer();
 
 	data->ui.butt.play.color = WHITE;
-	data->ui.butt.nbBlobLeft.color = WHITE;
-	data->ui.butt.nbBlobRight.color = WHITE;
 	data->ui.butt.restart.color = BLANK;
+
+	data->ui.butt.left.mButt.callback = &BlobLess;
+	data->ui.butt.right.mButt.callback = &BlobMore;
 
 	data->timeSpeed.value = 1;
 	data->nbBlob = 4;
@@ -40,48 +41,26 @@ void RunToMenu()
 	data->state = STATE_MENU;
 }
 
-void ButtCallback_play()
-{
-	MenuToRun();
-}
-
-void ButtCallback_nbBlobLeft()
-{
-	Data *data = DataPointer();
-	BlobLess(&data->nbBlob, &data->blobs);
-}
-
-void ButtCallback_nbBlobRight()
-{
-	Data *data = DataPointer();
-	BlobMore(&data->nbBlob, &data->blobs);
-}
-
-void ButtCallback_restart()
-{
-	RunToMenu();
-}
-
 void UiInit(Ui *ui)
 {
 	UiButtTex_init(
 	&ui->butt.play, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/play.png", &ButtCallback_play
+	ANCHOR_SW, "res/ui/play.png", &MenuToRun
 	);
 
 	UiButtTex_init(
-	&ui->butt.nbBlobLeft, (Vector2) { 120, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/left_arrow.png", &ButtCallback_nbBlobLeft
+	&ui->butt.left, (Vector2) { 120, -32 }, (Vector2) { 64, 64 },
+	ANCHOR_SW, "res/ui/left_arrow.png", &BlobLess
 	);
 
 	UiButtTex_init(
-	&ui->butt.nbBlobRight, (Vector2) { 200, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/right_arrow.png", &ButtCallback_nbBlobRight
+	&ui->butt.right, (Vector2) { 200, -32 }, (Vector2) { 64, 64 },
+	ANCHOR_SW, "res/ui/right_arrow.png", &BlobMore
 	);
 
 	UiButtTex_init(
 	&ui->butt.restart, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/restart.png", &ButtCallback_restart
+	ANCHOR_SW, "res/ui/restart.png", &RunToMenu
 	);
 	ui->butt.restart.color = BLANK;
 }
@@ -89,20 +68,25 @@ void UiInit(Ui *ui)
 void UiMenuUpdate(Ui *ui)
 {
 	UiButtTex_update(&ui->butt.play);
-	UiButtTex_update(&ui->butt.nbBlobLeft);
-	UiButtTex_update(&ui->butt.nbBlobRight);
+
+	UiButtTex_update(&ui->butt.left);
+	UiButtTex_update(&ui->butt.right);
 }
 
 void UiRunUpdate(Ui *ui)
 {
 	UiButtTex_update(&ui->butt.restart);
+
+	UiButtTex_update(&ui->butt.left);
+	UiButtTex_update(&ui->butt.right);
 }
 
 void UiRender(Ui *ui)
 {
 	UiButtTex_render(&ui->butt.play);
-	UiButtTex_render(&ui->butt.nbBlobLeft);
-	UiButtTex_render(&ui->butt.nbBlobRight);
+
+	UiButtTex_render(&ui->butt.left);
+	UiButtTex_render(&ui->butt.right);
 
 	UiButtTex_render(&ui->butt.restart);
 }
@@ -110,8 +94,9 @@ void UiRender(Ui *ui)
 void UiDel(Ui *ui)
 {
 	UiButtTex_del(&ui->butt.play);
-	UiButtTex_del(&ui->butt.nbBlobLeft);
-	UiButtTex_del(&ui->butt.nbBlobRight);
+
+	UiButtTex_del(&ui->butt.left);
+	UiButtTex_del(&ui->butt.right);
 	
 	UiButtTex_del(&ui->butt.restart);
 }

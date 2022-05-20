@@ -8,6 +8,7 @@
         "mouse.h": "c",
         "string": "c",
         "data.h": "c",
-        "ui.h": "c"
+        "ui.h": "c",
+        "type_traits": "c"
     }
 }

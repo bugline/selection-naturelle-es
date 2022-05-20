@@ -8,9 +8,10 @@
 
 #include "food.h"
 
-
 #define BLOB_MAX_SPEED 5.f
 #define BLOB_MIN_SPEED .5f
+#define BLOB_MAX 10000
+#define BLOB_MIN 1
 
 
 typedef struct Blob {
@@ -36,8 +37,8 @@ Blob BlobMutate(Blob blob);
 
 // Array of blobs
 LnList BlobsInit(int nbBlob);
-void BlobMore(int *nbBlob, LnList *blobs);
-void BlobLess(int *nbBlob, LnList *blobs);
+void BlobMore();
+void BlobLess();
 void BlobsRender(LnList *blobs);
 void BlobsDel(LnList *blobs);
 

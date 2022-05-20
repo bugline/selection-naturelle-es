@@ -4,11 +4,12 @@
 #include "blob.h"
 #include "gen.h"
 #include "gamemaker/core.h"
+#include "timeSpeed.h"
 typedef struct Butt {
     UiButtTex play;
     UiButtTex restart;
-    UiButtTex nbBlobLeft;
-    UiButtTex nbBlobRight;
+    UiButtTex left;
+    UiButtTex right;
 } Butt;
 typedef struct Ui {
     Butt butt;
@@ -16,10 +17,6 @@ typedef struct Ui {
 
 void MenuToRun(void);
 void RunToMenu(void);
-void ButtCallback_play();
-void ButtCallback_nbBlobLeft();
-void ButtCallback_nbBlobRight();
-void ButtCallback_restart();
 void UiInit(Ui *ui);
 void UiMenuUpdate(Ui *ui);
 void UiRunUpdate(Ui *ui);
