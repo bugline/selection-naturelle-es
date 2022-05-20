@@ -1,5 +1,7 @@
 #include "blob.h"
 #include "data.h"
+#include "gen.h"
+
 
 void BlobRender(const Blob *blob)
 {
@@ -111,6 +113,10 @@ void BlobMore()
     	if (data->blobs.first != NULL)
 		BlobsDel(&data->blobs);
 	data->blobs = BlobsInit(data->nbBlob);
+
+	UiGraphBar_del(&data->speedGraph);
+	UiGraphLine_del(&data->popGraph);
+	GraphsInit();
 }
 
 void BlobLess()
@@ -122,6 +128,10 @@ void BlobLess()
 	if (data->blobs.first != NULL)
 		BlobsDel(&data->blobs);
 	data->blobs = BlobsInit(data->nbBlob);
+
+	UiGraphBar_del(&data->speedGraph);
+	UiGraphLine_del(&data->popGraph);
+	GraphsInit();
 }
 
 bool BlobsStillHaveEnergy(LnList *blobs)

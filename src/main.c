@@ -142,9 +142,6 @@ void MainRemove(App *p_App)
 	BlobsDel(&data->blobs);
 	FoodsDel(&data->foods);
 
-	UiGraphBar_del(&data->speedGraph);
-	UiGraphLine_del(&data->popGraph);
-
 	UnloadTexture(data->foodTex);
 }
 
