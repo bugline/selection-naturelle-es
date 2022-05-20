@@ -68,9 +68,18 @@ void UiInit(Ui *ui)
 
 	Font font = LoadFont("res/Panipuri.ttf");
 	UiText_init(
-		&ui->text.butt_1, "4\0", font, 50,
-		(Vector2) { 0, 0 }, ANCHOR_NW, RAYWHITE
+		&ui->text.nbBlob, "4\0", font, 50,
+		(Vector2) { 10, 0 }, ANCHOR_W, RAYWHITE
 	);
+}
+
+void UiTextNbBlobUpdate()
+{
+	Data *data = DataPointer();
+	char *nbBlob = 	NEW_ARR(char, 11);
+	sprintf(nbBlob, "Blob: %d", data->nbBlob);
+	UiText_chngTxt(&data->ui.text.nbBlob, nbBlob);
+	free(nbBlob);
 }
 
 void UiMenuUpdate(Ui *ui)
@@ -79,6 +88,8 @@ void UiMenuUpdate(Ui *ui)
 
 	UiButtTex_update(&ui->butt.left_1);
 	UiButtTex_update(&ui->butt.right_1);
+
+	UiTextNbBlobUpdate();
 }
 
 void UiRunUpdate(Ui *ui)
@@ -87,6 +98,8 @@ void UiRunUpdate(Ui *ui)
 
 	UiButtTex_update(&ui->butt.left_1);
 	UiButtTex_update(&ui->butt.right_1);
+
+	UiTextNbBlobUpdate();
 }
 
 void UiRender(Ui *ui)
@@ -98,7 +111,7 @@ void UiRender(Ui *ui)
 
 	UiButtTex_render(&ui->butt.restart);
 
-	UiText_render(&ui->text.butt_1);
+	UiText_render(&ui->text.nbBlob);
 }
 
 void UiDel(Ui *ui)
@@ -110,5 +123,5 @@ void UiDel(Ui *ui)
 	
 	UiButtTex_del(&ui->butt.restart);
 
-	UiText_del(&ui->text.butt_1);
+	UiText_del(&ui->text.nbBlob);
 }

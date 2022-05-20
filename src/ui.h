@@ -13,7 +13,7 @@ typedef struct Butt {
 } Butt;
 
 typedef struct Text {
-	UiText butt_1;
+	UiText nbBlob;
 } Text;
 typedef struct Ui {
     Butt butt;
