@@ -10,8 +10,8 @@ void MenuToRun()
 	data->ui.butt.play.color = BLANK;
 	data->ui.butt.restart.color = WHITE;
 
-	data->ui.butt.left.mButt.callback = &TimeSpeedLess;
-	data->ui.butt.right.mButt.callback = &TimeSpeedMore;
+	data->ui.butt.left_1.mButt.callback = &TimeSpeedLess;
+	data->ui.butt.right_1.mButt.callback = &TimeSpeedMore;
 
 	data->state = STATE_RUN;
 }
@@ -23,8 +23,8 @@ void RunToMenu()
 	data->ui.butt.play.color = WHITE;
 	data->ui.butt.restart.color = BLANK;
 
-	data->ui.butt.left.mButt.callback = &BlobLess;
-	data->ui.butt.right.mButt.callback = &BlobMore;
+	data->ui.butt.left_1.mButt.callback = &BlobLess;
+	data->ui.butt.right_1.mButt.callback = &BlobMore;
 
 	data->timeSpeed.value = 1;
 	data->nbBlob = 4;
@@ -46,59 +46,69 @@ void RunToMenu()
 void UiInit(Ui *ui)
 {
 	UiButtTex_init(
-	&ui->butt.play, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/play.png", &MenuToRun
+		&ui->butt.play, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/play.png", &MenuToRun
 	);
 
 	UiButtTex_init(
-	&ui->butt.left, (Vector2) { 120, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/left_arrow.png", &BlobLess
+		&ui->butt.left_1, (Vector2) { 120, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/left_arrow.png", &BlobLess
 	);
 
 	UiButtTex_init(
-	&ui->butt.right, (Vector2) { 200, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/right_arrow.png", &BlobMore
+		&ui->butt.right_1, (Vector2) { 200, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/right_arrow.png", &BlobMore
 	);
 
 	UiButtTex_init(
-	&ui->butt.restart, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
-	ANCHOR_SW, "res/ui/restart.png", &RunToMenu
+		&ui->butt.restart, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/restart.png", &RunToMenu
 	);
 	ui->butt.restart.color = BLANK;
+
+	Font font = LoadFont("res/Panipuri.ttf");
+	UiText_init(
+		&ui->text.butt_1, "4\0", font, 50,
+		(Vector2) { 0, 0 }, ANCHOR_NW, RAYWHITE
+	);
 }
 
 void UiMenuUpdate(Ui *ui)
 {
 	UiButtTex_update(&ui->butt.play);
 
-	UiButtTex_update(&ui->butt.left);
-	UiButtTex_update(&ui->butt.right);
+	UiButtTex_update(&ui->butt.left_1);
+	UiButtTex_update(&ui->butt.right_1);
 }
 
 void UiRunUpdate(Ui *ui)
 {
 	UiButtTex_update(&ui->butt.restart);
 
-	UiButtTex_update(&ui->butt.left);
-	UiButtTex_update(&ui->butt.right);
+	UiButtTex_update(&ui->butt.left_1);
+	UiButtTex_update(&ui->butt.right_1);
 }
 
 void UiRender(Ui *ui)
 {
 	UiButtTex_render(&ui->butt.play);
 
-	UiButtTex_render(&ui->butt.left);
-	UiButtTex_render(&ui->butt.right);
+	UiButtTex_render(&ui->butt.left_1);
+	UiButtTex_render(&ui->butt.right_1);
 
 	UiButtTex_render(&ui->butt.restart);
+
+	UiText_render(&ui->text.butt_1);
 }
 
 void UiDel(Ui *ui)
 {
 	UiButtTex_del(&ui->butt.play);
 
-	UiButtTex_del(&ui->butt.left);
-	UiButtTex_del(&ui->butt.right);
+	UiButtTex_del(&ui->butt.left_1);
+	UiButtTex_del(&ui->butt.right_1);
 	
 	UiButtTex_del(&ui->butt.restart);
+
+	UiText_del(&ui->text.butt_1);
 }

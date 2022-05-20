@@ -17,7 +17,7 @@ void UiText_init(UiText *pUiText, const char *pText, Font pFont,
 	pUiText->mSize = MeasureTextEx(pFont, pText, pFontSize,
 		pFontSize / 10.f);
 
-	size_t textLen = strlen(pText);
+	size_t textLen = strlen(pText) + 1;
 	pUiText->mText = NEW_ARR(char, textLen);
 
 	for (int i = 0; i < textLen; i++)

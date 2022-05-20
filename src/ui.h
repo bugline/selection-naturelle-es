@@ -8,11 +8,16 @@
 typedef struct Butt {
     UiButtTex play;
     UiButtTex restart;
-    UiButtTex left;
-    UiButtTex right;
+    UiButtTex left_1;
+    UiButtTex right_1;
 } Butt;
+
+typedef struct Text {
+	UiText butt_1;
+} Text;
 typedef struct Ui {
     Butt butt;
+    Text text;
 } Ui;
 
 void MenuToRun(void);
