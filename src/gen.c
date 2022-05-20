@@ -20,10 +20,12 @@ void ProduceNextGen()
 
 		if (blob->score > 0) {
 			blob->pos = GetRandBlobPos();
+			blob->energy = BLOB_ENERGY;
 
 			if (blob->score > 1) {
 				Blob newBlob = BlobMutate(*blob);
 				newBlob.pos = GetRandBlobPos();
+				newBlob.energy = BLOB_ENERGY;
 				newBlob.score = 0;
 				LnList_pushFront(Blob, &pData->blobs, &newBlob);
 			}

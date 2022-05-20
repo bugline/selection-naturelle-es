@@ -1,6 +1,8 @@
 #ifndef BLOB
 #define BLOB
 
+#include <stdbool.h>
+
 #include "gamemaker/core.h"
 #include "raylib.h"
 #include "raymath.h"
@@ -9,8 +11,9 @@
 #include "food.h"
 
 
-#define BLOB_MAX_SPEED 5.f
-#define BLOB_MIN_SPEED .5f
+#define BLOB_MAX_SPEED  5.f
+#define BLOB_MIN_SPEED  .5f
+#define BLOB_ENERGY     30.f
 
 
 typedef struct Blob {
@@ -21,6 +24,7 @@ typedef struct Blob {
 
 	// Attributes
 	float speed;
+	float energy;
 } Blob;
 
 
@@ -38,6 +42,7 @@ Blob BlobMutate(Blob blob);
 LnList BlobsInit(int nbBlob);
 void BlobMore(int *nbBlob, LnList *blobs);
 void BlobLess(int *nbBlob, LnList *blobs);
+bool BlobsStillHaveEnergy(LnList *blobs);
 void BlobsRender(LnList *blobs);
 void BlobsDel(LnList *blobs);
 

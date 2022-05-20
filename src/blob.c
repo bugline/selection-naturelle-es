@@ -94,6 +94,7 @@ LnList BlobsInit(int nbBlob)
 
 		blob.speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
 			(BLOB_MAX_SPEED - 3.f) * 1e3f) / 1e3f;
+		blob.energy = BLOB_ENERGY;
 		
 		LnList_pushBack(Blob, &blobs, &blob);
 	}
@@ -119,6 +120,22 @@ void BlobLess(int *nbBlob, LnList *blobs)
     if (blobs->first != NULL)
 		BlobsDel(blobs);
 	*blobs = BlobsInit(*nbBlob);
+}
+
+bool BlobsStillHaveEnergy(LnList *blobs)
+{
+	Iter iter = Iterate(blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
+		if (blob->energy > 0.f)
+			return true;
+
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
+	}
+
+	return false;
 }
 
 void BlobsRender(LnList *blobs)
