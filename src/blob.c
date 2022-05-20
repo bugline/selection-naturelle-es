@@ -1,5 +1,5 @@
 #include "blob.h"
-
+#include "data.h"
 
 void BlobRender(const Blob *blob)
 {
@@ -102,24 +102,26 @@ LnList BlobsInit(int nbBlob)
 	return blobs;
 }
 
-void BlobMore(int *nbBlob, LnList *blobs)
+void BlobMore()
 {
-    *nbBlob *= 2;
-    if (*nbBlob > 10000)
-        *nbBlob = 10000;
-    if (blobs->first != NULL)
-		BlobsDel(blobs);
-	*blobs = BlobsInit(*nbBlob);
+	Data *data = DataPointer();
+	data->nbBlob *= 2;
+	if (data->nbBlob > BLOB_MAX)
+        	data->nbBlob = BLOB_MAX;
+    	if (data->blobs.first != NULL)
+		BlobsDel(&data->blobs);
+	data->blobs = BlobsInit(data->nbBlob);
 }
 
-void BlobLess(int *nbBlob, LnList *blobs)
+void BlobLess()
 {
-    *nbBlob /= 2;
-    if (*nbBlob < 1)
-        *nbBlob = 1;
-    if (blobs->first != NULL)
-		BlobsDel(blobs);
-	*blobs = BlobsInit(*nbBlob);
+	Data *data = DataPointer();
+    	data->nbBlob /= 2;
+   	if (data->nbBlob < BLOB_MIN)
+       		data->nbBlob = BLOB_MIN;
+	if (data->blobs.first != NULL)
+		BlobsDel(&data->blobs);
+	data->blobs = BlobsInit(data->nbBlob);
 }
 
 bool BlobsStillHaveEnergy(LnList *blobs)
