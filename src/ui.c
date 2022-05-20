@@ -1,6 +1,5 @@
 #include "ui.h"
 #include "data.h"
-#include "gen.h"
 
 
 void MenuToRun()

@@ -1,5 +1,7 @@
 #include "blob.h"
 #include "data.h"
+#include "gen.h"
+
 
 void BlobRender(const Blob *blob)
 {
@@ -94,6 +96,7 @@ LnList BlobsInit(int nbBlob)
 
 		blob.speed = GetRandomValue(BLOB_MIN_SPEED * 1e3f,
 			(BLOB_MAX_SPEED - 3.f) * 1e3f) / 1e3f;
+		blob.energy = BLOB_ENERGY;
 		
 		LnList_pushBack(Blob, &blobs, &blob);
 	}
@@ -110,6 +113,10 @@ void BlobMore()
     	if (data->blobs.first != NULL)
 		BlobsDel(&data->blobs);
 	data->blobs = BlobsInit(data->nbBlob);
+
+	UiGraphBar_del(&data->speedGraph);
+	UiGraphLine_del(&data->popGraph);
+	GraphsInit();
 }
 
 void BlobLess()
@@ -121,6 +128,26 @@ void BlobLess()
 	if (data->blobs.first != NULL)
 		BlobsDel(&data->blobs);
 	data->blobs = BlobsInit(data->nbBlob);
+
+	UiGraphBar_del(&data->speedGraph);
+	UiGraphLine_del(&data->popGraph);
+	GraphsInit();
+}
+
+bool BlobsStillHaveEnergy(LnList *blobs)
+{
+	Iter iter = Iterate(blobs);
+	Blob *blob = Iter_getElem(Blob, &iter);
+
+	while (blob != NULL) {
+		if (blob->energy > 0.f)
+			return true;
+
+		Iter_next(&iter);
+		blob = Iter_getElem(Blob, &iter);
+	}
+
+	return false;
 }
 
 void BlobsRender(LnList *blobs)

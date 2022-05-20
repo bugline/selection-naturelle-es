@@ -38,9 +38,12 @@ void FixedUpdate(const float pFixDt, Data *pData)
 
 	while (blob != NULL) {
 		// Mouvement des blobs
-		Vector2 dir = BlobGetDir(blob->pos, &pData->foods);
-		blob->pos = Vector2Add(blob->pos, Vector2Scale(dir,
-			pFixDt * blob->speed));
+		if (blob->energy > 0.f) {
+			Vector2 dir = BlobGetDir(blob->pos, &pData->foods);
+			blob->pos = Vector2Add(blob->pos, Vector2Scale(dir,
+				pFixDt * blob->speed));
+			blob->energy -= blob->speed * 10 * pFixDt;
+		}
 
 		// Detection de colision
 		BlobTryEat(blob, &pData->foods);
@@ -50,7 +53,9 @@ void FixedUpdate(const float pFixDt, Data *pData)
 	}
 
 	// Quand toutes les carotes sont mangées
-	if (pData->foods.first == NULL) {
+	if (pData->foods.first == NULL ||
+		!BlobsStillHaveEnergy(&pData->blobs)) {
+
 		ProduceNextGen(pData);
 		GraphsUpdate(pData);
 		FoodsDel(&pData->foods);
@@ -136,9 +141,6 @@ void MainRemove(App *p_App)
 
 	BlobsDel(&data->blobs);
 	FoodsDel(&data->foods);
-
-	UiGraphBar_del(&data->speedGraph);
-	UiGraphLine_del(&data->popGraph);
 
 	UnloadTexture(data->foodTex);
 }
