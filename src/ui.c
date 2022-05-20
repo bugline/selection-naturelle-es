@@ -1,5 +1,7 @@
 #include "ui.h"
 #include "data.h"
+#include "gen.h"
+
 
 void MenuToRun()
 {
@@ -49,12 +51,22 @@ void ButtCallback_nbBlobLeft()
 {
 	Data *data = DataPointer();
 	BlobLess(&data->nbBlob, &data->blobs);
+
+	UiGraphBar_del(&data->speedGraph);
+	UiGraphLine_del(&data->popGraph);
+
+	GraphsInit();
 }
 
 void ButtCallback_nbBlobRight()
 {
 	Data *data = DataPointer();
 	BlobMore(&data->nbBlob, &data->blobs);
+
+	UiGraphBar_del(&data->speedGraph);
+	UiGraphLine_del(&data->popGraph);
+
+	GraphsInit();
 }
 
 void ButtCallback_restart()
