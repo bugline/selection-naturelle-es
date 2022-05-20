@@ -58,19 +58,19 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
 	tSpeed->change = 0;
     }
     if (GetTime()  < tSpeed->currTimeAnim + tSpeed->timeAnim) {
-	char *num = NEW_ARR(char, 8);
-	memset(num, '\0', 8);
-	gcvt(tSpeed->value, 8, num);
-
-	char *text = NEW_ARR(char, 9);
-	memset(text, '\0', 9);
-	text[0] = 'x';
-	strcat(text, num);
+	char *text;
+	
+	if (tSpeed->value < 1.f) {
+		text = NEW_ARR(char, 5);
+		sprintf(text, "x%1.3f", tSpeed->value);
+	} else {
+		text = NEW_ARR(char, 7);
+		sprintf(text, "x%d", (int) tSpeed->value);
+	}
 
 	UiText_chngTxt(&tSpeed->uiText, text);
 
-	free(num);
-	free(text);
+	DEL(text);
 
 	if (tSpeed->timeAnim != 0.f) {
 		float alpha = (GetTime() - tSpeed->currTimeAnim) /
