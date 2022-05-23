@@ -1,6 +1,7 @@
 #include "food.h"
 
 #include "raymath.h"
+#include "data.h"
 
 
 bool FoodCircleColl(const Food *pFood, const Vector2 pCircPos, const float pRad)
@@ -35,6 +36,26 @@ LnList FoodsInit(int nbFood, Texture2D *tex)
 	}
 	
 	return foods;
+}
+
+void FoodMore()
+{
+	Data *data = DataPointer();
+	data->nbFood *= 2;
+	if (data->nbFood > FOOD_MAX)
+		data->nbFood = FOOD_MAX;
+	if (data->state == STATE_MENU)
+		data->foods = FoodsInit(data->nbFood, &data->foodTex);
+}
+
+void FoodLess()
+{
+	Data *data = DataPointer();
+	data->nbFood /= 2;
+	if (data->nbFood < FOOD_MIN)
+		data->nbFood = FOOD_MIN;
+	if (data->state == STATE_MENU)
+		data->foods = FoodsInit(data->nbFood, &data->foodTex);
 }
 
 void FoodsRender(LnList *foods)

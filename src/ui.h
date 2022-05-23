@@ -10,10 +10,13 @@ typedef struct Butt {
     UiButtTex restart;
     UiButtTex left_1;
     UiButtTex right_1;
+    UiButtTex left_2;
+    UiButtTex right_2;
 } Butt;
 
 typedef struct Text {
 	UiText nbBlob;
+    UiText nbFood;
 } Text;
 typedef struct Ui {
     Butt butt;
@@ -23,6 +26,8 @@ typedef struct Ui {
 void MenuToRun(void);
 void RunToMenu(void);
 void UiInit(Ui *ui);
+void UiTextNbBlobUpdate();
+void UiTextNbFoodUpdate();
 void UiMenuUpdate(Ui *ui);
 void UiRunUpdate(Ui *ui);
 void UiRender(Ui *ui);

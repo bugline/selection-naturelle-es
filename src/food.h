@@ -7,7 +7,8 @@
 #include "gamemaker/core.h"
 #include "linked_list.h"
 
-
+#define FOOD_MAX 10000
+#define FOOD_MIN 1
 // The foods default size
 #define FOOD_DEF_SIZE ((Vector2) { 0.4f, 0.4f })
 
@@ -27,6 +28,8 @@ void FoodRender(const Food *food);
 
 // Arrays
 LnList FoodsInit(int foodAmount, Texture2D *texture);
+void FoodMore();
+void FoodLess();
 void FoodsRender(LnList *foods);
 void FoodsDel(LnList *foods);
 

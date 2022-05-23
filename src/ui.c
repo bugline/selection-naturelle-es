@@ -60,6 +60,16 @@ void UiInit(Ui *ui)
 	);
 
 	UiButtTex_init(
+		&ui->butt.left_2, (Vector2) { 300, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/left_arrow.png", &FoodLess
+	);
+
+	UiButtTex_init(
+		&ui->butt.right_2, (Vector2) { 380, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/right_arrow.png", &FoodMore
+	);
+
+	UiButtTex_init(
 		&ui->butt.restart, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
 		ANCHOR_SW, "res/ui/restart.png", &RunToMenu
 	);
@@ -70,15 +80,29 @@ void UiInit(Ui *ui)
 		&ui->text.nbBlob, "4\0", font, 50,
 		(Vector2) { 10, 0 }, ANCHOR_W, RAYWHITE
 	);
+
+	UiText_init(
+		&ui->text.nbFood, "100\0", font, 50,
+		(Vector2) { 10, 40 }, ANCHOR_W, RAYWHITE
+	);
 }
 
 void UiTextNbBlobUpdate()
 {
 	Data *data = DataPointer();
 	char *nbBlob = 	NEW_ARR(char, 11);
-	sprintf(nbBlob, "Blob: %d", data->nbBlob);
+	sprintf(nbBlob, "Blobs : %d", data->nbBlob);
 	UiText_chngTxt(&data->ui.text.nbBlob, nbBlob);
 	free(nbBlob);
+}
+
+void UiTextNbFoodUpdate()
+{
+	Data *data = DataPointer();
+	char *nbFood = 	NEW_ARR(char, 11);
+	sprintf(nbFood, "Carrotes : %d", data->nbFood);
+	UiText_chngTxt(&data->ui.text.nbFood, nbFood);
+	free(nbFood);
 }
 
 void UiMenuUpdate(Ui *ui)
@@ -87,8 +111,11 @@ void UiMenuUpdate(Ui *ui)
 
 	UiButtTex_update(&ui->butt.left_1);
 	UiButtTex_update(&ui->butt.right_1);
+	UiButtTex_update(&ui->butt.left_2);
+	UiButtTex_update(&ui->butt.right_2);
 
 	UiTextNbBlobUpdate();
+	UiTextNbFoodUpdate();
 }
 
 void UiRunUpdate(Ui *ui)
@@ -97,8 +124,11 @@ void UiRunUpdate(Ui *ui)
 
 	UiButtTex_update(&ui->butt.left_1);
 	UiButtTex_update(&ui->butt.right_1);
+	UiButtTex_update(&ui->butt.left_2);
+	UiButtTex_update(&ui->butt.right_2);
 
 	UiTextNbBlobUpdate();
+	UiTextNbFoodUpdate();
 }
 
 void UiRender(Ui *ui)
@@ -107,10 +137,13 @@ void UiRender(Ui *ui)
 
 	UiButtTex_render(&ui->butt.left_1);
 	UiButtTex_render(&ui->butt.right_1);
+	UiButtTex_render(&ui->butt.left_2);
+	UiButtTex_render(&ui->butt.right_2);
 
 	UiButtTex_render(&ui->butt.restart);
 
 	UiText_render(&ui->text.nbBlob);
+	UiText_render(&ui->text.nbFood);
 }
 
 void UiDel(Ui *ui)
@@ -119,8 +152,11 @@ void UiDel(Ui *ui)
 
 	UiButtTex_del(&ui->butt.left_1);
 	UiButtTex_del(&ui->butt.right_1);
+	UiButtTex_del(&ui->butt.left_2);
+	UiButtTex_del(&ui->butt.right_2);
 	
 	UiButtTex_del(&ui->butt.restart);
 
 	UiText_del(&ui->text.nbBlob);
+	UiText_del(&ui->text.nbFood);
 }
