@@ -6,9 +6,10 @@ void ProduceNextGen()
 {
 	Data *pData = DataPointer();
 
-	int foodsMin = pData->nbFoodFix - pData->foodVariance;
-	int foodsMax = pData->nbFoodFix + pData->foodVariance;
-	pData->nbBlob = GetRandomValue(foodsMin, foodsMax);
+	int foodsMin = pData->nbFoodFix * (1 + ((float) pData->foodVariance / 100.f));
+	int foodsMax = pData->nbFoodFix * (1 - ((float) pData->foodVariance / 100.f));
+	pData->nbFood = GetRandomValue(foodsMin, foodsMax);
+
 	int newPopSize = 0;
 
 	Iter iter = Iterate(&pData->blobs);

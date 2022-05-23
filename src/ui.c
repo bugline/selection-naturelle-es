@@ -45,6 +45,24 @@ void RunToMenu()
 	data->state = STATE_MENU;
 }
 
+void VarianceMore()
+{
+	Data *data = DataPointer();
+	data->foodVariance *= 2;
+	if (data->foodVariance > VARIANCE_MAX)
+        	data->foodVariance = VARIANCE_MAX;
+	if (data->foodVariance == 0)
+		data->foodVariance = 1;
+}
+
+void VarianceLess()
+{
+	Data *data = DataPointer();
+    	data->foodVariance /= 2;
+   	if (data->foodVariance < VARIANCE_MIN)
+       		data->foodVariance = VARIANCE_MIN;
+}
+
 void UiInit(Ui *ui)
 {
 	UiButtTex_init(
@@ -74,12 +92,12 @@ void UiInit(Ui *ui)
 
 	UiButtTex_init(
 		&ui->butt.left_3, (Vector2) { 480, -32 }, (Vector2) { 64, 64 },
-		ANCHOR_SW, "res/ui/left_arrow.png", &FoodLess
+		ANCHOR_SW, "res/ui/left_arrow.png", &VarianceLess
 	);
 
 	UiButtTex_init(
 		&ui->butt.right_3, (Vector2) { 560, -32 }, (Vector2) { 64, 64 },
-		ANCHOR_SW, "res/ui/right_arrow.png", &FoodMore
+		ANCHOR_SW, "res/ui/right_arrow.png", &VarianceMore
 	);
 
 
@@ -93,16 +111,21 @@ void UiInit(Ui *ui)
 	Font font = LoadFont("res/Panipuri.ttf");
 	UiText_init(
 		&ui->text.nbGen, "Gen : 0\0", font, 40,
-		(Vector2) { 10, -40 }, ANCHOR_W, RAYWHITE
+		(Vector2) { 10, -80 }, ANCHOR_W, RAYWHITE
 	);
 
 	UiText_init(
 		&ui->text.nbBlob, "Blobs : 4\0", font, 40,
-		(Vector2) { 10, 0 }, ANCHOR_W, RAYWHITE
+		(Vector2) { 10, -40 }, ANCHOR_W, RAYWHITE
 	);
 
 	UiText_init(
 		&ui->text.nbFood, "Carrotes : 100\0", font, 40,
+		(Vector2) { 10, 0 }, ANCHOR_W, RAYWHITE
+	);
+
+	UiText_init(
+		&ui->text.variance, "Variance : 0\0", font, 40,
 		(Vector2) { 10, 40 }, ANCHOR_W, RAYWHITE
 	);
 }
@@ -138,7 +161,7 @@ void UiTextVarianceUpdate()
 {
 	Data *data = DataPointer();
 	char *variance = NEW_ARR(char, 11);
-	sprintf(variance, "Carrotes : %d", data->foodVariance);
+	sprintf(variance, "Variance : %d", data->foodVariance);
 	UiText_chngTxt(&data->ui.text.variance, variance);
 	free(variance);
 }

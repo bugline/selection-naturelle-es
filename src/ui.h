@@ -7,7 +7,7 @@
 #include "timeSpeed.h"
 
 #define VARIANCE_MIN 0
-#define VARIANCE_MAX 1000
+#define VARIANCE_MAX 100
 
 typedef struct Butt {
     UiButtTex play;
@@ -33,6 +33,8 @@ typedef struct Ui {
 
 void MenuToRun(void);
 void RunToMenu(void);
+void VarianceMore();
+void VarianceLess();
 void UiInit(Ui *ui);
 void UiTextNbGenUpdate();
 void UiTextNbBlobUpdate();
