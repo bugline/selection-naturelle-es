@@ -41,21 +41,21 @@ LnList FoodsInit(int nbFood, Texture2D *tex)
 void FoodMore()
 {
 	Data *data = DataPointer();
-	data->nbFood *= 2;
-	if (data->nbFood > FOOD_MAX)
-		data->nbFood = FOOD_MAX;
+	data->nbFoodFix *= 2;
+	if (data->nbFoodFix > FOOD_MAX)
+		data->nbFoodFix = FOOD_MAX;
 	if (data->state == STATE_MENU)
-		data->foods = FoodsInit(data->nbFood, &data->foodTex);
+		data->foods = FoodsInit(data->nbFoodFix, &data->foodTex);
 }
 
 void FoodLess()
 {
 	Data *data = DataPointer();
-	data->nbFood /= 2;
-	if (data->nbFood < FOOD_MIN)
-		data->nbFood = FOOD_MIN;
+	data->nbFoodFix /= 2;
+	if (data->nbFoodFix < FOOD_MIN)
+		data->nbFoodFix = FOOD_MIN;
 	if (data->state == STATE_MENU)
-		data->foods = FoodsInit(data->nbFood, &data->foodTex);
+		data->foods = FoodsInit(data->nbFoodFix, &data->foodTex);
 }
 
 void FoodsRender(LnList *foods)

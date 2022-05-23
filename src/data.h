@@ -32,6 +32,8 @@ typedef struct Data {
 	Texture2D foodTex;
 	LnList foods;
 	int nbFood;
+	int nbFoodFix;
+	int foodVariance;
 	
 	TimeSpeed timeSpeed;
 

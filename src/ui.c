@@ -28,6 +28,9 @@ void RunToMenu()
 	data->timeSpeed.value = 1;
 	data->nbBlob = 4;
 	data->nbFood = 100;
+	data->nbFoodFix = data->nbFood;
+
+	data->foodVariance = 0;
 
 	if (data->blobs.first != NULL)
 		BlobsDel(&data->blobs);
@@ -70,21 +73,47 @@ void UiInit(Ui *ui)
 	);
 
 	UiButtTex_init(
+		&ui->butt.left_3, (Vector2) { 480, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/left_arrow.png", &FoodLess
+	);
+
+	UiButtTex_init(
+		&ui->butt.right_3, (Vector2) { 560, -32 }, (Vector2) { 64, 64 },
+		ANCHOR_SW, "res/ui/right_arrow.png", &FoodMore
+	);
+
+
+	UiButtTex_init(
 		&ui->butt.restart, (Vector2) { 0, -32 }, (Vector2) { 64, 64 },
 		ANCHOR_SW, "res/ui/restart.png", &RunToMenu
 	);
 	ui->butt.restart.color = BLANK;
 
+
 	Font font = LoadFont("res/Panipuri.ttf");
 	UiText_init(
-		&ui->text.nbBlob, "4\0", font, 50,
+		&ui->text.nbGen, "Gen : 0\0", font, 40,
+		(Vector2) { 10, -40 }, ANCHOR_W, RAYWHITE
+	);
+
+	UiText_init(
+		&ui->text.nbBlob, "Blobs : 4\0", font, 40,
 		(Vector2) { 10, 0 }, ANCHOR_W, RAYWHITE
 	);
 
 	UiText_init(
-		&ui->text.nbFood, "100\0", font, 50,
+		&ui->text.nbFood, "Carrotes : 100\0", font, 40,
 		(Vector2) { 10, 40 }, ANCHOR_W, RAYWHITE
 	);
+}
+
+void UiTextNbGenUpdate()
+{
+	Data *data = DataPointer();
+	char *nbGen = 	NEW_ARR(char, 15);
+	sprintf(nbGen, "Gen : %d", data->genCount);
+	UiText_chngTxt(&data->ui.text.nbGen, nbGen);
+	free(nbGen);
 }
 
 void UiTextNbBlobUpdate()
@@ -100,9 +129,18 @@ void UiTextNbFoodUpdate()
 {
 	Data *data = DataPointer();
 	char *nbFood = 	NEW_ARR(char, 11);
-	sprintf(nbFood, "Carrotes : %d", data->nbFood);
+	sprintf(nbFood, "Carrotes : %d", data->nbFoodFix);
 	UiText_chngTxt(&data->ui.text.nbFood, nbFood);
 	free(nbFood);
+}
+
+void UiTextVarianceUpdate()
+{
+	Data *data = DataPointer();
+	char *variance = NEW_ARR(char, 11);
+	sprintf(variance, "Carrotes : %d", data->foodVariance);
+	UiText_chngTxt(&data->ui.text.variance, variance);
+	free(variance);
 }
 
 void UiMenuUpdate(Ui *ui)
@@ -113,9 +151,13 @@ void UiMenuUpdate(Ui *ui)
 	UiButtTex_update(&ui->butt.right_1);
 	UiButtTex_update(&ui->butt.left_2);
 	UiButtTex_update(&ui->butt.right_2);
+	UiButtTex_update(&ui->butt.left_3);
+	UiButtTex_update(&ui->butt.right_3);
 
+	UiTextNbGenUpdate();
 	UiTextNbBlobUpdate();
 	UiTextNbFoodUpdate();
+	UiTextVarianceUpdate();
 }
 
 void UiRunUpdate(Ui *ui)
@@ -126,9 +168,13 @@ void UiRunUpdate(Ui *ui)
 	UiButtTex_update(&ui->butt.right_1);
 	UiButtTex_update(&ui->butt.left_2);
 	UiButtTex_update(&ui->butt.right_2);
+	UiButtTex_update(&ui->butt.left_3);
+	UiButtTex_update(&ui->butt.right_3);
 
+	UiTextNbGenUpdate();
 	UiTextNbBlobUpdate();
 	UiTextNbFoodUpdate();
+	UiTextVarianceUpdate();
 }
 
 void UiRender(Ui *ui)
@@ -139,11 +185,15 @@ void UiRender(Ui *ui)
 	UiButtTex_render(&ui->butt.right_1);
 	UiButtTex_render(&ui->butt.left_2);
 	UiButtTex_render(&ui->butt.right_2);
+	UiButtTex_render(&ui->butt.left_3);
+	UiButtTex_render(&ui->butt.right_3);
 
 	UiButtTex_render(&ui->butt.restart);
 
+	UiText_render(&ui->text.nbGen);
 	UiText_render(&ui->text.nbBlob);
 	UiText_render(&ui->text.nbFood);
+	UiText_render(&ui->text.variance);
 }
 
 void UiDel(Ui *ui)
@@ -157,6 +207,8 @@ void UiDel(Ui *ui)
 	
 	UiButtTex_del(&ui->butt.restart);
 
+	UiText_del(&ui->text.nbGen);
 	UiText_del(&ui->text.nbBlob);
 	UiText_del(&ui->text.nbFood);
+	UiText_del(&ui->text.variance);
 }
