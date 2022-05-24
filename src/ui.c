@@ -120,7 +120,7 @@ void UiInit(Ui *ui)
 	);
 
 	UiText_init(
-		&ui->text.nbFood, "Carrotes : 100\0", font, 40,
+		&ui->text.nbFood, "Carottes : 100\0", font, 40,
 		(Vector2) { 10, 0 }, ANCHOR_W, RAYWHITE
 	);
 
@@ -128,6 +128,22 @@ void UiInit(Ui *ui)
 		&ui->text.variance, "Variance : 0\0", font, 40,
 		(Vector2) { 10, 40 }, ANCHOR_W, RAYWHITE
 	);
+}
+
+/*écrit un texte quand tout les blobs sont mort (est sensé mettre la simulation sur pause mais 
+PUISQUE LE CODE NEST PAS COMMENT2 ONT COMPREND PAS TOUT!! SURTOUT SUR LES STRUCTURE!!!!!!*/
+void UiEnd(Ui *ui)
+{
+	Font font = LoadFont("res/Panipuri.ttf");
+
+	//écrit au milieu un message de fin
+	UiText_init(
+		&ui->text.variance, "Tout les blobs sont mort\0", font, 40,
+		(Vector2) { 10, 80 }, ANCHOR_W, RAYWHITE
+	);
+
+	//debug
+	printf("\n \n Tout les blobs sont mort \n \n");
 }
 
 void UiTextNbGenUpdate()
@@ -152,7 +168,7 @@ void UiTextNbFoodUpdate()
 {
 	Data *data = DataPointer();
 	char *nbFood = 	NEW_ARR(char, 23);
-	sprintf(nbFood, "Carrotes : %d", data->nbFoodFix);
+	sprintf(nbFood, "Carottes : %d", data->nbFoodFix);
 	UiText_chngTxt(&data->ui.text.nbFood, nbFood);
 	free(nbFood);
 }

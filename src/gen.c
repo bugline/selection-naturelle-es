@@ -1,5 +1,6 @@
 #include "gen.h"
 #include "data.h"
+#include "ui.h"
 
 
 void ProduceNextGen()
@@ -59,6 +60,10 @@ void ProduceNextGen()
 	}
 
 	pData->nbBlob = newPopSize;
+
+	//met pause a la simultion si plus de blob
+	if (pData->nbBlob==0)
+		UiEnd(&pData->ui);
 }
 
 void GraphsInit()
