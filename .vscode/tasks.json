@@ -33,7 +33,7 @@
             "${workspaceFolder}/bin/debug.exe",
             "-Wall",
             "-D",
-            "DEBUG",
+            "RELEASE",
             "-I",
             "${workspaceFolder}/inc/",
             "-L",

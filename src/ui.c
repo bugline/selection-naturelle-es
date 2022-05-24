@@ -142,7 +142,7 @@ void UiTextNbGenUpdate()
 void UiTextNbBlobUpdate()
 {
 	Data *data = DataPointer();
-	char *nbBlob = 	NEW_ARR(char, 11);
+	char *nbBlob = 	NEW_ARR(char, 23);
 	sprintf(nbBlob, "Blobs : %d", data->nbBlob);
 	UiText_chngTxt(&data->ui.text.nbBlob, nbBlob);
 	free(nbBlob);
@@ -151,7 +151,7 @@ void UiTextNbBlobUpdate()
 void UiTextNbFoodUpdate()
 {
 	Data *data = DataPointer();
-	char *nbFood = 	NEW_ARR(char, 11);
+	char *nbFood = 	NEW_ARR(char, 23);
 	sprintf(nbFood, "Carrotes : %d", data->nbFoodFix);
 	UiText_chngTxt(&data->ui.text.nbFood, nbFood);
 	free(nbFood);
@@ -160,7 +160,7 @@ void UiTextNbFoodUpdate()
 void UiTextVarianceUpdate()
 {
 	Data *data = DataPointer();
-	char *variance = NEW_ARR(char, 11);
+	char *variance = NEW_ARR(char, 23);
 	sprintf(variance, "Variance : %d", data->foodVariance);
 	UiText_chngTxt(&data->ui.text.variance, variance);
 	free(variance);

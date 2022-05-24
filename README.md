@@ -1,2 +1,5 @@
-# selection-naturelle-es
-Projet d'ES sur la séléction naturelle des blobs
+# Selection naturelle
+
+## Résumé
+Des **blobs** se battent pour manger des carottes. On voit l'évolution du nombre d'individus et de
+leur vitesse.

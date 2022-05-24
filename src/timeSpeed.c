@@ -62,7 +62,7 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
 	
 	if (tSpeed->value < 1.f) {
 		text = NEW_ARR(char, 5);
-		sprintf(text, "x%1.3f", tSpeed->value);
+		sprintf(text, "x%.3f", tSpeed->value);
 	} else {
 		text = NEW_ARR(char, 7);
 		sprintf(text, "x%d", (int) tSpeed->value);
