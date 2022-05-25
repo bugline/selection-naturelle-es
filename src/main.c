@@ -28,6 +28,8 @@ void MainInit(App *p_App)
 	data->fixUdpt.incrmnt = 0.f;
 	data->fixUdpt.limExec = 0.2f;
 
+	data->simulEnd = false;
+
 	RunToMenu();
 }
 
@@ -78,14 +80,18 @@ void MenuUpdate(Data *data)
 
 void RunUpdate(Data *data, float p_Dt)
 {
-	TimeSpeedUpdate(&data->timeSpeed, &p_Dt);
-
 	UiRunUpdate(&data->ui);
 
 	if (IsKeyPressed(KEY_DELETE))
 		RunToMenu();
 
 	MouseUpdate(data);
+
+	// Si tout les blobs sont morts ne pas socuper de les bouger
+	if (DataPointer()->simulEnd)
+		return;
+
+	TimeSpeedUpdate(&data->timeSpeed, &p_Dt);
     
 	// FIXED UPDATE
 	data->fixUdpt.incrmnt += p_Dt * data->timeSpeed.value;

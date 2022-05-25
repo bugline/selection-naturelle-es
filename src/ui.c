@@ -43,6 +43,7 @@ void RunToMenu()
 	GraphsInit(data);
 
 	data->state = STATE_MENU;
+	data->simulEnd = false;
 }
 
 void VarianceMore()
@@ -128,19 +129,19 @@ void UiInit(Ui *ui)
 		&ui->text.variance, "Variance : 0\0", font, 40,
 		(Vector2) { 10, 40 }, ANCHOR_W, RAYWHITE
 	);
+
+	UiText_init(
+		&ui->text.end, "Tout les blobs sont mort\0", font, 40,
+		(Vector2) { 0, 0 }, ANCHOR_C, RAYWHITE
+	);
 }
 
 /*écrit un texte quand tout les blobs sont mort (est sensé mettre la simulation sur pause mais 
 PUISQUE LE CODE NEST PAS COMMENT2 ONT COMPREND PAS TOUT!! SURTOUT SUR LES STRUCTURE!!!!!!*/
 void UiEnd(Ui *ui)
 {
-	Font font = LoadFont("res/Panipuri.ttf");
-
-	//écrit au milieu un message de fin
-	UiText_init(
-		&ui->text.variance, "Tout les blobs sont mort\0", font, 40,
-		(Vector2) { 10, 80 }, ANCHOR_W, RAYWHITE
-	);
+	DataPointer()->timeSpeed.value = 0.f;
+	DataPointer()->simulEnd = true;
 
 	//debug
 	printf("\n \n Tout les blobs sont mort \n \n");
@@ -233,6 +234,9 @@ void UiRender(Ui *ui)
 	UiText_render(&ui->text.nbBlob);
 	UiText_render(&ui->text.nbFood);
 	UiText_render(&ui->text.variance);
+
+	if (DataPointer()->simulEnd)
+		UiText_render(&ui->text.end);
 }
 
 void UiDel(Ui *ui)

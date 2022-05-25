@@ -48,6 +48,8 @@ typedef struct Data {
 	UiGraphLine popGraph;
 
 	int genCount;
+
+	bool simulEnd;
 } Data;
 
 Data *DataPointer(void);
