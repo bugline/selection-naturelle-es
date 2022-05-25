@@ -25,7 +25,6 @@ typedef struct Text {
 	UiText nbBlob;
     UiText nbFood;
     UiText variance;
-    //truc que j'ai fais et que je ne sait pas a quoi ça sert car RIEN NEST COMMENTE!!!
     UiText end;
 } Text;
 typedef struct Ui {
@@ -37,7 +36,9 @@ void MenuToRun(void);
 void RunToMenu(void);
 void VarianceMore();
 void VarianceLess();
+//inisialise tout les texte
 void UiInit(Ui *ui);
+//met sur pause et passe la valeur pour la fin a true
 void UiEnd(Ui *ui);
 void UiTextNbGenUpdate();
 void UiTextNbBlobUpdate();
@@ -45,6 +46,7 @@ void UiTextNbFoodUpdate();
 void UiTextVarianceUpdate();
 void UiMenuUpdate(Ui *ui);
 void UiRunUpdate(Ui *ui);
+//écrit tout les textes
 void UiRender(Ui *ui);
 void UiDel(Ui *ui);
 

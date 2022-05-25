@@ -15,6 +15,8 @@ void TimeSpeedInit(TimeSpeed *tSpeed)
     UiText_init(&tSpeed->uiText, "", font, 60, (Vector2) { 0, 0 }, ANCHOR_C, WHITE);
 }
 
+/*------------------------------------------------------------------*/
+
 void TimeSpeedMore()
 {
 	Data *data = DataPointer();
@@ -27,6 +29,8 @@ void TimeSpeedMore()
 	data->timeSpeed.change = 1;
 }
 
+/*------------------------------------------------------------------*/
+
 void TimeSpeedLess()
 {
 	Data *data = DataPointer();
@@ -36,6 +40,8 @@ void TimeSpeedLess()
 		data->timeSpeed.value = 0;
 	data->timeSpeed.change = 1;
 }
+
+/*------------------------------------------------------------------*/
 
 void TimeSpeedUpdate(TimeSpeed *tSpeed, float *dt)
 {
@@ -50,6 +56,8 @@ void TimeSpeedUpdate(TimeSpeed *tSpeed, float *dt)
 		TimeSpeedMore();
 	}
 }
+
+/*------------------------------------------------------------------*/
 
 void TimeSpeedRender(TimeSpeed *tSpeed)
 {
@@ -85,6 +93,8 @@ void TimeSpeedRender(TimeSpeed *tSpeed)
 	tSpeed->change = 0;
     }
 }
+
+/*------------------------------------------------------------------*/
 
 void TimeSpeedDel(TimeSpeed *tSpeed)
 {

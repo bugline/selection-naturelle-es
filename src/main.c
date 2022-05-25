@@ -33,6 +33,8 @@ void MainInit(App *p_App)
 	RunToMenu();
 }
 
+/*------------------------------------------------------------------*/
+
 void FixedUpdate(const float pFixDt, Data *pData)
 {
 	Iter iter = Iterate(&pData->blobs);
@@ -65,6 +67,8 @@ void FixedUpdate(const float pFixDt, Data *pData)
 	}
 }
 
+/*------------------------------------------------------------------*/
+
 void MenuUpdate(Data *data)
 {
 	UiMenuUpdate(&data->ui);
@@ -77,6 +81,8 @@ void MenuUpdate(Data *data)
 		MenuToRun();
 	MouseUpdate(data);
 }
+
+/*------------------------------------------------------------------*/
 
 void RunUpdate(Data *data, float p_Dt)
 {
@@ -106,6 +112,8 @@ void RunUpdate(Data *data, float p_Dt)
 	}
 }
 
+/*------------------------------------------------------------------*/
+
 void MainUpdate(App *p_App, float p_Dt)
 {
 	Data *data = DataPointer();
@@ -116,6 +124,8 @@ void MainUpdate(App *p_App, float p_Dt)
 		RunUpdate(data, p_Dt);
 	}
 }
+
+/*------------------------------------------------------------------*/
 
 void MainRender(App *p_App)
 {
@@ -138,6 +148,8 @@ void MainRender(App *p_App)
 	UiRender(&data->ui);
 }
 
+/*------------------------------------------------------------------*/
+
 void MainRemove(App *p_App)
 {
 	Data *data = DataPointer();
@@ -150,6 +162,8 @@ void MainRemove(App *p_App)
 
 	UnloadTexture(data->foodTex);
 }
+
+/*------------------------------------------------------------------*/
 
 int main()
 {

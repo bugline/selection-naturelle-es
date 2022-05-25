@@ -12,6 +12,8 @@ static struct LnListElemInfo *_LnList_GetInfo(const void *elem)
 	return (struct LnListElemInfo *) (elem - sizeof(struct LnListElemInfo));
 }
 
+/*------------------------------------------------------------------*/
+
 static void *_LnList_malloc(const size_t size)
 {
 	/*     <-  Allocates this space  ->
@@ -23,6 +25,8 @@ static void *_LnList_malloc(const size_t size)
 	return malloc(sizeof(struct LnListElemInfo) + size) +
 		sizeof(struct LnListElemInfo);
 }
+
+/*------------------------------------------------------------------*/
 
 static void _LnList_copy(void *dest, const void *src, const size_t bytes)
 {
@@ -36,7 +40,7 @@ static void _LnList_copy(void *dest, const void *src, const size_t bytes)
 	}
 }
 
-
+/*------------------------------------------------------------------*/
 // LIST METHODS
 
 LnList _LnList_new(size_t typeSize)
@@ -47,6 +51,8 @@ LnList _LnList_new(size_t typeSize)
 		NULL       // last elem ptr
 	};
 }
+
+/*------------------------------------------------------------------*/
 
 void *_LnList_get(LnList *list, const int index)
 {
@@ -67,6 +73,8 @@ void *_LnList_get(LnList *list, const int index)
 	return nextPtr;
 }
 
+/*------------------------------------------------------------------*/
+
 void *_SafeLnList_get(size_t typeSize, LnList *list, const int index)
 {
 	if (typeSize != list->typeSize) {
@@ -77,6 +85,8 @@ void *_SafeLnList_get(size_t typeSize, LnList *list, const int index)
 	return _LnList_get(list, index);
 }
 
+/*------------------------------------------------------------------*/
+
 char LnList_pop(LnList *list, const int index)
 {
 	void *elem = _LnList_get(list, index);
@@ -86,6 +96,8 @@ char LnList_pop(LnList *list, const int index)
 	
 	return LnList_rem(list, elem);
 }
+
+/*------------------------------------------------------------------*/
 
 char LnList_rem(LnList *list, void *ptr)
 {
@@ -115,6 +127,8 @@ char LnList_rem(LnList *list, void *ptr)
 	
 	return 0;
 }
+
+/*------------------------------------------------------------------*/
 
 char _LnList_pushFront(LnList *list, const void *newElem)
 {
@@ -156,6 +170,8 @@ char _LnList_pushFront(LnList *list, const void *newElem)
 	return 0;
 }
 
+/*------------------------------------------------------------------*/
+
 char _LnList_pushBack(LnList *list, const void *newElem)
 {
 	// Alloc space for the new element
@@ -196,6 +212,8 @@ char _LnList_pushBack(LnList *list, const void *newElem)
 	return 0;
 }
 
+/*------------------------------------------------------------------*/
+
 void LnList_clear(LnList *list)
 {
 	void *next = list->first;
@@ -206,7 +224,7 @@ void LnList_clear(LnList *list)
 	}
 }
 
-
+/*------------------------------------------------------------------*/
 // ITER METHODS
 
 Iter Iterate(LnList *list)

@@ -43,6 +43,7 @@ UiGraphBar UiGraphBar_default(int valLen)
 	return graph;
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphBar_setVal(UiGraphBar *graph, int index, float value)
 {
@@ -50,6 +51,7 @@ void UiGraphBar_setVal(UiGraphBar *graph, int index, float value)
 		graph->values[index] = value;
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphBar_newValAmnt(UiGraphBar *graph, int amount)
 {
@@ -64,6 +66,7 @@ void UiGraphBar_newValAmnt(UiGraphBar *graph, int amount)
 	graph->valLen = amount;
 }
 
+/*------------------------------------------------------------------*/
 
 float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 {
@@ -89,6 +92,7 @@ float *_GetFrequ(float *values, int valLen, Vector2 range, float step)
 	return frequ;
 }
 
+/*------------------------------------------------------------------*/
 
 void _DrawBars(const UiGraphBar *graph)
 {
@@ -123,6 +127,7 @@ void _DrawBars(const UiGraphBar *graph)
 	}
 }
 
+/*------------------------------------------------------------------*/
 
 void _DrawText(const UiGraphBar *graph)
 {
@@ -156,6 +161,7 @@ void _DrawText(const UiGraphBar *graph)
 		graph->fontSize, graph->fontSize / 10.f, graph->colFg);
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphBar_render(const UiGraphBar *graph)
 {
@@ -171,6 +177,7 @@ void UiGraphBar_render(const UiGraphBar *graph)
 	EndBlendMode();
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphBar_del(UiGraphBar *graph)
 {

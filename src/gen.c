@@ -66,6 +66,8 @@ void ProduceNextGen()
 		UiEnd(&pData->ui);
 }
 
+/*------------------------------------------------------------------*/
+
 void GraphsInit()
 {
 	Data *pData = DataPointer();
@@ -121,6 +123,8 @@ void GraphsInit()
 	pData->popGraph = g;
 }
 
+/*------------------------------------------------------------------*/
+
 void ReducePopGraphPts(UiGraphLine *popGraph, int maxPtsAmout)
 {
 	if (!(popGraph->ptsLen > maxPtsAmout))
@@ -150,6 +154,8 @@ void ReducePopGraphPts(UiGraphLine *popGraph, int maxPtsAmout)
 
 	popGraph->xAxis.valRng.x = popGraph->pts[0].x;
 }
+
+/*------------------------------------------------------------------*/
 
 void GraphsUpdate()
 {

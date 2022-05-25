@@ -8,6 +8,8 @@ void BlobRender(const Blob *blob)
 	DrawCircleV(blob->pos, blob->size, blob->color);
 }
 
+/*------------------------------------------------------------------*/
+
 Vector2 BlobGetDir(Vector2 pPos, LnList *pFoods)
 {
 	Vector2 closer = { 0.f, 0.f };
@@ -35,6 +37,8 @@ Vector2 BlobGetDir(Vector2 pPos, LnList *pFoods)
 	return Vector2Scale(closer, 1.f / sqrt(closerDist));
 }
 
+/*------------------------------------------------------------------*/
+
 void BlobTryEat(Blob *pBlob, LnList *pFoods)
 {
 	Iter iter = Iterate(pFoods);
@@ -54,6 +58,7 @@ void BlobTryEat(Blob *pBlob, LnList *pFoods)
 	}
 }
 
+/*------------------------------------------------------------------*/
 // Arrays
 
 Vector2 GetRandBlobPos()
@@ -69,6 +74,8 @@ void fclamp(float *val, float min, float max)
 		*val = min;
 }
 
+/*------------------------------------------------------------------*/
+
 Blob BlobMutate(Blob blob)
 {
 	Blob newBlob = blob;
@@ -79,6 +86,8 @@ Blob BlobMutate(Blob blob)
 
 	return newBlob;
 }
+
+/*------------------------------------------------------------------*/
 
 LnList BlobsInit(int nbBlob)
 {
@@ -105,6 +114,8 @@ LnList BlobsInit(int nbBlob)
 	return blobs;
 }
 
+/*------------------------------------------------------------------*/
+
 void BlobMore()
 {
 	Data *data = DataPointer();
@@ -120,6 +131,8 @@ void BlobMore()
 	GraphsInit();
 }
 
+/*------------------------------------------------------------------*/
+
 void BlobLess()
 {
 	Data *data = DataPointer();
@@ -134,6 +147,8 @@ void BlobLess()
 	UiGraphLine_del(&data->popGraph);
 	GraphsInit();
 }
+
+/*------------------------------------------------------------------*/
 
 bool BlobsStillHaveEnergy(LnList *blobs)
 {
@@ -151,6 +166,8 @@ bool BlobsStillHaveEnergy(LnList *blobs)
 	return false;
 }
 
+/*------------------------------------------------------------------*/
+
 void BlobsRender(LnList *blobs)
 {
 	Iter iter = Iterate(blobs);
@@ -163,6 +180,8 @@ void BlobsRender(LnList *blobs)
 		blob = Iter_getElem(Blob, &iter);
 	}
 }
+
+/*------------------------------------------------------------------*/
 
 void BlobsDel(LnList *blobs)
 {

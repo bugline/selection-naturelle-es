@@ -12,6 +12,8 @@ void UiImg_init(UiImg *pImg, const char *pFName, Vector2 pPos, Vector2 pSize,
 	pImg->mAnch = pAnch;
 }
 
+/*------------------------------------------------------------------*/
+
 void UiImg_render(const UiImg *pImg)
 {
 	Rectangle src = { 0.f, 0.f, pImg->mTex.width, pImg->mTex.height };
@@ -19,6 +21,8 @@ void UiImg_render(const UiImg *pImg)
 	Rectangle dest = { topLeft.x, topLeft.y, pImg->mSize.x, pImg->mSize.y };
 	DrawTexturePro(pImg->mTex, src, dest, Vector2Zero(), 0.f, WHITE);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiImg_del(UiImg *pImg)
 {

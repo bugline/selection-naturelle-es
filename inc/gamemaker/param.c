@@ -14,6 +14,8 @@ App_param App_param_default(void)
 	return param;
 }
 
+/*------------------------------------------------------------------*/
+
 App_param_window Param_default_window(void)
 {
 	App_param_window window = { 0 };
@@ -37,6 +39,8 @@ App_param_window Param_default_window(void)
 	return window;
 }
 
+/*------------------------------------------------------------------*/
+
 App_param_update Param_default_update(void)
 {
 	App_param_update update = { 0 };
@@ -45,6 +49,8 @@ App_param_update Param_default_update(void)
 
 	return update;
 }
+
+/*------------------------------------------------------------------*/
 
 App_param_render Param_default_render(void)
 {

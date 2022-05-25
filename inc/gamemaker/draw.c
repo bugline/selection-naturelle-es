@@ -7,6 +7,8 @@ void DrawRecMid(Vector2 pPos, Vector2 pSize, Color pCol)
 	DrawRectangleV(pos, pSize, pCol);
 }
 
+/*------------------------------------------------------------------*/
+
 void DrawTexMid(Texture2D tex, Vector2 pos, Vector2 size)
 {
 	Rectangle source = { 0, 0, tex.width, tex.height };
@@ -19,6 +21,8 @@ void DrawTexMid(Texture2D tex, Vector2 pos, Vector2 size)
 
 	DrawTexturePro(tex, source, dest, (Vector2) { 0.f, 0.f }, 0.f, WHITE);
 }
+
+/*------------------------------------------------------------------*/
 
 void DrawFrameMid(Texture2D tex, Vector2 pos, Vector2 size, Frame nbFrame,
 	Frame posFrame)
@@ -37,6 +41,8 @@ void DrawFrameMid(Texture2D tex, Vector2 pos, Vector2 size, Frame nbFrame,
 	DrawTexturePro(tex, frameRec, dest, (Vector2) { 0.f, 0.f }, 0.f,
 		WHITE);
 }
+
+/*------------------------------------------------------------------*/
 
 void DrawArcMid(Vector2 pPos, float pRad, float pStartAngle, float pStopAngle,
 	int pLines, Color pCol)

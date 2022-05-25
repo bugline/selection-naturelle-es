@@ -15,6 +15,8 @@ void UiButt_init(UiButt *pButt, Vector2 pPos, Vector2 pSize, char pAnch,
 	pButt->callback = pCallback;
 }
 
+/*------------------------------------------------------------------*/
+
 bool CheckCollision(UiButt *pButt)
 {
 	Vector2 topLeft = AnchGetRecTL(pButt->pos, pButt->size, pButt->anchor);
@@ -29,6 +31,8 @@ bool CheckCollision(UiButt *pButt)
 	return true;
 }
 
+/*------------------------------------------------------------------*/
+
 void UiButt_update(UiButt *pButt)
 {
 	if (IsMouseButtonPressed(0) && pButt->callback) {
@@ -36,6 +40,8 @@ void UiButt_update(UiButt *pButt)
 			pButt->callback();
 	}
 }
+
+/*------------------------------------------------------------------*/
 
 void UiButt_del(UiButt *pButt)
 {

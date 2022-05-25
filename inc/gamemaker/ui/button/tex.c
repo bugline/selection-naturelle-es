@@ -9,10 +9,14 @@ void UiButtTex_init(UiButtTex *pButt, Vector2 pPos, Vector2 pSize, char pAnch,
 	pButt->color = WHITE;
 }
 
+/*------------------------------------------------------------------*/
+
 void UiButtTex_update(UiButtTex *pButt)
 {
 	UiButt_update(&pButt->mButt);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiButtTex_render(const UiButtTex *pButt)
 {
@@ -26,6 +30,8 @@ void UiButtTex_render(const UiButtTex *pButt)
 	DrawTexturePro(pButt->mTex, src, dest, (Vector2) { 0.f, 0.f }, 0.f,
 		pButt->color);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiButtTex_del(UiButtTex *pButt)
 {

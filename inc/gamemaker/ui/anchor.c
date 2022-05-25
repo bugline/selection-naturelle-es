@@ -31,6 +31,8 @@ Vector2 AnchGetOrig(char pAnch)
 	return origin;
 }
 
+/*------------------------------------------------------------------*/
+
 Vector2 AnchGetRecC(Vector2 pPos, Vector2 pSize, char pAnch)
 {
 	Vector2 origin = (Vector2) AnchGetOrig(pAnch);
@@ -62,6 +64,8 @@ Vector2 AnchGetRecC(Vector2 pPos, Vector2 pSize, char pAnch)
 
 	return res;
 }
+
+/*------------------------------------------------------------------*/
 
 Vector2 AnchGetRecTL(Vector2 pPos, Vector2 pSize, char pAnch)
 {
@@ -95,6 +99,8 @@ Vector2 AnchGetRecTL(Vector2 pPos, Vector2 pSize, char pAnch)
 	return res;
 }
 
+/*------------------------------------------------------------------*/
+
 Vector2 AnchGetRecTR(Vector2 pPos, Vector2 pSize, char pAnch)
 {
 	Vector2 origin = (Vector2) AnchGetOrig(pAnch);
@@ -127,6 +133,8 @@ Vector2 AnchGetRecTR(Vector2 pPos, Vector2 pSize, char pAnch)
 	return res;
 }
 
+/*------------------------------------------------------------------*/
+
 Vector2 AnchGetRecBL(Vector2 pPos, Vector2 pSize, char pAnch)
 {
 	Vector2 origin = (Vector2) AnchGetOrig(pAnch);
@@ -158,6 +166,8 @@ Vector2 AnchGetRecBL(Vector2 pPos, Vector2 pSize, char pAnch)
 
 	return res;
 }
+
+/*------------------------------------------------------------------*/
 
 Vector2 AnchGetRecBR(Vector2 pPos, Vector2 pSize, char pAnch)
 {

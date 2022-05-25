@@ -23,10 +23,14 @@ void UiButtText_init(UiButtText *pButt, Vector2 pPos, Vector2 pSize,
 	pButt->mTextSize = MeasureText(pButt->mText, pButt->mFontSize);
 }
 
+/*------------------------------------------------------------------*/
+
 void UiButtText_update(UiButtText *pButt)
 {
 	UiButt_update(&pButt->mButt);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiButtText_render(const UiButtText *pButt)
 {
@@ -40,6 +44,8 @@ void UiButtText_render(const UiButtText *pButt)
 		center.y - pButt->mFontSize / 2.f, pButt->mFontSize,
 		pButt->mFontCol);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiButtText_del(UiButtText *pButt)
 {

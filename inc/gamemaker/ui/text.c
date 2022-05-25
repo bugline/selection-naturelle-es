@@ -24,6 +24,8 @@ void UiText_init(UiText *pUiText, const char *pText, Font pFont,
 		pUiText->mText[i] = pText[i];
 }
 
+/*------------------------------------------------------------------*/
+
 void UiText_chngTxt(UiText *uiText, const char *newText)
 {
 	if (uiText->mText)
@@ -38,12 +40,16 @@ void UiText_chngTxt(UiText *uiText, const char *newText)
 		strcpy(uiText->mText, newText);
 }
 
+/*------------------------------------------------------------------*/
+
 void UiText_render(const UiText *pText)
 {
 	Vector2 pos = AnchGetRecTL(pText->mPos, pText->mSize, pText->mAnch);
 	DrawTextEx(pText->mFont, pText->mText, pos, pText->mSize.y,
 		pText->mSpacing, pText->mCol);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiText_del(UiText *pText)
 {

@@ -18,6 +18,8 @@ Cam Cam_init(float p_Fov)
 	return newCam;
 }
 
+/*------------------------------------------------------------------*/
+
 Cam *Cam_new(float p_Fov)
 {
 	Cam *newCam = NEW(Cam);
@@ -34,10 +36,14 @@ Cam *Cam_new(float p_Fov)
 	return newCam;
 }
 
+/*------------------------------------------------------------------*/
+
 void Cam_del(Cam *p_Cam)
 {
 	free(p_Cam);
 }
+
+/*------------------------------------------------------------------*/
 
 void Cam_prepRender(Cam *p_Cam, App *p_App)
 {
@@ -46,31 +52,43 @@ void Cam_prepRender(Cam *p_Cam, App *p_App)
 	p_Cam->camera.zoom = GetScreenWidth() / p_Cam->fov;
 }
 
+/*------------------------------------------------------------------*/
+
 void Cam_start(Cam *p_Cam, App *p_App)
 {
 	Cam_prepRender(p_Cam, p_App);
 	BeginMode2D(p_Cam->camera);
 }
 
+/*------------------------------------------------------------------*/
+
 void Cam_stop(void)
 {
 	EndMode2D();
 }
+
+/*------------------------------------------------------------------*/
 
 Vector2 Cam_getPos(Cam *p_Cam)
 {
 	return p_Cam->camera.target;
 }
 
+/*------------------------------------------------------------------*/
+
 void Cam_setPos(Cam *p_Cam, Vector2 newVec)
 {
 	p_Cam->camera.target = newVec;
 }
 
+/*------------------------------------------------------------------*/
+
 float Cam_getRot(Cam *p_Cam)
 {
 	return p_Cam->camera.rotation;
 }
+
+/*------------------------------------------------------------------*/
 
 void Cam_setRot(Cam *p_Cam, float newRot)
 {

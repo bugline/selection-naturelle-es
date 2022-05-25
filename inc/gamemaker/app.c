@@ -21,40 +21,52 @@ App *App_new(App_param p_Param)
 	return newApp;
 }
 
+/*------------------------------------------------------------------*/
+
 void App_del(App *p_App)
 {
 	free(p_App);
 }
 
-
+/*------------------------------------------------------------------*/
 // Fonctions pour attribuer les fonctions à appeler
+
 void App_setInit(App *p_App, void (*p_Init) (App *p_App))
 {
 	p_App->Init = (void (*) (void)) p_Init;
 }
+
+/*------------------------------------------------------------------*/
 
 void App_setUpdate(App *p_App, void (*p_Update) (App *p_App, float p_Dt))
 {
 	p_App->Update = (void (*) (void)) p_Update;
 }
 
+/*------------------------------------------------------------------*/
+
 void App_setRender(App *p_App, void (*p_Render) (App *p_App))
 {
 	p_App->Render = (void (*) (void)) p_Render;
 }
+
+/*------------------------------------------------------------------*/
 
 void App_setRemove(App *p_App, void (*p_Remove) (App *p_App))
 {
 	p_App->Remove = (void (*) (void)) p_Remove;
 }
 
-
+/*------------------------------------------------------------------*/
 // Fonctions pour appeler les fonctions correspondantes
+
 static void App_callInit(App *p_App)
 {
 	void (*initFunc) (App *) = (void (*) (App *)) p_App->Init;
 	(*initFunc)(p_App);
 }
+
+/*------------------------------------------------------------------*/
 
 static void App_callUpdate(App *p_App, float p_Dt)
 {
@@ -62,11 +74,15 @@ static void App_callUpdate(App *p_App, float p_Dt)
 	(*updateFunc)(p_App, p_Dt);
 }
 
+/*------------------------------------------------------------------*/
+
 static void App_callRender(App *p_App)
 {
 	void (*renderFunc) (App *) = (void (*) (App *)) p_App->Render;
 	(*renderFunc)(p_App);
 }
+
+/*------------------------------------------------------------------*/
 
 static void App_callRemove(App *p_App)
 {
@@ -74,6 +90,7 @@ static void App_callRemove(App *p_App)
 	(*removeFunc)(p_App);
 }
 
+/*------------------------------------------------------------------*/
 
 void App_loop(App *p_App)
 {

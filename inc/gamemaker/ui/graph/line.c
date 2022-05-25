@@ -35,6 +35,7 @@ UiGraphLine UiGraphLine_default()
 	return graph;
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphLine_setPoint(UiGraphLine *graph, int index, Vector2 pt)
 {
@@ -54,6 +55,7 @@ void UiGraphLine_setPoint(UiGraphLine *graph, int index, Vector2 pt)
 		graph->pts[index] = pt;
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphLine_addPoint(UiGraphLine *graph, Vector2 pt)
 {
@@ -93,6 +95,7 @@ void UiGraphLine_addPoint(UiGraphLine *graph, Vector2 pt)
 	graph->ptsLen++;
 }
 
+/*------------------------------------------------------------------*/
 
 Vector2 _PutVecInRng(Vector2 vec, Vector2 rngX, Vector2 rngY, Vector2 graphLen)
 {
@@ -102,6 +105,7 @@ Vector2 _PutVecInRng(Vector2 vec, Vector2 rngX, Vector2 rngY, Vector2 graphLen)
 	};
 }
 
+/*------------------------------------------------------------------*/
 
 void _DrawLines(const UiGraphLine *graph)
 {
@@ -141,6 +145,7 @@ void _DrawLines(const UiGraphLine *graph)
 	}
 }
 
+/*------------------------------------------------------------------*/
 
 void _DrawTextLine(const UiGraphLine *graph)
 {
@@ -174,6 +179,7 @@ void _DrawTextLine(const UiGraphLine *graph)
 	// 	graph->fontSize, graph->fontSize / 10.f, graph->colFg);
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphLine_render(const UiGraphLine *graph)
 {
@@ -189,6 +195,7 @@ void UiGraphLine_render(const UiGraphLine *graph)
 	EndBlendMode();
 }
 
+/*------------------------------------------------------------------*/
 
 void UiGraphLine_del(UiGraphLine *graph)
 {

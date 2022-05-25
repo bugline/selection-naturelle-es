@@ -13,11 +13,14 @@ bool FoodCircleColl(const Food *pFood, const Vector2 pCircPos, const float pRad)
 	return true;
 }
 
+/*------------------------------------------------------------------*/
+
 void FoodRender(const Food *food)
 {
 	DrawTexMid(*food->tex, food->pos, food->size);
 }
 
+/*------------------------------------------------------------------*/
 // Array functions
 
 LnList FoodsInit(int nbFood, Texture2D *tex)
@@ -38,6 +41,8 @@ LnList FoodsInit(int nbFood, Texture2D *tex)
 	return foods;
 }
 
+/*------------------------------------------------------------------*/
+
 void FoodMore()
 {
 	Data *data = DataPointer();
@@ -48,6 +53,8 @@ void FoodMore()
 		data->foods = FoodsInit(data->nbFoodFix, &data->foodTex);
 }
 
+/*------------------------------------------------------------------*/
+
 void FoodLess()
 {
 	Data *data = DataPointer();
@@ -57,6 +64,8 @@ void FoodLess()
 	if (data->state == STATE_MENU)
 		data->foods = FoodsInit(data->nbFoodFix, &data->foodTex);
 }
+
+/*------------------------------------------------------------------*/
 
 void FoodsRender(LnList *foods)
 {
@@ -70,6 +79,8 @@ void FoodsRender(LnList *foods)
 		food = Iter_getElem(Food, &iter);
 	}
 }
+
+/*------------------------------------------------------------------*/
 
 void FoodsDel(LnList *foods)
 {

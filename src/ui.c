@@ -15,6 +15,8 @@ void MenuToRun()
 	data->state = STATE_RUN;
 }
 
+/*------------------------------------------------------------------*/
+
 void RunToMenu()
 {
 	Data *data = DataPointer();
@@ -46,6 +48,8 @@ void RunToMenu()
 	data->simulEnd = false;
 }
 
+/*------------------------------------------------------------------*/
+
 void VarianceMore()
 {
 	Data *data = DataPointer();
@@ -56,6 +60,8 @@ void VarianceMore()
 		data->foodVariance = 1;
 }
 
+/*------------------------------------------------------------------*/
+
 void VarianceLess()
 {
 	Data *data = DataPointer();
@@ -63,6 +69,8 @@ void VarianceLess()
    	if (data->foodVariance < VARIANCE_MIN)
        		data->foodVariance = VARIANCE_MIN;
 }
+
+/*------------------------------------------------------------------*/
 
 void UiInit(Ui *ui)
 {
@@ -136,8 +144,8 @@ void UiInit(Ui *ui)
 	);
 }
 
-/*écrit un texte quand tout les blobs sont mort (est sensé mettre la simulation sur pause mais 
-PUISQUE LE CODE NEST PAS COMMENT2 ONT COMPREND PAS TOUT!! SURTOUT SUR LES STRUCTURE!!!!!!*/
+/*------------------------------------------------------------------*/
+
 void UiEnd(Ui *ui)
 {
 	DataPointer()->timeSpeed.value = 0.f;
@@ -146,6 +154,8 @@ void UiEnd(Ui *ui)
 	//debug
 	printf("\n \n Tout les blobs sont mort \n \n");
 }
+
+/*------------------------------------------------------------------*/
 
 void UiTextNbGenUpdate()
 {
@@ -156,6 +166,8 @@ void UiTextNbGenUpdate()
 	free(nbGen);
 }
 
+/*------------------------------------------------------------------*/
+
 void UiTextNbBlobUpdate()
 {
 	Data *data = DataPointer();
@@ -164,6 +176,8 @@ void UiTextNbBlobUpdate()
 	UiText_chngTxt(&data->ui.text.nbBlob, nbBlob);
 	free(nbBlob);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiTextNbFoodUpdate()
 {
@@ -174,6 +188,8 @@ void UiTextNbFoodUpdate()
 	free(nbFood);
 }
 
+/*------------------------------------------------------------------*/
+
 void UiTextVarianceUpdate()
 {
 	Data *data = DataPointer();
@@ -182,6 +198,8 @@ void UiTextVarianceUpdate()
 	UiText_chngTxt(&data->ui.text.variance, variance);
 	free(variance);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiMenuUpdate(Ui *ui)
 {
@@ -200,6 +218,8 @@ void UiMenuUpdate(Ui *ui)
 	UiTextVarianceUpdate();
 }
 
+/*------------------------------------------------------------------*/
+
 void UiRunUpdate(Ui *ui)
 {
 	UiButtTex_update(&ui->butt.restart);
@@ -216,6 +236,8 @@ void UiRunUpdate(Ui *ui)
 	UiTextNbFoodUpdate();
 	UiTextVarianceUpdate();
 }
+
+/*------------------------------------------------------------------*/
 
 void UiRender(Ui *ui)
 {
@@ -238,6 +260,8 @@ void UiRender(Ui *ui)
 	if (DataPointer()->simulEnd)
 		UiText_render(&ui->text.end);
 }
+
+/*------------------------------------------------------------------*/
 
 void UiDel(Ui *ui)
 {
