@@ -168,6 +168,7 @@ void MainRemove(App *p_App)
 int main()
 {
 	App_param param = App_param_default();
+	param.window.name = "Selection naturelle";
 	param.update.fps = 0;
 	//param.render.limitFPS = 1.f / 60.f;
 	param.window.autoResize = false;
