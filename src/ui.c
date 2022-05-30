@@ -119,7 +119,7 @@ void UiInit(Ui *ui)
 
 	Font font = LoadFont("res/Panipuri.ttf");
 	UiText_init(
-		&ui->text.nbGen, "Gen : 0\0", font, 40,
+		&ui->text.nbGen, "Generations : 0\0", font, 40,
 		(Vector2) { 10, -80 }, ANCHOR_W, RAYWHITE
 	);
 
@@ -139,7 +139,7 @@ void UiInit(Ui *ui)
 	);
 
 	UiText_init(
-		&ui->text.end, "Tout les blobs sont mort\0", font, 40,
+		&ui->text.end, "Tous les blobs sont morts\0", font, 40,
 		(Vector2) { 0, 0 }, ANCHOR_C, RAYWHITE
 	);
 }
@@ -150,9 +150,6 @@ void UiEnd(Ui *ui)
 {
 	DataPointer()->timeSpeed.value = 0.f;
 	DataPointer()->simulEnd = true;
-
-	//debug
-	printf("\n \n Tout les blobs sont mort \n \n");
 }
 
 /*------------------------------------------------------------------*/
@@ -161,7 +158,7 @@ void UiTextNbGenUpdate()
 {
 	Data *data = DataPointer();
 	char *nbGen = 	NEW_ARR(char, 15);
-	sprintf(nbGen, "Gen : %d", data->genCount);
+	sprintf(nbGen, "Generations : %d", data->genCount);
 	UiText_chngTxt(&data->ui.text.nbGen, nbGen);
 	free(nbGen);
 }

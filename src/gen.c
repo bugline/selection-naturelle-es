@@ -96,8 +96,8 @@ void GraphsInit()
 	}
 		
 
-	UiGraphAxis_setLabel(&pData->speedGraph.xAxis, "speed");
-	UiGraphAxis_setLabel(&pData->speedGraph.yAxis, "blob amount");
+	UiGraphAxis_setLabel(&pData->speedGraph.xAxis, "vitesse");
+	UiGraphAxis_setLabel(&pData->speedGraph.yAxis, "pourcentage de blobs");
 
 	// POPULATION GRAPHIC
 	UiGraphLine g = UiGraphLine_default();
@@ -108,8 +108,8 @@ void GraphsInit()
 	g.colLine = (Color) { 250, 150, 75, 200 };
 	g.colBg = (Color) { 50, 50, 50, 200 };
 
-	UiGraphAxis_setLabel(&g.xAxis, "time");
-	UiGraphAxis_setLabel(&g.yAxis, "population amount");
+	UiGraphAxis_setLabel(&g.xAxis, "temps");
+	UiGraphAxis_setLabel(&g.yAxis, "nombre de blobs");
 
 	g.xAxis.valRng = (Vector2) { 0.f, 1.f };
 	g.yAxis.valRng = (Vector2) { 0.f, 105.f };
